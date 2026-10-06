@@ -41,7 +41,13 @@ except Exception as e:
 PY
 )"
 if [[ "$IPS" == ERR:* || -z "$IPS" ]]; then
-  echo "  ✗ 查不到 A 记录 —— 域名可能尚未生效，或NS 未正确指向 Cloudflare"
+  # DoH 偶发失败时退回系统 dig，避免误报"域名未生效"
+  IPS2="$(dig +short "$DOMAIN" A 2>/dev/null | grep -E '^[0-9]' | tr '\n' ' ')"
+  if [ -n "$IPS2" ]; then
+    echo "  ✓ A 记录: $IPS2  (DoH 查询失败，已回退到 dig)"
+  else
+    echo "  ✗ 查不到 A 记录 —— 域名可能尚未生效，或 NS 未正确指向 Cloudflare"
+  fi
 else
   echo "  ✓ A 记录: $IPS"
   if echo "$IPS" | grep -q "^198\.18\."; then
@@ -56,6 +62,16 @@ CODE="$(curl -s --noproxy '*' -o /dev/null -w "%{http_code}" \
         --max-time 20 "https://$DOMAIN/" 2>/dev/null)"
 if [ "$CODE" = "200" ]; then
   echo "  ✓ 首页返回 HTTP 200，站点正常"
+elif [ "$CODE" = "307" ] || [ "$CODE" = "308" ]; then
+  # Cloudflare 对 .html 页面可能返回 307 规范跳转，属正常行为
+  FINAL="$(curl -s --noproxy '*' -L -o /dev/null -w "%{http_code}" \
+          --max-time 25 "https://$DOMAIN/" 2>/dev/null)"
+  if [ "$FINAL" = "200" ]; then
+    echo "  ✓ 返回 $CODE 跳转，跟随后HTTP $FINAL（Cloudflare 规范跳转，正常）"
+    CODE=200
+  else
+    echo "  ✗ 跳转后仍无法访问（最终 HTTP $FINAL）"
+  fi
 elif [ "$CODE" = "000" ]; then
   echo "  ✗ 无法建立连接"
   echo ""
