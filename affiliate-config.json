@@ -1,0 +1,88 @@
+{
+  "_comment": "联盟链接集中管理。改成你自己的推广链接即可。url 留空表示该项不显示。",
+  "_note": "所有链接必须是你自己的推广链接，填 affiliate id 后的完整 URL。直接用商家的主页链接不会有佣金。",
+
+  "payroll": [
+    {
+      "name": "Gusto",
+      "badge": "Editors pick",
+      "url": "",
+      "desc": "Payroll, benefits and onboarding in one place. Adds employee self-service, which cuts the admin time most small employers underestimate."
+    },
+    {
+      "name": "ADP",
+      "badge": "Most complete",
+      "url": "",
+      "desc": "Handles multi-state filings, which matters once you have staff in more than one state. Steeper pricing but the compliance load drops sharply."
+    },
+    {
+      "name": "QuickBooks Payroll",
+      "badge": "Best with QuickBooks",
+      "url": "",
+      "desc": "If you already run QuickBooks for bookkeeping, adding payroll keeps everything in one system instead of exporting and re-importing data."
+    }
+  ],
+
+  "cash": [
+    {
+      "name": "QuickBooks Online",
+      "badge": "Best all-rounder",
+      "url": "",
+      "desc": "Cash flow view, income and expense tracking, and built-in invoicing. Reasonable entry tier for a small business."
+    },
+    {
+      "name": "Wave",
+      "badge": "Free option",
+      "url": "",
+      "desc": "Free invoicing and basic accounting with no monthly fee. Useful for testing whether you need more than basic cash tracking at all."
+    },
+    {
+      "name": "Chase Business Complete",
+      "badge": "Best bank pairing",
+      "url": "",
+      "desc": "Built for small business banking. Automatic transaction feeds cut the time spent reconciling, which is where cash flow reporting usually stalls."
+    }
+  ],
+
+  "breakeven": [
+    {
+      "name": "Breeze",
+      "badge": "Free option",
+      "url": "",
+      "desc": "Accounting for very small businesses with no monthly fee, so you can track the actual cost side while testing a price."
+    },
+    {
+      "name": "Square",
+      "badge": "Best for retail",
+      "url": "",
+      "desc": "Low transaction fees with no monthly charge, which matters most at the sales volumes a break-even test assumes."
+    },
+    {
+      "name": "Stripe",
+      "badge": "Best for online",
+      "url": "",
+      "desc": "Card processing with transparent rates, useful when break-even depends on keeping payment fees low as sales volume grows."
+    }
+  ],
+
+  "margin": [
+    {
+      "name": "QuickBooks Online",
+      "badge": "Most popular",
+      "url": "",
+      "desc": "Tracks income and expenses by category, which is how you confirm the margin numbers this page estimates."
+    },
+    {
+      "name": "LiveBookkeeping",
+      "badge": "Best for service firms",
+      "url": "",
+      "desc": "Bookkeeping services for service businesses where the cost side is mostly contractor time rather than materials."
+    },
+    {
+      "name": "Xero",
+      "badge": "Best for multi-entity",
+      "url": "",
+      "desc": "Strong reporting and multi-entity support if your business structure is more involved than a single sole trader."
+    }
+  ]
+}
