@@ -63,8 +63,43 @@ SCODE=$(code "https://$DOMAIN/sitemap.xml")
 
 # ── 4. sitemap 格式正确 ──
 SM=$(fetch "https://$DOMAIN/sitemap.xml")
-echo "$SM" | grep -q "<urlset" && chk "sitemap 为合法 urlset 格式" ok || chk "sitemap 为合法 urlset 格式" "ok" ""
-echo "$SM" | grep -q "https://$DOMAIN" && chk "sitemap 使用 https 绝对地址" ok || chk "sitemap 使用 https 绝对地址" "ok" "含 http:// 的相对地址不会被正常解析"
+echo "$SM" | grep -q "<urlset" && chk "sitemap 为合法 urlset 格式" ok || chk "sitemap 为合法 urlset 格式" "" ""
+echo "$SM" | grep -q "https://$DOMAIN" && chk "sitemap 使用 https 绝对地址" ok || chk "sitemap 使用 https 绝对地址" "" "含 http:// 的相对地址不会被正常解析"
+
+# ── 4b. sitemap 可被解析且条目数正确（Google 要求严格）──
+curl -s --noproxy '*' -L -A "$UA" --max-time 25 "https://$DOMAIN/sitemap.xml" -o /tmp/_sm.xml 2>/dev/null
+PYOUT="$("$PY" - <<'PYEOF' 2>/dev/null
+import xml.etree.ElementTree as ET
+try:
+    root = ET.parse("/tmp/_sm.xml").getroot()
+    ns = "{http://www.sitemaps.org/schemas/sitemap/0.9}"
+    locs = [u.find(ns+"loc").text for u in root.findall(ns+"url")]
+    bad = sum(1 for l in locs if not l.startswith("https://"))
+    mixed = sum(1 for l in locs if "www." in l)
+    print(f"OK|{len(locs)}|{bad}|{mixed}")
+except Exception as e:
+    print(f"ERR|{e}")
+PYEOF
+)"
+rm -f /tmp/_sm.xml
+case "$PYOUT" in
+  OK\|*)
+    IFS='|' read -r _ N BAD MIXED <<< "$PYOUT"
+    if [ "$BAD" = "0" ]; then
+      chk "sitemap XML 可解析（${N} 条 URL）" ok
+    else
+      chk "sitemap XML 可解析" "" "有 ${BAD} 条非 https 地址"
+    fi
+    if [ "$MIXED" = "0" ]; then
+      chk "sitemap 无 www 与裸域混用" ok
+    else
+      chk "sitemap 无 www 与裸域混用" "" "有 ${MIXED} 条含 www，若 Property 是裸域版会判为范围不符"
+    fi
+    ;;
+  *)
+    chk "sitemap XML 可解析" "" "解析失败：${PYOUT#ERR|}。Google 会因此报「无法抓取」"
+    ;;
+esac
 
 # ── 5. 页面数一致性 ──
 LOCAL_N=$(grep -c "^https://$DOMAIN" "$SM" 2>/dev/null || echo 0)
