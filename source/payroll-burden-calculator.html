@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payroll Burden Calculator — The Real Cost of Hiring an Employee</title>
+<meta name="description" content="Free payroll burden calculator. See what an employee actually costs beyond their wage, including employer FICA, FUTA, state unemployment, workers comp and benefits. 2026 IRS rates included.">
+<link rel="canonical" href="https://example.com/payroll-burden-calculator.html">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Payroll Burden Calculator",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any",
+  "url": "https://example.com/payroll-burden-calculator.html",
+  "description": "Calculate the full loaded cost of an employee including employer FICA, FUTA, SUTA, workers compensation and benefits using2026 IRS rates.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is payroll burden?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Payroll burden is the total cost of an employee beyond their gross wage: employer payroll taxes, unemployment taxes, workers compensation insurance, benefits, paid time off, and equipment. It is usually expressed as a percentage of the wage, called the burden rate. A burden rate between 25 and 35 percent is common for a US small business hiring an employee rather than a contractor, so a $50,000 wage typically costs $62,500 to $67,500 in total."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What percentage of an employee's salary does an employer pay on top of the wage?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Employer FICA alone adds 7.65 percent: 6.2 percent Social Security on wages up to the 2026 wage base of $184,500, and 1.45 percent Medicare on all wages with no cap. Federal unemployment adds 0.6 percent on the first $7,000 per employee after the standard state credit. State unemployment tax varies by state and employer experience rating. Workers compensation and benefits then push the total burden rate into the 25 to 35 percent range for most small employers."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between an employee and a contractor for payroll taxes?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "An employee requires the employer to withhold income tax and the employee share of FICA, match the FICA employer share, pay federal and state unemployment taxes, and provide workers compensation and benefits, typically costing 25 to 35 percent on top of the wage. A contractor is responsible for their own taxes, so the cost is close to the invoice amount. The gap between these two is often 30 to 40 percent of the wage, which is why misclassifying a worker as a contractor carries substantial back-tax liability."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is payroll burden deductible?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Generally yes. Employer payroll taxes, workers compensation premiums, and the employer portion of health and retirement contributions are deductible business expenses. Employee salary and wages are deductible, though the W-2 wages themselves are reported on Form W-2 and are not deducted again on Form 1065 or a personal return. Because deduction does not reduce the cash cost, budget on the gross figure and treat the deduction as a tax benefit that arrives later."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What counts as a benefit in a payroll burden calculation?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Common benefit costs measured against annual wages include employer-paid health insurance premiums, employer retirement contributions such as a 401k match, paid vacation and sick time, and any allowances for equipment such as a laptop or phone. The method most businesses use is to total the annual cost of each benefit, divide by the annual wage, and express that as a percentage. Common targets are 8 to 12 percent for health, 3 to 6 percent for retirement, and 5 to 10 percent for paid time off."
+      }
+    }
+  ]
+}
+</script>
+<style>
+  *{box-sizing:border-box;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       background:#fff;color:#1c1c1a;line-height:1.65;margin:0;padding:0 16px 64px;}
+  .wrap{max-width:860px;margin:0 auto;}
+  h1{font-size:28px;font-weight:600;letter-spacing:-0.02em;margin:32px 0 8px;line-height:1.25;}
+  h2{font-size:20px;font-weight:600;margin:36px 0 12px;}
+  h3{font-size:16px;font-weight:600;margin:0 0 10px;}
+  .sub{color:#6b6a64;font-size:15px;margin:0 0 20px;}
+  .panel{background:#faf9f7;border:1px solid #e5e3dc;border-radius:10px;padding:20px;margin:0 0 18px;}
+  .panel h3:not(:first-child){margin-top:22px;}
+  .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;}
+  .field{margin:0 0 14px;}
+  label{display:block;font-weight:500;font-size:14px;margin-bottom:6px;}
+  .hint{display:block;font-weight:400;color:#6b6a64;font-size:13px;margin-top:2px;}
+  input[type=number]{width:100%;padding:10px 12px;border:1px solid #c9c7bf;border-radius:8px;
+       font-size:16px;background:#fff;color:inherit;}
+  input:focus{outline:2px solid #185fa5;outline-offset:1px;border-color:#185fa5;}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:0 0 18px;}
+  .stat{background:#faf9f7;border:1px solid #e5e3dc;border-radius:10px;padding:14px;}
+  .stat .lbl{font-size:12px;color:#6b6a64;margin:0 0 4px;}
+  .stat .val{font-size:24px;font-weight:600;margin:0;letter-spacing:-0.01em;}
+  .stat.hl{background:#e1f5ee;border-color:#9fe1cb;}
+  .stat.hl .val{color:#0f6e56;}
+  .stat.warn{background:#faeeda;border-color:#fac775;}
+  .stat.warn .val{color:#854f0b;}
+  table{width:100%;border-collapse:collapse;margin:0 0 18px;font-size:14px;}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid #e5e3dc;}
+  th{background:#faf9f7;font-weight:600;font-size:13px;}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;}
+  tr.total{background:#faf9f7;font-weight:600;border-top:2px solid #c9c7bf;}
+  tr.ss td{border-bottom:0;}
+  tr.ss2 td{border-bottom:1px solid #e5e3dc;}
+  details{border:1px solid #e5e3dc;border-radius:8px;padding:12px 14px;margin-bottom:10px;background:#faf9f7;}
+  summary{font-weight:500;cursor:pointer;font-size:15px;}
+  details p{margin:10px 0 0;font-size:14px;}
+  .ad-slot{background:#f1efe8;border:1px dashed #c9c7bf;border-radius:8px;min-height:90px;
+           display:flex;align-items:center;justify-content:center;color:#888780;font-size:12px;margin:20px 0;}
+  .note{background:#e6f1fb;border-left:3px solid #185fa5;border-radius:0 8px 8px 0;padding:12px 16px;font-size:14px;margin:0 0 18px;}
+  .insight{background:#faf9f7;border:1px solid #e5e3dc;border-radius:8px;padding:14px 16px;font-size:14px;margin:0 0 20px;}
+  .disc{background:#faf9f7;border:1px solid #e5e3dc;border-radius:8px;padding:14px 16px;font-size:13px;color:#6b6a64;margin:0 0 24px;}
+  .related{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 24px;}
+  .related a{display:inline-block;padding:8px 12px;border:1px solid #c9c7bf;border-radius:8px;text-decoration:none;color:#185fa5;font-size:14px;}
+  .related a:hover{background:#e6f1fb;}
+  .src{font-size:12px;color:#6b6a64;margin:-6px 0 18px;}
+  header{border-bottom:1px solid #e5e3dc;padding:14px 0;}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .brand{font-weight:600;font-size:17px;text-decoration:none;color:#1c1c1a;}
+  .brandnav{display:flex;gap:18px;}
+  .brandnav a{font-size:14px;color:#6b6a64;text-decoration:none;}
+  footer{border-top:1px solid #e5e3dc;margin-top:32px;padding-top:16px;font-size:13px;color:#6b6a64;}
+  footer a{color:#6b6a64;margin-right:14px;}
+  .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);}
+</style>
+</head>
+<body>
+
+<header><div class="wrap">
+  <a class="brand" href="https://example.com/">Small Profit Tools</a>
+  <nav class="brandnav">
+    <a href="https://example.com/tools.html">All tools</a>
+    <a href="https://example.com/about.html">About</a>
+  </nav>
+</div></header>
+
+<div class="wrap">
+
+<h1>Payroll Burden Calculator</h1>
+<p class="sub">The wage is only part of what an employee costs. Here is the rest, using 2026 IRS rates.</p>
+
+<div class="ad-slot" id="ad-slot-top" aria-hidden="true">Advertisement slot · top</div>
+
+<div class="panel">
+  <h3>Pay and work pattern</h3>
+  <div class="row">
+    <div class="field">
+      <label for="wage">Annual base wage <span class="hint">Gross pay before taxes</span></label>
+      <input type="number" id="wage" value="52000" step="100" min="0" inputmode="decimal">
+    </div>
+    <div class="field">
+      <label for="hours">Hours worked per week</label>
+      <input type="number" id="hours" value="40" step="1" min="0" max="168" inputmode="numeric">
+    </div>
+    <div class="field">
+      <label for="weeks">Weeks paid per year</label>
+      <input type="number" id="weeks" value="52" step="1" min="0" max="53" inputmode="numeric">
+    </div>
+  </div>
+
+  <h3>Employer taxes</h3>
+  <div class="row">
+    <div class="field">
+      <label for="suta">State unemployment tax <span class="hint">SUTA, as % of wages. Typical 1–5%</span></label>
+      <input type="number" id="suta" value="2.4" step="0.1" min="0" inputmode="decimal">
+    </div>
+    <div class="field">
+      <label for="wc">Workers comp insurance <span class="hint">% of wages. Varies by trade and state</span></label>
+      <input type="number" id="wc" value="1.2" step="0.1" min="0" inputmode="decimal">
+    </div>
+  </div>
+
+  <h3>Benefits</h3>
+  <p class="hint" style="margin:-4px 0 14px;">Annual cost as a percentage of the base wage. Targets shown in brackets.</p>
+  <div class="row">
+    <div class="field">
+      <label for="health">Health insurance <span class="hint">Employer-paid premiums [8–12%]</span></label>
+      <input type="number" id="health" value="9" step="0.5" min="0" inputmode="decimal">
+    </div>
+    <div class="field">
+      <label for="retire">Retirement match <span class="hint">401k or pension [3–6%]</span></label>
+      <input type="number" id="retire" value="4" step="0.5" min="0" inputmode="decimal">
+    </div>
+    <div class="field">
+      <label for="pto">Paid time off <span class="hint">Vacation and sick, as % of wages [5–10%]</span></label>
+      <input type="number" id="pto" value="7" step="0.5" min="0" inputmode="decimal">
+    </div>
+    <div class="field">
+      <label for="equip">Equipment and other <span class="hint">Laptop, phone, tools, mileage [1–3%]</span></label>
+      <input type="number" id="equip" value="2" step="0.5" min="0" inputmode="decimal">
+    </div>
+  </div>
+</div>
+
+<div id="results" aria-live="polite">
+  <div class="grid3">
+    <div class="stat hl">
+      <p class="lbl">Total annual cost per employee</p>
+      <p class="val" id="total">$69,332.00</p>
+    </div>
+    <div class="stat">
+      <p class="lbl">Total burden rate</p>
+      <p class="val" id="burdenRate">33.3%</p>
+    </div>
+    <div class="stat">
+      <p class="lbl">Cost above the wage</p>
+      <p class="val" id="above">$17,332.00</p>
+    </div>
+  </div>
+
+  <div class="grid3">
+    <div class="stat">
+      <p class="lbl">True hourly cost</p>
+      <p class="val" id="hourly">$33.33</p>
+    </div>
+    <div class="stat">
+      <p class="lbl">Total monthly cost</p>
+      <p class="val" id="monthly">$5,777.67</p>
+    </div>
+    <div class="stat">
+      <p class="lbl">Same work as a contractor</p>
+      <p class="val" id="contractor">$67,600</p>
+    </div>
+  </div>
+
+  <h2>Cost breakdown</h2>
+  <table>
+    <caption class="vh">Full loaded cost of an employee broken into wage, employer taxes and benefits</caption>
+    <thead><tr><th>Component</th><th class="num">Annual</th><th class="num">Per hour</th><th class="num">% of total</th></tr></thead>
+    <tbody id="breakdown">
+      <tr class="ss2"><td>Base wage</td><td class="num" id="d-wage">$52,000.00</td><td class="num" id="h-wage">$25.00</td><td class="num" id="p-wage">75.0%</td></tr>
+      <tr class="ss2"><td>Social Security (6.2%, up to $184,500)</td><td class="num" id="d-ss">$3,224.00</td><td class="num" id="h-ss">$1.55</td><td class="num" id="p-ss">4.7%</td></tr>
+      <tr class="ss2"><td>Medicare (1.45%, no cap)</td><td class="num" id="d-mc">$754.00</td><td class="num" id="h-mc">$0.36</td><td class="num" id="p-mc">1.1%</td></tr>
+      <tr class="ss2"><td>Federal unemployment (0.6%, first $7,000)</td><td class="num" id="d-fu">$42.00</td><td class="num" id="h-fu">$0.02</td><td class="num" id="p-fu">0.1%</td></tr>
+      <tr class="ss2"><td>State unemployment</td><td class="num" id="d-su">$1,248.00</td><td class="num" id="h-su">$0.60</td><td class="num" id="p-su">1.8%</td></tr>
+      <tr class="ss2"><td>Workers compensation</td><td class="num" id="d-wc">$624.00</td><td class="num" id="h-wc">$0.30</td><td class="num" id="p-wc">0.9%</td></tr>
+      <tr class="ss2"><td>Health insurance</td><td class="num" id="d-hc">$4,680.00</td><td class="num" id="h-hc">$2.25</td><td class="num" id="p-hc">6.8%</td></tr>
+      <tr class="ss2"><td>Retirement match</td><td class="num" id="d-rt">$2,080.00</td><td class="num" id="h-rt">$1.00</td><td class="num" id="p-rt">3.0%</td></tr>
+      <tr class="ss2"><td>Paid time off</td><td class="num" id="d-pt">$3,640.00</td><td class="num" id="h-pt">$1.75</td><td class="num" id="p-pt">5.3%</td></tr>
+      <tr class="ss2"><td>Equipment and other</td><td class="num" id="d-eq">$1,040.00</td><td class="num" id="h-eq">$0.50</td><td class="num" id="p-eq">1.5%</td></tr>
+    </tbody>
+    <tfoot>
+      <tr class="total">
+        <td>Total loaded cost</td>
+        <td class="num" id="t-total">$69,332.00</td>
+        <td class="num" id="t-hourly">$33.33</td>
+        <td class="num">100%</td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <p class="src">2026 federal rates per IRS Publication 15: Social Security 6.2% on wages up to the $184,500 wage base, Medicare 1.45% with no cap, FUTA 0.6% on the first $7,000 after the standard 5.4% state credit. State unemployment and workers compensation rates vary by state and trade.</p>
+
+  <div class="insight" id="insight" role="status"></div>
+</div>
+
+<h2>What payroll burden actually includes</h2>
+<p>Payroll burden is every cost of employment beyond the wage itself. Two categories are legally required and cannot be avoided: employer payroll taxes and, in most states, workers compensation insurance. The rest is your own choices about benefits and time off. Understanding which is which matters when costs need to come down.</p>
+
+<table>
+  <thead><tr><th>Category</th><th>Components</th><th>Can it be reduced?</th></tr></thead>
+  <tbody>
+    <tr><td>Required taxes</td><td>Social Security 6.2%, Medicare 1.45%, FUTA 0.6%, state unemployment</td><td>No. These follow from having an employee.</td></tr>
+    <tr><td>Required insurance</td><td>Workers compensation, state-mandated where applicable</td><td>Only by changing trade classification or state, both rarely practical.</td></tr>
+    <tr><td>Optional benefits</td><td>Health premiums, retirement match, life and disability</td><td>Yes. This is where most flexibility exists.</td></tr>
+    <tr><td>Time and equipment</td><td>Paid vacation and sick leave, laptop, phone, tools, mileage</td><td>Yes, but reducing paid leave affects retention and morale.</td></tr>
+  </tbody>
+</table>
+
+<h2>Employee versus contractor</h2>
+<p>Many business owners compare hiring an employee against hiring a contractor and conclude the contractor is cheaper. On the invoice it usually is. Once payroll taxes, insurance, benefits and equipment are counted, the gap typically closes to 30 to 40 percent of the wage, which is substantial.</p>
+<p>The calculator shows the annualised contractor figure as a common alternative, assuming a contractor bill rate about 30 percent above the equivalent wage to cover their own taxes, insurance, and profit. The comparison is not always straightforward: a contractor still has to be paid while you wait to invoice, gives you less control over scheduling, and creates worker classification risk if the working relationship looks employee-like in practice.</p>
+
+<h2>Common questions</h2>
+
+<details>
+  <summary>What is payroll burden?</summary>
+  <p>Payroll burden is the total cost of an employee beyond their gross wage: employer payroll taxes, unemployment taxes, workers compensation insurance, benefits, paid time off, and equipment. It is usually expressed as a percentage of the wage, called the burden rate. A burden rate of 25 to 35 percent is typical for a US small business hiring an employee rather than a contractor, so a $52,000 wage typically costs somewhere between $65,000 and $70,000 in total.</p>
+</details>
+
+<details>
+  <summary>What percentage of salary does an employer pay on top of the wage?</summary>
+  <p>Employer FICA alone adds 7.65 percent: 6.2 percent Social Security on wages up to the 2026 wage base of $184,500, and 1.45 percent Medicare on all wages with no cap. Federal unemployment adds 0.6 percent on the first $7,000 per employee after the standard state credit. State unemployment varies by state and your own claims history. Workers compensation and benefits then push the total burden rate into the 25 to 35 percent range for most small employers.</p>
+</details>
+
+<details>
+  <summary>What is the difference between an employee and a contractor for payroll taxes?</summary>
+  <p>An employee requires you to withhold income tax and the employee share of FICA, match the FICA employer share, pay federal and state unemployment taxes, and provide workers compensation and benefits, typically 25 to 35 percent on top of the wage. A contractor handles their own taxes, so the cost is close to the invoice amount. The gap is often 30 to 40 percent of the wage, which is why misclassifying a worker as a contractor creates substantial back-tax liability.</p>
+</details>
+
+<details>
+  <summary>Is payroll burden deductible?</summary>
+  <p>Generally yes. Employer payroll taxes, workers compensation premiums, and the employer portion of health and retirement contributions are deductible business expenses. Note that deduction does not reduce the cash cost, so budget on the gross figure and treat the deduction as a tax benefit that arrives later.</p>
+</details>
+
+<details>
+  <summary>What counts as a benefit in a payroll burden calculation?</summary>
+  <p>Common benefit costs measured against annual wages include employer-paid health insurance premiums, employer retirement contributions such as a 401k match, paid vacation and sick time, and equipment allowances such as a laptop or phone. The usual method is to total the annual cost of each benefit, divide by the annual wage, and express it as a percentage. Common targets are 8 to 12 percent for health, 3 to 6 percent for retirement, and 5 to 10 percent for paid time off.</p>
+</details>
+
+<details>
+  <summary>Does the Social Security wage cap affect hiring decisions?</summary>
+  <p>It can. Employer Social Security tax stops at $184,500 in 2026 for each employee, but Medicare continues with no cap at all. Above that wage level the employer tax rate falls from 7.65 percent to 1.45 percent, so higher earners are noticeably cheaper in tax terms than the 7.65 percent baseline suggests. For most small businesses this matters only for senior or highly skilled roles.</p>
+</details>
+
+<div class="ad-slot" id="ad-slot-bottom" aria-hidden="true">Advertisement slot · bottom</div>
+
+<h2>Related tools</h2>
+<div class="related">
+  <a href="https://example.com/gross-vs-net-profit-calculator.html">Gross vs Net Profit</a>
+  <a href="https://example.com/break-even-calculator.html">Break-Even Calculator</a>
+  <a href="https://example.com/profit-margin-by-industry.html">Profit Margin by Industry</a>
+  <a href="https://example.com/tools.html">All calculators</a>
+</div>
+
+<div class="disc"><strong>Disclaimer.</strong> This calculator is for informational and educational purposes only. Results are estimates based on the figures you enter and do not constitute tax, accounting, legal, or financial advice. Tax rates, wage bases, and insurance requirements change; verify current figures with the IRS, your state revenue department, and your insurance carrier before making employment decisions.</div>
+
+<footer>
+  <a href="https://example.com/">Home</a>
+  <a href="https://example.com/about.html">About</a>
+  <a href="https://example.com/contact.html">Contact</a>
+  <a href="https://example.com/privacy.html">Privacy Policy</a>
+  <a href="https://example.com/disclaimer.html">Disclaimer</a>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  // 2026 联邦税率常数（来源：IRS Publication 15）
+  var SS_RATE = 0.062;
+  var SS_WAGE_BASE = 184500;
+  var MC_RATE = 0.0145;
+  var FUTA_RATE = 0.006;
+  var FUTA_WAGE_BASE = 7000;
+  var CONTRACTOR_MARKUP = 0.30;
+
+  function v(id){
+    var x = parseFloat(document.getElementById(id).value);
+    return (isFinite(x) && x >= 0) ? x : 0;
+  }
+  function money(n){
+    return '$' + n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  }
+  function money0(n){
+    return '$' + Math.round(n).toLocaleString('en-US');
+  }
+  function pct(n){
+    return (isFinite(n)?n:0).toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1}) + '%';
+  }
+  function setT(id, val){
+    var el = document.getElementById(id);
+    if (el) el.textContent = val;
+  }
+
+  function update(){
+    var wage = v('wage');
+    var hours = v('hours');
+    var weeks = v('weeks');
+    var sutaPct = v('suta') / 100;
+    var wcPct = v('wc') / 100;
+    var healthPct = v('health') / 100;
+    var retirePct = v('retire') / 100;
+    var ptoPct = v('pto') / 100;
+    var equipPct = v('equip') / 100;
+
+    var annualHours = hours * weeks;
+    var hourlyCost = annualHours > 0 ? wage / annualHours : 0;
+
+    // 雇主税
+    var ss = Math.min(wage, SS_WAGE_BASE) * SS_RATE;
+    var mc = wage * MC_RATE;
+    var fu = Math.min(wage, FUTA_WAGE_BASE) * FUTA_RATE;
+    var su = wage * sutaPct;
+    var wc = wage * wcPct;
+
+    // 福利
+    var hc = wage * healthPct;
+    var rt = wage * retirePct;
+    var pt = wage * ptoPct;
+    var eq = wage * equipPct;
+
+    var taxes = ss + mc + fu + su + wc;
+    var benefits = hc + rt + pt + eq;
+    var total = wage + taxes + benefits;
+    var above = total - wage;
+    var burdenRate = wage > 0 ? (above / wage) * 100 : 0;
+    var contractor = wage * (1 + CONTRACTOR_MARKUP);
+
+    setT('total', money(total));
+    setT('burdenRate', pct(burdenRate));
+    setT('above', money(above));
+    setT('hourly', hourlyCost > 0 ? money(total / annualHours) : '—');
+    setT('monthly', money(total / 12));
+    setT('contractor', money0(contractor));
+
+    var tHourly = annualHours > 0 ? total / annualHours : 0;
+    setT('t-total', money(total));
+    setT('t-hourly', tHourly > 0 ? money(tHourly) : '—');
+
+    var rows = [
+      ['wage', wage], ['ss', ss], ['mc', mc], ['fu', fu], ['su', su],
+      ['wc', wc], ['hc', hc], ['rt', rt], ['pt', pt], ['eq', eq]
+    ];
+    for (var i = 0; i < rows.length; i++){
+      var k = rows[i][0], amt = rows[i][1];
+      var hh = annualHours > 0 ? amt / annualHours : 0;
+      setT('d-' + k, money(amt));
+      setT('h-' + k, hh > 0 ? money(hh) : '—');
+      setT('p-' + k, total > 0 ? pct(amt / total * 100) : '0.0%');
+    }
+
+    // 结论
+    var msg;
+    if (wage <= 0){
+      msg = 'Enter an annual wage above to see the full loaded cost.';
+    } else if (burdenRate < 20){
+      msg = 'A burden rate of ' + pct(burdenRate) + ' is below the typical range of 25% to 35%. Check that state unemployment, workers compensation, and benefits are actually included, because a figure this low usually means something is missing rather than the costs being genuinely low.';
+    } else if (burdenRate <= 35){
+      msg = 'A burden rate of ' + pct(burdenRate) + ' sits in the normal range for a US small business. Hiring this employee costs ' +
+            money(above) + ' more than their wage, a total of ' + money(total) + '. Required taxes alone account for ' +
+            money(taxes) + ', which no amount of planning can avoid.';
+    } else if (burdenRate <= 45){
+      msg = 'A burden rate of ' + pct(burdenRate) + ' is above the typical range, driven by benefits totalling ' +
+            money(benefits) + ' per year. This is not necessarily wrong, particularly where skilled staff need competitive packages, but it is worth confirming each benefit line matches what you actually intend to provide.';
+    } else {
+      msg = 'A burden rate of ' + pct(burdenRate) + ' is well above typical. Benefits of ' + money(benefits) +
+            ' per year are the main driver. Worth reviewing each line individually, since a few generous benefit items can quietly add tens of thousands of dollars annually to a single hire.';
+    }
+
+    if (wage > 0 && burdenRate >= 20){
+      var diff = contractor - total;
+      msg += ' The same work done as a contractor would bill roughly ' + money0(contractor) +
+             ', which is ' + (diff > 0 ? money0(diff) + ' less' : money0(-diff) + ' more') + '.';
+    }
+    document.getElementById('insight').textContent = msg;
+  }
+
+  ['wage','hours','weeks','suta','wc','health','retire','pto','equip'].forEach(function(id){
+    document.getElementById(id).addEventListener('input', update);
+  });
+  update();
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cash Runway Calculator — How Many Months Can You Survive</title>
+<meta name="description" content="Free cash runway calculator. Find how many months your current cash covers at your burn rate, when you run out, and how to extend your runway. Includes revenue-aware and B2B-style views.">
+<link rel="canonical" href="https://example.com/cash-runway-calculator.html">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Cash Runway Calculator",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any",
+  "url": "https://example.com/cash-runway-calculator.html",
+  "description": "Calculate cash runway in months from starting cash, monthly revenue, operating expenses, one-off costs and expected monthly growth.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is cash runway?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cash runway is the number of months a business can operate before its cash runs out, calculated by dividing current cash by the monthly net burn, which is total monthly outflow minus monthly revenue. Runway matters more than profit because a profitable business on paper can still fail if cash arrives late from customers or bills fall due sooner than revenue. A runway under six months is generally treated as a warning sign."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is 6 months of runway enough?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Six months is a common minimum for a stable business with predictable revenue, and it is roughly the threshold at which most lenders and investors feel comfortable. Businesses with volatile revenue, customer concentration risk, or seasonal swings generally want nine to twelve months. The strongest reason to hold more runway is that most business disruptions are temporary, and having buffer means you can wait them out instead of making permanent decisions such as cancelling insurance or losing key staff during a slow quarter."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does profit not equal cash?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Profit is an accounting measure based on revenue earned and expenses incurred, while cash reflects when money actually moves. Two common causes make them diverge. First, timing: you record revenue on the invoice date but collect 30 to 60 days later, or you pay bills immediately while revenue is still outstanding. Second, non-cash and capital items: depreciation reduces profit without reducing cash, while equipment purchases and loan principal reduce cash without reducing profit. For a small business, timing differences are usually the larger factor."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I increase cash runway?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Four levers matter. Raise prices, which improves both margin and runway at once. Reduce fixed costs such as rent and subscriptions, which improves margin and slows burn simultaneously. Accelerate collections by requesting deposits, shortening invoice terms, or offering early payment discounts, which pulls cash forward without changing profit. And slow growth spending on marketing and equipment until revenue recovers. Increasing revenue works too, but only if the new revenue arrives with margin rather than requiring more spend first."
+      }
+    }
+  ]
+}
+</script>
+<style>
+  *{box-sizing:border-box;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       background:#fff;color:#1c1c1a;line-height:1.65;margin:0;padding:0 16px 64px;}
+  .wrap{max-width:860px;margin:0 auto;}
+  h1{font-size:28px;font-weight:600;letter-spacing:-0.02em;margin:32px 0 8px;line-height:1.25;}
+  h2{font-size:20px;font-weight:600;margin:36px 0 12px;}
+  h3{font-size:16px;font-weight:600;margin:0 0 10px;}
+  .sub{color:#6b6a64;font-size:15px;margin:0 0 20px;}
+  .panel{background:#faf9f7;border:1px solid #e5e3dc;border-radius:10px;padding:20px;margin:0 0 18px;}
+  .panel h3:not(:first-child){margin-top:22px;}
+  .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;}
+  .field{margin:0 0 14px;}
+  label{display:block;font-weight:500;font-size:14px;margin-bottom:6px;}
+  .hint{display:block;font-weight:400;color:#6b6a64;font-size:13px;margin-top:2px;}
+  input[type=number]{width:100%;padding:10px 12px;border:1px solid #c9c7bf;border-radius:8px;
+       font-size:16px;background:#fff;color:inherit;}
+  input:focus{outline:2px solid #185fa5;outline-offset:1px;border-color:#185fa5;}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:0 0 18px;}
+  .stat{background:#faf9f7;border:1px solid #e5e3dc;border-radius:10px;padding:14px;}
+  .stat .lbl{font-size:12px;color:#6b6a64;margin:0 0 4px;}
+  .stat .val{font-size:24px;font-weight:600;margin:0;letter-spacing:-0.01em;}
+  .stat.hl{background:#e1f5ee;border-color:#9fe1cb;}
+  .stat.hl .val{color:#0f6e56;}
+  .stat.warn{background:#faeeda;border-color:#fac775;}
+  .stat.warn .val{color:#854f0b;}
+  .stat.bad{background:#fcebeb;border-color:#f7c1c1;}
+  .stat.bad .val{color:#a32d2d;}
+  table{width:100%;border-collapse:collapse;margin:0 0 18px;font-size:14px;}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid #e5e3dc;}
+  th{background:#faf9f7;font-weight:600;font-size:13px;}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;}
+  details{border:1px solid #e5e3dc;border-radius:8px;padding:12px 14px;margin-bottom:10px;background:#faf9f7;}
+  summary{font-weight:500;cursor:pointer;font-size:15px;}
+  details p{margin:10px 0 0;font-size:14px;}
+  .ad-slot{background:#f1efe8;border:1px dashed #c9c7bf;border-radius:8px;min-height:90px;
+           display:flex;align-items:center;justify-content:center;color:#888780;font-size:12px;margin:20px 0;}
+  .insight{background:#faf9f7;border:1px solid #e5e3dc;border-radius:8px;padding:14px 16px;font-size:14px;margin:0 0 20px;}
+  .disc{background:#faf9f7;border:1px solid #e5e3dc;border-radius:8px;padding:14px 16px;font-size:13px;color:#6b6a64;margin:0 0 24px;}
+  .related{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 24px;}
+  .related a{display:inline-block;padding:8px 12px;border:1px solid #c9c7bf;border-radius:8px;text-decoration:none;color:#185fa5;font-size:14px;}
+  .related a:hover{background:#e6f1fb;}
+  header{border-bottom:1px solid #e5e3dc;padding:14px 0;}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .brand{font-weight:600;font-size:17px;text-decoration:none;color:#1c1c1a;}
+  .brandnav{display:flex;gap:18px;}
+  .brandnav a{font-size:14px;color:#6b6a64;text-decoration:none;}
+  footer{border-top:1px solid #e5e3dc;margin-top:32px;padding-top:16px;font-size:13px;color:#6b6a64;}
+  footer a{color:#6b6a64;margin-right:14px;}
+  .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);}
+</style>
+</head>
+<body>
+
+<header><div class="wrap">
+  <a class="brand" href="https://example.com/">Small Profit Tools</a>
+  <nav class="brandnav">
+    <a href="https://example.com/tools.html">All tools</a>
+    <a href="https://example.com/about.html">About</a>
+  </nav>
+</div></header>
+
+<div class="wrap">
+
+<h1>Cash Runway Calculator</h1>
+<p class="sub">How many months can you operate before the cash runs out — and what happens if revenue changes.</p>
+
+<div class="ad-slot" id="ad-slot-top" aria-hidden="true">Advertisement slot · top</div>
+
+<div class="panel">
+  <h3>Position today</h3>
+  <div class="row">
+    <div class="field">
+      <label for="cash">Cash in the bank <span class="hint">Available balance, excluding committed funds</span></label>
+      <input type="number" id="cash" value="85000" step="100" min="0" inputmode="decimal">
+    </div>
+    <div class="field">
+      <label for="revenue">Monthly revenue <span class="hint">Average received, not invoiced</span></label>
+      <input type="number" id="revenue" value="22000" step="100" min="0" inputmode="decimal">
+    </div>
+    <div class="field">
+      <label for="expenses">Monthly cash expenses <span class="hint">Rent, payroll, software, marketing — actual cash out</span></label>
+      <input type="number" id="expenses" value="28000" step="100" min="0" inputmode="decimal">
+    </div>
+  </div>
+
+  <h3>One-off costs coming up</h3>
+  <p class="hint" style="margin:-4px 0 14px;">Equipment, taxes, legal, deposits. These reduce cash immediately.</p>
+  <div class="row">
+    <div class="field">
+      <label for="oneoff">One-off costs in the next 12 months</label>
+      <input type="number" id="oneoff" value="15000" step="100" min="0" inputmode="decimal">
+    </div>
+  </div>
+
+  <h3>What might change</h3>
+  <p class="hint" style="margin:-4px 0 14px;">Optional. Use these to test a decision before you make it.</p>
+  <div class="row">
+    <div class="field">
+      <label for="growth">Expected monthly revenue growth <span class="hint">% per month. Use negative for a decline</span></label>
+      <input type="number" id="growth" value="3" step="0.5" inputmode="decimal">
+    </div>
+    <div class="field">
+      <label for="save">Planned monthly savings <span class="hint">Cash you will set aside each month</span></label>
+      <input type="number" id="save" value="0" step="50" min="0" inputmode="decimal">
+    </div>
+  </div>
+</div>
+
+<div id="results" aria-live="polite">
+  <div class="grid3">
+    <div class="stat" id="runCard">
+      <p class="lbl">Cash runway</p>
+      <p class="val" id="runway">11.7 months</p>
+    </div>
+    <div class="stat">
+      <p class="lbl">Monthly net burn</p>
+      <p class="val" id="burn">$6,000.00</p>
+    </div>
+    <div class="stat">
+      <p class="lbl">Cash runs out around</p>
+      <p class="val" id="enddate">October 2027</p>
+    </div>
+  </div>
+
+  <div class="grid3">
+    <div class="stat">
+      <p class="lbl">Break-even monthly revenue</p>
+      <p class="val" id="beRev">$28,000.00</p>
+    </div>
+    <div class="stat">
+      <p class="lbl">Cash left after one-off costs</p>
+      <p class="val" id="afterOneoff">$70,000.00</p>
+    </div>
+    <div class="stat">
+      <p class="lbl">Gap to 6 months of buffer</p>
+      <p class="val" id="gap6">+$34,000</p>
+    </div>
+  </div>
+
+  <h2>Month by month</h2>
+  <table>
+    <caption class="vh">Projected cash balance by month based on current inputs</caption>
+    <thead><tr><th>Month</th><th class="num">Revenue</th><th class="num">Expenses</th><th class="num">Net</th><th class="num">Cash at month end</th></tr></thead>
+    <tbody id="proj"></tbody>
+  </table>
+
+  <div class="insight" id="insight" role="status"></div>
+</div>
+
+<h2>Why cash runway matters more than profit</h2>
+<p>A business can report a profit and still fail. Profit is an accounting measure based on revenue earned and expenses incurred. Cash is what actually moves. The two diverge for two main reasons, and for a small business the first dominates.</p>
+<p><strong>Timing.</strong> You record revenue when you invoice, but the money arrives 30 to 60 days later. Meanwhile rent, payroll, and suppliers are paid immediately. A business with strong reported profit and slow collection from customers can run out of cash while looking healthy on paper.</p>
+<p><strong>Structure.</strong> Depreciation reduces profit without reducing cash. Equipment purchases and loan principal reduce cash without reducing profit. These matter less often but can be large.</p>
+<p>Runway is the buffer that absorbs both. Most business disruptions are temporary — a slow quarter, a late payment, a season that underdelivers. Enough runway means you wait it out. Not enough means you make permanent decisions under pressure: cancelling insurance, losing key staff, or accepting unfavorable terms.</p>
+
+<h2>How much runway is enough</h2>
+<table>
+  <thead><tr><th>Runway</th><th>What it usually signals</th></tr></thead>
+  <tbody>
+    <tr><td>Under 3 months</td><td>Critical. One delayed invoice or slow month creates a crisis.</td></tr>
+    <tr><td>3 to 6 months</td><td>Tight. Manageable with discipline, but any real setback forces action.</td></tr>
+    <tr><td>6 to 9 months</td><td>Acceptable for a stable business with predictable revenue.</td></tr>
+    <tr><td>9 to 12 months</td><td>Comfortable. The range most advisers and lenders look for.</td></tr>
+    <tr><td>Above 12 months</td><td>Very strong, or more cash than the current plan needs. Consider deploying it.</td></tr>
+  </tbody>
+</table>
+<p>Volatile revenue, dependence on one large customer, or seasonal swings each argue for holding more. Predictable recurring revenue on diversified customers supports holding less.</p>
+
+<h2>Four ways to extend runway</h2>
+<ol style="padding-left:22px;">
+  <li style="margin-bottom:10px;"><strong>Raise prices.</strong>Improves margin and runway simultaneously, because the extra dollar of price carries almost no extra cost. This is usually the fastest lever available.</li>
+  <li style="margin-bottom:10px;"><strong>Cut fixed costs.</strong>Rent, subscriptions, and software. Improves margin and slows burn at the same time, though cutting too deeply can damage delivery and retention.</li>
+  <li style="margin-bottom:10px;"><strong>Pull cash forward.</strong>Request deposits, shorten invoice terms, offer early payment discounts. This does not change profit at all but converts future cash into present cash, which is the most useful thing you can do when runway is short.</li>
+  <li style="margin-bottom:10px;"><strong>Pause growth spending.</strong>Marketing and equipment can be deferred. Be careful with marketing specifically: cutting it entirely reduces the revenue you need to recover.</li>
+</ol>
+<p>Use the growth and savings inputs above to test any of these before committing. Change one number at a time and compare the resulting runway.</p>
+
+<h2>Common questions</h2>
+
+<details>
+  <summary>What is cash runway?</summary>
+  <p>Cash runway is the number of months a business can operate before its cash runs out, calculated by dividing current cash by the monthly net burn, which is total monthly outflow minus monthly revenue. Runway matters more than profit because a profitable business on paper can still fail if cash arrives late from customers or bills fall due before revenue lands. Under six months is generally treated as a warning sign.</p>
+</details>
+
+<details>
+  <summary>Is 6 months of runway enough?</summary>
+  <p>Six months is a common minimum for a stable business with predictable revenue, and roughly the threshold where most lenders and investors feel comfortable. Volatile revenue, customer concentration, or seasonal swings generally argue for nine to twelve months. The strongest reason to hold more is that most disruptions are temporary: buffer means you can wait out a slow quarter instead of making permanent decisions such as cancelling insurance or losing key staff.</p>
+</details>
+
+<details>
+  <summary>Why does profit not equal cash?</summary>
+  <p>Profit is an accounting measure of revenue earned and expenses incurred. Cash reflects when money actually moves. Two common causes make them diverge. Timing: you record revenue on the invoice date but collect 30 to 60 days later, or you pay bills immediately while revenue is still outstanding. Non-cash and capital items: depreciation reduces profit without reducing cash, while equipment purchases and loan principal reduce cash without reducing profit. For small businesses, timing differences are usually the larger factor.</p>
+</details>
+
+<details>
+  <summary>How do I increase cash runway?</summary>
+  <p>Four levers matter. Raise prices, which improves both margin and runway at once. Reduce fixed costs such as rent and subscriptions, which improves margin and slows burn together. Accelerate collections by requesting deposits, shortening invoice terms, or offering early payment discounts, which pulls cash forward without changing profit. And slow growth spending on marketing and equipment until revenue recovers. Increasing revenue also works, but only if the new revenue arrives with margin rather than requiring more spend first.</p>
+</details>
+
+<div class="ad-slot" id="ad-slot-bottom" aria-hidden="true">Advertisement slot · bottom</div>
+
+<h2>Related tools</h2>
+<div class="related">
+  <a href="https://example.com/gross-vs-net-profit-calculator.html">Gross vs Net Profit</a>
+  <a href="https://example.com/break-even-calculator.html">Break-Even Calculator</a>
+  <a href="https://example.com/profit-margin-by-industry.html">Profit Margin by Industry</a>
+  <a href="https://example.com/tools.html">All calculators</a>
+</div>
+
+<div class="disc"><strong>Disclaimer.</strong> This calculator is for informational and educational purposes only. Results are estimates based on the figures you enter and do not constitute tax, accounting, legal, or financial advice. Projections are arithmetic extrapolations and will not match real outcomes; verify assumptions with a qualified professional before making financing or hiring decisions.</div>
+
+<footer>
+  <a href="https://example.com/">Home</a>
+  <a href="https://example.com/about.html">About</a>
+  <a href="https://example.com/contact.html">Contact</a>
+  <a href="https://example.com/privacy.html">Privacy Policy</a>
+  <a href="https://example.com/disclaimer.html">Disclaimer</a>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var MONTHS = ['January','February','March','April','May','June',
+                'July','August','September','October','November','December'];
+  var BASE_YEAR = 2026, BASE_MONTH = 9; // 2026年10月（0-based）
+
+  function v(id){
+    var x = parseFloat(document.getElementById(id).value);
+    return isFinite(x) ? x : 0;
+  }
+  function money(n){
+    return '$' + n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  }
+  function money0(n){
+    return '$' + Math.round(n).toLocaleString('en-US');
+  }
+  function monthLabel(k){
+    var i = (BASE_MONTH + k) % 12;
+    var y = BASE_YEAR + Math.floor((BASE_MONTH + k) / 12);
+    return MONTHS[i] + ' ' + y;
+  }
+
+  function simulate(cash0, rev0, exp, oneoff, growthPct, save){
+    var rows = [];
+    var cash = cash0;
+    var rev = rev0;
+    var g = growthPct / 100;
+    var burnTotal = 0;
+    var burnMonths = 0;
+    var endIdx = -1;
+    var appliedOneoff = false;
+
+    for (var k = 0; k < 60; k++){
+      if (!appliedOneoff){
+        cash -= oneoff;
+        appliedOneoff = true;
+      }
+      var net = rev - exp;
+      cash -= net;
+      if (save > 0) cash -= save;
+      rev *= (1 + g);
+      var isLast = (cash <= 0) || (k === 59);
+      rows.push({m:k, rev:rev, exp:exp, net:net, cash:cash, end:isLast});
+      if (cash <= 0 && endIdx < 0) endIdx = k + 1;
+      if (net > 0){ burnMonths++; burnTotal += net; }
+      if (cash <= 0) break;
+    }
+    return {rows:rows, endIdx:endIdx, avgSurplus: burnMonths ? burnTotal / burnMonths : 0};
+  }
+
+  function update(){
+    var cash0 = Math.max(0, v('cash'));
+    var rev0 = Math.max(0, v('revenue'));
+    var exp = Math.max(0, v('expenses'));
+    var oneoff = Math.max(0, v('oneoff'));
+    var growth = v('growth');
+    var save = Math.max(0, v('save'));
+
+    var baseBurn = exp - rev0;                 // 首月净烧钱
+    var afterOneoff = Math.max(0, cash0 - oneoff);
+    var staticRunway = baseBurn > 0 ? afterOneoff / baseBurn : null;
+
+    document.getElementById('runway').textContent =
+      staticRunway === null ? 'No burn' : staticRunway.toFixed(1) + ' months';
+    document.getElementById('burn').textContent = money(baseBurn);
+    document.getElementById('beRev').textContent = money(exp);
+    document.getElementById('afterOneoff').textContent = money(afterOneoff);
+
+    var card = document.getElementById('runCard');
+    card.className = 'stat ' + (staticRunway === null ? ' hl'
+      : (staticRunway < 3 ? ' bad' : (staticRunway < 6 ? ' warn' : ' hl')));
+
+    var sim = simulate(cash0, rev0, exp, oneoff, growth, save);
+    var endIdx = sim.endIdx;
+
+    document.getElementById('enddate').textContent =
+      endIdx > 0 ? monthLabel(endIdx) : 'Beyond 5 years';
+
+    // 距6 个月缓冲的缺口（以扣除一次性支出后的可用现金为准）
+    var target = baseBurn > 0 ? baseBurn * 6 : 0;
+    var gap = afterOneoff - target;
+    document.getElementById('gap6').textContent =
+      baseBurn <= 0 ? '—' : (gap >= 0 ? '+' : '−') + '$' + Math.abs(Math.round(gap)).toLocaleString('en-US');
+
+    // 明细表
+    var body = document.getElementById('proj');
+    var html = '';
+    for (var i = 0; i < sim.rows.length && i < 24; i++){
+      var r = sim.rows[i];
+      var cashTxt = r.cash < 0
+        ? '<span style="color:#a32d2d;font-weight:500">$' + Math.round(r.cash).toLocaleString('en-US') + '</span>'
+        : money0(r.cash);
+      html += '<tr' + (i === 0 ? ' class="total"' : '') + '>' +
+        '<td>' + monthLabel(r.m) + '</td>' +
+        '<td class="num">' + money0(r.rev) + '</td>' +
+        '<td class="num">' + money0(r.exp) + '</td>' +
+        '<td class="num">' + (r.net >= 0 ? '+' : '−') + money0(Math.abs(r.net)) + '</td>' +
+        '<td class="num">' + cashTxt + '</td></tr>';
+      if (r.end) break;
+    }
+    body.innerHTML = html;
+
+    // 结论
+    var msg;
+    if (cash0 <= 0){
+      msg = 'Enter your available cash above to see your runway.';
+    } else if (baseBurn <= 0 && save <= 0){
+      msg = 'Revenue covers your monthly expenses, so you are not burning cash. Cash grows by ' +
+            money(rev0 - exp) + ' per month at current volume, and after your one-off costs you would hold ' +
+            money(afterOneoff) + '. If that surplus is not being used, it is worth deploying it into growth ' +
+            'or reserves rather than sitting idle.';
+    } else if (staticRunway !== null && staticRunway < 3){
+      msg = 'You have ' + staticRunway.toFixed(1) + ' months of cash at a burn of ' + money(baseBurn) +
+            ' per month. That is critical territory: a single delayed invoice or unexpected cost creates a crisis. ' +
+            'The fastest available levers are pulling cash forward by requesting deposits and shortening invoice terms, ' +
+            'and raising prices, which improves margin without adding cost.';
+    } else if (staticRunway !== null && staticRunway < 6){
+      msg = 'You have ' + staticRunway.toFixed(1) + ' months of runway, which is below the six months most advisers treat as a minimum. ' +
+            'This is workable if revenue is predictable and collections are reliable, but any setback forces immediate action. ' +
+            'A price increase of a few percent, or tightening payment terms, would move you into a safer band quickly.';
+    } else if (staticRunway !== null && staticRunway <= 12){
+      msg = 'You have ' + staticRunway.toFixed(1) + ' months of runway, which sits in the healthy range. ' +
+            'At this level you can wait out a slow quarter without making permanent decisions. ' +
+            'If your revenue is volatile or concentrated in a few customers, aim for the higher end of this range.';
+    } else {
+      msg = 'You have ' + staticRunway.toFixed(1) + ' months of runway, which is strong. ' +
+            'That buffer gives you room to invest in growth rather than defend against the next bad month. ' +
+            'Check whether the cash is committed to planned spending before treating it as available.';
+    }
+
+    if (growth !== 0){
+      var dir = growth > 0 ? 'growing' : 'declining';
+      if (endIdx > 0){
+        msg += ' With revenue ' + dir + ' at ' + Math.abs(growth) + '% per month, cash runs out in about ' +
+               endIdx + ' months (around ' + monthLabel(endIdx) + ').';
+      } else if (growth > 0){
+        msg += ' At ' + growth + '% monthly revenue growth you reach cash-flow positive, so the runway figure above is the worst case rather than a permanent state.';
+      }
+    }
+    document.getElementById('insight').textContent = msg;
+  }
+
+  ['cash','revenue','expenses','oneoff','growth','save'].forEach(function(id){
+    document.getElementById(id).addEventListener('input', update);
+  });
+  update();
+})();
+</script>
+
+</body>
+</html>
