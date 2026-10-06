@@ -86,12 +86,12 @@ def build(domain: str, outdir: pathlib.Path) -> int:
         else:
             shutil.copy(f, outdir / f.name)
         # 附带复制非 html 资源
-    for extra in ("robots.txt", "sitemap.xml", "_headers", "_redirects"):
-        p = SRC / extra
-        if p.exists():
-            shutil.copy(p, outdir / extra)
+    # 2. 复制 source/ 下的非 HTML 文件（验证文件、_headers 等）
+    # 自动发现，避免新增文件时忘记改代码
+    for extra in sorted(p for p in SRC.iterdir() if p.is_file() and p.suffix != ".html"):
+        shutil.copy(extra, outdir / extra.name)
 
-    # 2. sitemap：只列真实存在的页面
+    # 3. sitemap：只列真实存在的页面
     built = sorted(p.name for p in outdir.glob("*.html"))
     order = ["index.html"] + [n for n in built if n != "index.html"]
     urls = []
