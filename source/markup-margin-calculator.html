@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Markup vs Margin Calculator — Free Small Business Profit Tool</title>
+<meta name="description" content="Free markup vs margin calculator for small businesses. See the real profit on every sale, what markup means versus margin, and why a 40% markup is only a 29% margin.">
+<link rel="canonical" href="https://example.com/markup-margin-calculator.html">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Markup vs Margin Calculator",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any",
+  "url": "https://example.com/markup-margin-calculator.html",
+  "description": "Calculate gross profit, markup percentage and gross margin from cost and selling price. Includes batch pricing for multiple products.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Markup vs Margin Calculator",
+      "item": "https://example.com/markup-margin-calculator.html"
+    }]
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the difference between markup and margin?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Markup is calculated on cost: markup = (price - cost) / cost. Margin is calculated on revenue: margin = (price - cost) / price. The same product can have a 40% markup and only a 28.6% margin. Markup is what most people quote when setting prices; margin is what your financial statements and lenders actually care about."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I convert a markup to a margin?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Margin = markup / (1 + markup). So a 40% markup becomes 28.6% margin, and a 100% markup (doubling cost) becomes 50% margin. To go the other way: markup = margin / (1 - margin). A 30% target margin requires a 42.9% markup."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a good gross margin for a small business?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Healthy benchmarks vary sharply by industry. Resale and distribution typically run 10-25%. Foodservice and retail run 25-40%. Professional services and software run 60-85%. Construction trades typically run 15-30% gross but much higher net. Compare your numbers against your own industry, not the general average."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should I use markup or margin when pricing?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use markup when you are setting prices from your costs, because it is the intuitive number for most products. Use margin when you are checking whether a price is sustainable against a target, or when comparing your pricing to a competitor, because margin is what determines whether you can cover overhead. The calculator above shows both."
+      }
+    }
+  ]
+}
+</script>
+<style>
+  *{box-sizing:border-box;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:#ffffff;color:#1c1c1a;line-height:1.65;margin:0;
+    padding:0 16px 64px;
+  }
+  .wrap{max-width:840px;margin:0 auto;}
+  h1{font-size:28px;font-weight:600;letter-spacing:-0.02em;margin:32px 0 8px;line-height:1.25;}
+  h2{font-size:20px;font-weight:600;margin:36px 0 12px;}
+  .sub{color:#6b6a64;margin:0 0 20px;font-size:15px;}
+  .panel{background:#faf9f7;border:1px solid #e5e3dc;border-radius:10px;padding:20px;margin:0 0 20px;}
+  .field{margin:0 0 16px;}
+  label{display:block;font-weight:500;font-size:14px;margin-bottom:6px;}
+  .hint{display:block;font-weight:400;color:#6b6a64;font-size:13px;margin-top:2px;}
+  input[type=number],input[type=text]{
+    width:100%;padding:10px 12px;border:1px solid #c9c7bf;border-radius:8px;
+    font-size:16px;background:#fff;color:inherit;
+  }
+  input:focus{outline:2px solid #185fa5;outline-offset:1px;border-color:#185fa5;}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:640px){.row{grid-template-columns:1fr;}}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:0 0 20px;}
+  .stat{background:#faf9f7;border:1px solid #e5e3dc;border-radius:10px;padding:14px;}
+  .stat .lbl{font-size:12px;color:#6b6a64;margin:0 0 4px;}
+  .stat .val{font-size:24px;font-weight:600;margin:0;letter-spacing:-0.01em;}
+  .stat.hl{background:#e1f5ee;border-color:#9fe1cb;}
+  .stat.hl .val{color:#0f6e56;}
+  .stat.warn .val{color:#a32d2d;}
+  table{width:100%;border-collapse:collapse;margin:0 0 20px;font-size:14px;}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid #e5e3dc;}
+  th{background:#faf9f7;font-weight:600;font-size:13px;}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;}
+  details{border:1px solid #e5e3dc;border-radius:8px;padding:12px 14px;margin-bottom:10px;background:#faf9f7;}
+  summary{font-weight:500;cursor:pointer;font-size:15px;}
+  details p{margin:10px 0 0;font-size:14px;}
+  .ad-slot{
+    background:#f1efe8;border:1px dashed #c9c7bf;border-radius:8px;
+    min-height:90px;display:flex;align-items:center;justify-content:center;
+    color:#888780;font-size:12px;margin:20px 0;
+  }
+  .note{background:#e6f1fb;border-left:3px solid #185fa5;border-radius:0 8px 8px 0;padding:12px 16px;font-size:14px;margin:0 0 20px;}
+  .disc{background:#faf9f7;border:1px solid #e5e3dc;border-radius:8px;padding:14px 16px;font-size:13px;color:#6b6a64;margin:0 0 24px;}
+  .related{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 24px;}
+  .related a{
+    display:inline-block;padding:8px 12px;border:1px solid #c9c7bf;border-radius:8px;
+    text-decoration:none;color:#185fa5;font-size:14px;
+  }
+  .related a:hover{background:#e6f1fb;}
+  header{border-bottom:1px solid #e5e3dc;padding:14px 0;margin-bottom:8px;}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .brand{font-weight:600;font-size:17px;text-decoration:none;color:#1c1c1a;}
+  footer{border-top:1px solid #e5e3dc;margin-top:32px;padding-top:16px;font-size:13px;color:#6b6a64;}
+  footer a{color:#6b6a64;margin-right:14px;}
+  .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);}
+  .switch{margin:0 0 20px;font-size:14px;}
+</style>
+</head>
+<body>
+
+<header>
+<div class="wrap">
+  <a class="brand" href="https://example.com/">Small Profit Tools</a>
+  <nav>
+    <a href="https://example.com/tools.html" style="font-size:14px;color:#6b6a64;text-decoration:none;margin-right:16px;">All tools</a>
+    <a href="https://example.com/about.html" style="font-size:14px;color:#6b6a64;text-decoration:none;">About</a>
+  </nav>
+</div>
+</header>
+
+<div class="wrap">
+
+<h1>Markup vs Margin Calculator</h1>
+<p class="sub">Free calculator that shows both numbers side by side, plus what your profit actually is on every sale.</p>
+
+<div class="ad-slot" id="ad-slot-top" aria-hidden="true">Advertisement slot · top</div>
+
+<div class="panel">
+  <p class="switch"><label style="display:inline;margin:0;cursor:pointer;">
+    <input type="checkbox" id="batchToggle" style="width:auto;margin-right:8px;vertical-align:middle;">
+    Add a second product to compare
+  </label></p>
+
+  <h2 style="margin-top:0;font-size:17px;">Single product</h2>
+  <div class="row">
+    <div class="field">
+      <label for="cost1">Total cost per unit <span class="hint">Materials + labor + packaging, in USD</span></label>
+      <input type="number" id="cost1" value="25" step="0.01" min="0" inputmode="decimal">
+    </div>
+    <div class="field">
+      <label for="price1">Selling price <span class="hint">What the customer actually pays</span></label>
+      <input type="number" id="price1" value="65" step="0.01" min="0" inputmode="decimal">
+    </div>
+  </div>
+
+  <div id="batchWrap" style="display:none;">
+    <hr style="border:none;border-top:1px solid #e5e3dc;margin:20px 0;">
+    <h2 style="font-size:17px;margin-top:0;">Second product</h2>
+    <div class="row">
+      <div class="field">
+        <label for="cost2">Total cost per unit</label>
+        <input type="number" id="cost2" value="40" step="0.01" min="0" inputmode="decimal">
+      </div>
+      <div class="field">
+        <label for="price2">Selling price</label>
+        <input type="number" id="price2" value="90" step="0.01" min="0" inputmode="decimal">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="out1" aria-live="polite">
+  <div class="grid3">
+    <div class="stat hl">
+      <p class="lbl">Gross profit per unit</p>
+      <p class="val" id="profit">$40.00</p>
+    </div>
+    <div class="stat">
+      <p class="lbl">Gross margin</p>
+      <p class="val" id="margin">61.5%</p>
+    </div>
+    <div class="stat">
+      <p class="lbl">Markup on cost</p>
+      <p class="val" id="markup">160.0%</p>
+    </div>
+  </div>
+
+  <table>
+    <caption class="vh">Breakdown for the single product</caption>
+    <thead><tr><th>Line</th><th class="num">Amount</th><th>As % of price</th></tr></thead>
+    <tbody id="table1">
+      <tr><td>Revenue</td><td class="num" id="t-price">$65.00</td><td>100.0%</td></tr>
+      <tr><td>Cost of goods</td><td class="num" id="t-cost">−$25.00</td><td>38.5%</td></tr>
+      <tr><td><strong>Gross profit</strong></td><td class="num" id="t-profit"><strong>$40.00</strong></td><td><strong id="t-margin">61.5%</strong></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="out2" style="display:none;">
+  <h2>Side by side</h2>
+  <table>
+    <thead><tr><th>Metric</th><th class="num">Product 1</th><th class="num">Product 2</th></tr></thead>
+    <tbody>
+      <tr><td>Cost</td><td class="num" id="c1">$25.00</td><td class="num" id="c2">$40.00</td></tr>
+      <tr><td>Price</td><td class="num" id="p1">$65.00</td><td class="num" id="p2">$90.00</td></tr>
+      <tr><td><strong>Gross profit</strong></td><td class="num" id="gp1"><strong>$40.00</strong></td><td class="num" id="gp2"><strong>$50.00</strong></td></tr>
+      <tr><td>Gross margin</td><td class="num" id="gm1">61.5%</td><td class="num" id="gm2">55.6%</td></tr>
+      <tr><td>Markup</td><td class="num" id="mk1">160.0%</td><td class="num" id="mk2">125.0%</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="note" id="insight" role="status"></div>
+
+<h2>Why markup and margin are not the same number</h2>
+<p>Both describe the same profit, but they measure it against different things. Markup divides by your cost. Margin divides by your selling price. Because the denominators differ, the two numbers always diverge, and the gap grows as your margin rises.</p>
+<p>A 40% markup sounds healthy. It is actually a 28.6% margin, because you are measuring the profit against the larger number. This is the single most common pricing mistake small businesses make: they quote a healthy-sounding markup and then discover their real margin cannot cover overhead.</p>
+
+<table>
+  <thead><tr><th>Markup on cost</th><th class="num">Gross margin</th><th>What it means</th></tr></thead>
+  <tbody>
+    <tr><td>25%</td><td class="num">20.0%</td><td>Very thin, rarely sustainable</td></tr>
+    <tr><td>40%</td><td class="num">28.6%</td><td>Common retail baseline</td></tr>
+    <tr><td>50%</td><td class="num">33.3%</td><td>Healthy distribution business</td></tr>
+    <tr><td>100%</td><td class="num">50.0%</td><td>Doubling cost, standard in services</td></tr>
+    <tr><td>200%</td><td class="num">66.7%</td><td>Strong services or software</td></tr>
+    <tr><td>300%</td><td class="num">75.0%</td><td>Very high, rare in goods resale</td></tr>
+  </tbody>
+</table>
+
+<p>To convert between them:</p>
+<ul>
+  <li>Markup to margin: <strong>margin = markup ÷ (1 + markup)</strong></li>
+  <li>Margin to markup: <strong>markup = margin ÷ (1 − margin)</strong></li>
+</ul>
+<p>So if you need a 30% gross margin to survive your overhead, you have to quote a 42.9% markup. That is the number most people forget to check before they raise a price.</p>
+
+<h2>Gross margin benchmarks by industry</h2>
+<p>Compare against your own sector, not against the average of all businesses. A 35% margin is strong for a distributor and weak for a contractor.</p>
+<table>
+  <thead><tr><th>Industry</th><th class="num">Typical gross margin</th><th>Note</th></tr></thead>
+  <tbody>
+    <tr><td>Software / SaaS</td><td class="num">70–85%</td><td>Low marginal cost per user</td></tr>
+    <tr><td>Professional services</td><td class="num">60–80%</td><td>Labor is the main cost</td></tr>
+    <tr><td>Agency / marketing</td><td class="num">50–70%</td><td>Watch contractor pass-through cost</td></tr>
+    <tr><td>Foodservice / restaurant</td><td class="num">25–40%</td><td>Rent and labor dominate</td></tr>
+    <tr><td>Construction trades</td><td class="num">15–30%</td><td>Gross looks low, net often healthy</td></tr>
+    <tr><td>Retail</td><td class="num">25–45%</td><td>Occupancy is the main rent</td></tr>
+    <tr><td>Wholesale / distribution</td><td class="num">10–25%</td><td>Volume business, thin per unit</td></tr>
+  </tbody>
+</table>
+
+<h2>Common questions</h2>
+
+<details>
+  <summary>What is the difference between markup and margin?</summary>
+  <p>Markup is calculated on your cost: markup = (price − cost) ÷ cost. Margin is calculated on your revenue: margin = (price − cost) ÷ price. The same product can carry a 40% markup and only a 28.6% margin. Markup is the number most people use when quoting a price. Margin is the number your financial statements, lenders, and buyers actually evaluate.</p>
+</details>
+
+<details>
+  <summary>How do I convert a markup into a margin?</summary>
+  <p>Divide the markup by one plus the markup. A 40% markup becomes 28.6%, a 100% markup becomes 50%, a 200% markup becomes 66.7%. Going the other way, divide the target margin by one minus the margin: a 30% target margin needs a 42.9% markup.</p>
+</details>
+
+<details>
+  <summary>Should I price by markup or by margin?</summary>
+  <p>Use markup when you set prices from cost, because it is intuitive for most products and services. Use margin when you are testing whether a price survives your overhead, or when you are comparing yourself to a competitor, because margin decides whether a sale is profitable at all. In practice you need both: markup to set the price, margin to check whether that price is safe.</p>
+</details>
+
+<details>
+  <summary>Does a higher markup always mean a better business?</summary>
+  <p>No. A high markup on a slow-moving product can produce less total profit than a modest markup on something you sell ten times as often. Gross margin tells you about the health of a single sale. Turnover and volume determine whether that health becomes an actual income.</p>
+</details>
+
+<details>
+  <summary>What counts as cost of goods for a service business?</summary>
+  <p>Include the direct cost of delivering the work: contractor labor you pay for, materials, subcontractor invoices, cloud and software you use per project, and travel specific to a job. Do not include rent, salaries of permanent staff, or general admin, because those belong in operating expenses. Mixing the two is what makes service businesses misjudge their margins.</p>
+</details>
+
+<details>
+  <summary>Should gross margin include shipping and packaging?</summary>
+  <p>It depends on how you report. Many small businesses put packaging into cost of goods and shipping into operating expenses. Others fold both into cost of goods. Pick one method, apply it consistently, and write it down, because mixing the two makes your margins incomparable over time.</p>
+</details>
+
+<div class="ad-slot" id="ad-slot-bottom" aria-hidden="true">Advertisement slot · bottom</div>
+
+<h2>Related tools</h2>
+<div class="related">
+  <a href="https://example.com/tools.html">All calculators</a>
+</div>
+
+<div class="disc">
+  <strong>Disclaimer.</strong> This calculator is for informational and educational purposes only. Results are estimates based on the numbers you enter and do not constitute tax, legal, accounting, or financial advice. Verify all figures with a qualified professional before making business decisions.
+</div>
+
+<footer>
+  <a href="https://example.com/about.html">About</a>
+  <a href="https://example.com/contact.html">Contact</a>
+  <a href="https://example.com/privacy.html">Privacy Policy</a>
+  <a href="https://example.com/disclaimer.html">Disclaimer</a>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var F='$';
+  function num(id){
+    var v = parseFloat(document.getElementById(id).value);
+    return (isFinite(v) && v >= 0) ? v : 0;
+  }
+  function money(n){
+    return F + n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  }
+  function pct(n){
+    return (isFinite(n)?n:0).toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1}) + '%';
+  }
+  function calc(cost,price){
+    var profit = price - cost;
+    var margin = price > 0 ? (profit / price) * 100 : 0;
+    var markup = cost > 0 ? (profit / cost) * 100 : 0;
+    return {cost:cost,price:price,profit:profit,margin:margin,markup:markup};
+  }
+  function calcText(r){
+    if(r.price <= 0) return 'Enter a selling price above to see the breakdown.';
+    if(r.cost <= 0) return 'Enter your cost per unit. Margin and markup cannot be calculated from a zero cost.';
+    var lines = [];
+    lines.push('On a '+money(r.price)+' sale you keep '+money(r.profit)+' after cost.');
+    if(r.margin < 15){
+      lines.push('That is a '+pct(r.margin)+' gross margin, which is thin — most fixed costs will not be covered. Reaching a 30% margin would require a price near '+money(r.cost/0.7)+'.');
+    } else if(r.margin < 35){
+      lines.push('That is a '+pct(r.margin)+' gross margin. Workable for distribution or retail, but check it against the '+pct(20)+'–'+pct(30)+' range typical of those sectors.');
+    } else if(r.margin < 60){
+      lines.push('That is a '+pct(r.margin)+' gross margin, which sits in a healthy range for a service or specialty business.');
+    } else {
+      lines.push('That is a '+pct(r.margin)+' gross margin, which is high. That usually means a service or software model rather than goods resale.');
+    }
+    return lines.join(' ');
+  }
+
+  var el = {
+    cost1:document.getElementById('cost1'), price1:document.getElementById('price1'),
+    cost2:document.getElementById('cost2'), price2:document.getElementById('price2'),
+    profit:document.getElementById('profit'), margin:document.getElementById('margin'),
+    markup:document.getElementById('markup'),
+    tprice:document.getElementById('t-price'), tcost:document.getElementById('t-cost'),
+    tprofit:document.getElementById('t-profit'), tmargin:document.getElementById('t-margin'),
+    insight:document.getElementById('insight'),
+    batchWrap:document.getElementById('batchWrap'), out2:document.getElementById('out2'),
+    batchToggle:document.getElementById('batchToggle')
+  };
+
+  function update1(){
+    var r = calc(num('cost1'), num('price1'));
+    el.profit.textContent = money(r.profit);
+    el.margin.textContent = pct(r.margin);
+    el.markup.textContent = pct(r.markup);
+    el.tprice.textContent = money(r.price);
+    el.tcost.textContent = (r.cost>0?'−':'') + money(r.cost);
+    el.tprofit.textContent = money(r.profit);
+    el.tmargin.textContent = pct(r.margin);
+    el.insight.textContent = calcText(r);
+    return r;
+  }
+  function update2(){
+    var a = calc(num('cost1'), num('price1'));
+    var b = calc(num('cost2'), num('price2'));
+    document.getElementById('c1').textContent = money(a.cost);
+    document.getElementById('c2').textContent = money(b.cost);
+    document.getElementById('p1').textContent = money(a.price);
+    document.getElementById('p2').textContent = money(b.price);
+    document.getElementById('gp1').textContent = money(a.profit);
+    document.getElementById('gp2').textContent = money(b.profit);
+    document.getElementById('gm1').textContent = pct(a.margin);
+    document.getElementById('gm2').textContent = pct(b.margin);
+    document.getElementById('mk1').textContent = pct(a.markup);
+    document.getElementById('mk2').textContent = pct(b.markup);
+  }
+
+  [el.cost1,el.price1,el.cost2,el.price2].forEach(function(i){
+    i.addEventListener('input', function(){ update1(); if(el.batchToggle.checked) update2(); });
+  });
+  el.batchToggle.addEventListener('change', function(){
+    el.batchWrap.style.display = el.batchToggle.checked ? '' : 'none';
+    el.out2.style.display = el.batchToggle.checked ? '' : 'none';
+    if(el.batchToggle.checked) update2();
+  });
+
+  update1();
+})();
+</script>
+
+</body>
+</html>

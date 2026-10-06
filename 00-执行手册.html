@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>30天英文工具站执行手册 · 小微企业财务垂类</title>
+<style>
+  :root{
+    --bg:#ffffff; --surface:#faf9f7; --text:#1c1c1a; --muted:#6b6a64;
+    --border:#e5e3dc; --blue:#185fa5; --blue-bg:#e6f1fb;
+    --green:#0f6e56; --green-bg:#e1f5ee;
+    --amber:#854f0b; --amber-bg:#faeeda;
+    --red:#a32d2d; --red-bg:#fcebeb;
+    --purple:#3c3489; --purple-bg:#eeedfe;
+  }
+  *{box-sizing:border-box;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB",sans-serif;
+    background:var(--bg); color:var(--text); line-height:1.7;
+    max-width:900px; margin:0 auto; padding:40px 24px 80px;
+    font-size:15px;
+  }
+  h1{font-size:26px;font-weight:600;margin:0 0 8px;letter-spacing:-0.02em;}
+  .sub{color:var(--muted);font-size:15px;margin:0 0 32px;}
+  h2{font-size:20px;font-weight:600;margin:48px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+  h3{font-size:16px;font-weight:600;margin:28px 0 10px;}
+  h4{font-size:14px;font-weight:600;margin:20px 0 8px;color:var(--muted);}
+  p{margin:0 0 12px;}
+  ol,ul{margin:0 0 12px;padding-left:22px;}
+  li{margin-bottom:6px;}
+  code{
+    background:var(--surface); padding:2px 6px; border-radius:4px;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:13px;
+    border:1px solid var(--border);
+  }
+  pre{
+    background:var(--surface); padding:14px 16px; border-radius:8px;
+    overflow-x:auto; border:1px solid var(--border); font-size:13px; line-height:1.6;
+  }
+  pre code{background:none;border:none;padding:0;}
+  table{width:100%;border-collapse:collapse;margin:0 0 16px;font-size:14px;}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:top;}
+  th{background:var(--surface);font-weight:600;font-size:13px;}
+  .card{border:1px solid var(--border);border-radius:10px;padding:16px 18px;margin:0 0 16px;background:var(--bg);}
+  .note{border-left:3px solid var(--blue);background:var(--blue-bg);padding:12px 16px;border-radius:0 8px 8px 0;margin:0 0 16px;font-size:14px;}
+  .warn{border-left:3px solid var(--amber);background:var(--amber-bg);padding:12px 16px;border-radius:0 8px 8px 0;margin:0 0 16px;font-size:14px;}
+  .good{border-left:3px solid var(--green);background:var(--green-bg);padding:12px 16px;border-radius:0 8px 8px 0;margin:0 0 16px;font-size:14px;}
+  .bad{border-left:3px solid var(--red);background:var(--red-bg);padding:12px 16px;border-radius:0 8px 8px 0;margin:0 0 16px;font-size:14px;}
+  .task{
+    border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin:0 0 12px;background:var(--bg);
+  }
+  .task-h{display:flex;align-items:baseline;gap:10px;margin-bottom:10px;}
+  .num{
+    background:var(--purple);color:#fff;border-radius:20px;min-width:24px;height:24px;
+    display:inline-flex;align-items:center;justify-content:center;
+    font-size:12px;font-weight:600;padding:0 7px;flex-shrink:0;
+  }
+  .task-t{font-weight:600;font-size:15px;}
+  .meta{color:var(--muted);font-size:13px;margin-left:auto;white-space:nowrap;}
+  .ck{list-style:none;padding:0;margin:0;}
+  .ck li{padding-left:26px;position:relative;margin-bottom:7px;font-size:14px;}
+  .ck li:before{
+    content:"";position:absolute;left:0;top:5px;width:15px;height:15px;
+    border:1.5px solid #c9c7bf;border-radius:3px;
+  }
+  .badge{display:inline-block;font-size:12px;padding:2px 8px;border-radius:20px;background:var(--surface);border:1px solid var(--border);color:var(--muted);margin-right:6px;}
+  .kbd{
+    display:inline-block;padding:1px 6px;border:1px solid #c9c7bf;border-bottom-width:2px;
+    border-radius:4px;font-size:12px;background:var(--surface);
+  }
+  .divider{height:1px;background:var(--border);margin:40px 0;border:none;}
+  a{color:var(--blue);}
+  .toc{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 20px;}
+  .toc ol{margin:0;padding-left:20px;}
+  .toc li{margin-bottom:4px;font-size:14px;}
+  .tl{border-left:2px solid var(--border);padding-left:20px;margin:0 0 20px;}
+  .tl-item{position:relative;padding-bottom:20px;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-item:before{
+    content:"";position:absolute;left:-27px;top:5px;width:9px;height:9px;
+    background:var(--bg);border:2px solid var(--blue);border-radius:50%;
+  }
+  .tl-d{font-size:12px;color:var(--muted);font-weight:600;}
+  .tl-t{font-weight:600;margin:2px 0 4px;}
+</style>
+</head>
+<body>
+
+<h1>30天英文工具站执行手册</h1>
+<p class="sub">垂类：小微企业财务工具 · 投入：每天 1 小时 · 目标：第 30 天验证流量链路是否成立</p>
+
+<div class="note">
+<strong>先说三句实话，避免你做错决策：</strong>
+<ol style="margin:8px 0 0">
+<li><strong>30 天内基本赚不到钱。</strong>工具类网站的搜索排名普遍要 3–6 个月才开始给量。所以第 30 天的验收指标是<em>流量信号</em>（收录、曝光、排名），不是收入。用收入当30 天指标，你会得出"我失败了"的错误结论。</li>
+<li><strong>你的汇丰卓越理财账户是最大的优势。</strong>美元收款通道天然畅通，不需要 Payoneer、不需要香港公司、不需要 US LLC。这是绝大多数国内个人站长卡死的地方，你直接跨过了。</li>
+<li><strong>每天 1 小时 = 前 30 天只做 12–15 个页面，不要贪多。</strong>集中火力打一个词簇，比铺 30 个半成品有用得多。</li>
+</ol>
+</div>
+
+<div class="toc">
+<p style="font-weight:600;margin:0 0 8px;">目录</p>
+<ol>
+<li><a href="#s0">为什么是小微企业财务垂类</a></li>
+<li><a href="#s1">第 1 天：域名与托管（1.5 小时）</a></li>
+<li><a href="#s2">第 2 天：站点骨架与法务页（2 小时）</a></li>
+<li><a href="#s3">第 3–4 天：第一个工具（3 小时）</a></li>
+<li><a href="#s4">第 5–7 天：关键词筛选（2 小时）</a></li>
+<li><a href="#s5">第 2 周：工具 2–4 + 联盟接入（4 小时）</a></li>
+<li><a href="#s6">第 3 周：补到 15 页 + 申请 AdSense（4 小时）</a></li>
+<li><a href="#s7">第 4 周：读数据、定去留（2 小时）</a></li>
+<li><a href="#s8">第 2–6 个月：放大路径</a></li>
+<li><a href="#s9">红线清单（别踩）</a></li>
+</ol>
+</div>
+
+<hr class="divider">
+
+<h2 id="s0">零、为什么是小微企业财务垂类</h2>
+
+<p>选垂类的唯一标准：<strong>用户搜索时正准备花钱</strong>。小微企业主搜"sales tax calculator for Texas"的时候，手里在决定一个具体的商业决策——这类用户的广告竞价意愿是娱乐内容的几十倍。</p>
+
+<table>
+<thead><tr><th>维度</th><th>数据</th><th>对你的意义</th></tr></thead>
+<tbody>
+<tr><td>2026 年 CPM 排序</td><td>金融/保险 $4.80、科技/B2B软件 $3.90、医疗 $3.10、零售电商 $2.10</td><td>你选的正好在第一档和第二档</td></tr>
+<tr><td>地域溢价</td><td>美国用户价值是印度/印尼的 5–20 倍</td><td>必须做英文站，必须吃美国流量</td></tr>
+<tr><td>词簇容量</td><td>50 州 × 上千个郡 = 几千个长尾词</td><td>12–15 个页面就能占住一个州级词簇</td></tr>
+<tr><td>数据正确性</td><td>税率、最低工资、申报门槛全是公开政府数据</td><td><strong>你不会算错</strong>——这是本方案选它的核心原因</td></tr>
+<tr><td>联盟生态</td><td>Payroll、记账SaaS、注册代提交、POS/支付终端</td><td>单条转介佣金常见 $50–400</td></tr>
+</tbody>
+</table>
+
+<div class="bad">
+<strong>唯一的致命短板：这个垂类里有硬巨头。</strong><br>
+Avalara、TaxJar、Paychix、ADP、Gusto 都在做这类工具，且它们本身就做SEO。你打不了正面。<br><br>
+<b>破解方式：只做"巨头懒得做的长尾"。</b>巨头要做通用平台，不会为"Texas 州 Harris County 的餐饮业销售税"单独做一个页面。而这类页面搜索量虽小、但<b>广告单价极高</b>（搜索者已经明确到县一级，商业意图极强）。
+</div>
+
+<hr class="divider">
+
+<h2 id="s1">第 1 天：域名与托管</h2>
+
+<div class="task">
+<div class="task-h"><span class="num">1</span><span class="task-t">买域名</span><span class="meta">40 分钟 · 约 ¥75</span></div>
+<ul class="ck">
+<li>去 <code>namecheap.com</code> 或 <code>cloudflare.com/registrar</code>，搜索你想要的词，加 <code>.com</code> 后缀</li>
+<li><strong>命名规则</strong>（重要，关系到后面能不能做多个站）：
+  <ul style="margin-top:6px">
+    <li>不要用 <code>best-</code>、<code>top-</code>、<code>cheap-</code>、<code>free-</code> 开头</li>
+    <li>不要含年份（<code>tax2026</code> → 明年要改）</li>
+    <li>建议构词：<b>[主词] + [修饰]</b>，如 <code>salestaxcalc.com</code> / <code>ledgercalc.com</code> / <code>ratehq.com</code></li>
+    <li>长度控制在 15 字符内，方便写进页脚和推广</li>
+  </ul>
+</li>
+<li>⚠️ <strong>不要用带连字符的域名</strong>，容易被判断为垃圾站点，影响 AdSense 审核</li>
+<li>关闭 WHOIS 隐私保护时注意：AdSense 要求你能证明域名所有权，保留购买记录和账号邮箱</li>
+<li>⚠️ <strong>不要用国内注册商</strong>（阿里云/腾讯云域名），它们对英文站的 Google 收录和 AdSense 审核都有负面影响</li>
+</ul>
+</div>
+
+<div class="task">
+<div class="task-h"><span class="num">2</span><span class="task-t">托管与 DNS</span><span class="meta">20 分钟 · 0 元</span></div>
+<ul class="ck">
+<li>用 <code>Cloudflare Pages</code>（免费版）。整个站是纯静态 HTML，不需要服务器</li>
+<li>步骤：GitHub 建仓库 → 上传 HTML → Cloudflare Pages 连接仓库 → 部署</li>
+<li>DNS 切到 Cloudflare NS，改 A / CNAME 记录指向 Pages</li>
+<li>⚠️ <strong>必须开 HTTPS</strong>。HTTP-only 站点 AdSense 会自动拒绝，Cloudflare 默认给免费证书</li>
+<li>在 Cloudflare 里开 <code>Always Use HTTPS</code> 和 <code>Auto Minify</code></li>
+</ul>
+</div>
+
+<div class="task">
+<div class="task-h"><span class="num">3</span><span class="task-t">注册 Search Console + Analytics</span><span class="meta">20 分钟</span></div>
+<ul class="ck">
+<li>用你的 Google 账号去 <code>search.google.com/search-console</code>，添加 <code>domain property</code>（用 DNS TXT 验证，覆盖所有子域名）</li>
+<li>同时开 <code>analytics.google.com</code>，建一个 GA4 属性</li>
+<li>GA4 里把 <code>Search Console</code> 关联进去</li>
+<li>⚠️ <strong>这一步不能省。</strong>没有 Search Console，你 30 天后无法判断成败——你只能凭感觉，而感觉是错的</li>
+</ul>
+</div>
+
+<div class="warn">
+<strong>关于"站点名"和"域名里带什么词"的一个提醒</strong><br>
+AdSense 审核会看域名。含<code>tax</code>、<code>calculator</code>、<code>loan</code> 这类词的域名是加分项（说明站点主题明确）；含 <code>best-</code>、<code>top10-</code>、<code>free-</code> 反而减分。
+</div>
+
+<hr class="divider">
+
+<h2 id="s2">第 2 天：站点骨架与法务页</h2>
+
+<p>AdSense 的过审硬门槛是：<strong>20–30 个有实质内容的页面 + 隐私政策 + 关于 + 联系页</strong>。今天先把法务页铺好，因为它们不需要技术能力但必须有。</p>
+
+<div class="task">
+<div class="task-h"><span class="num">4</span><span class="task-t">建 4 个法务/信任页</span><span class="meta">90 分钟</span></div>
+<p style="font-size:14px;color:var(--muted);margin:0 0 10px;">已为你生成好模板，直接改域名和邮箱即可：</p>
+<ul class="ck">
+<li><code>/privacy.html</code> — 隐私政策。必须披露使用了 cookie 和第三方广告（AdSense/联盟的 cookie）</li>
+<li><code>/about.html</code> — 关于我们。要写清站点提供什么、数据从哪来、免责说明</li>
+<li><code>/contact.html</code> — 联系方式。一个能收信的邮箱（推荐用 <code>hello@你的域名</code>）</li>
+<li><code>/disclaimer.html</code> — 免责声明。<strong>财务类站点必做</strong>：明确声明"本工具仅供参考，不构成税务或法律建议"</li>
+</ul>
+<p style="font-size:14px;margin:10px 0 0"><strong>关于免责条款的重要提醒</strong>：财务计算器如果算错而用户据此做决策，可能引发纠纷。页面底部固定一句 "Results are estimates for informational purposes only and do not constitute tax, legal, or financial advice."，成本几乎为零，风险大幅下降。</p>
+</div>
+
+<div class="task">
+<div class="task-h"><span class="num">5</span><span class="task-t">建 robots.txt 和 sitemap.xml</span><span class="meta">20 分钟</span></div>
+<pre><code># robots.txt
+User-agent: *
+Allow: /
+Disallow: /admin/
+
+# sitemap.xml — 每加一个页面就往里加一条
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"&gt;
+  &lt;url&gt;&lt;loc>https://你的域名/&lt;/loc&gt;&lt;/url&gt;
+  &lt;url&gt;&lt;loc>https://你的域名/privacy.html&lt;/loc&gt;&lt;/url&gt;
+  &lt;url&gt;&lt;loc>https://你的域名/about.html&lt;/loc&gt;&lt;/url&gt;
+  &lt;url&gt;&lt;loc>https://你的域名/contact.html&lt;/loc&gt;&lt;/url&gt;
+  &lt;url&gt;&lt;loc>https://你的域名/disclaimer.html&lt;/loc&gt;&lt;/url&gt;
+&lt;/urlset&gt;</code></pre>
+<ul class="ck">
+<li>提交 sitemap 到 Search Console（左侧菜单 "Sitemaps"）</li>
+<li>在 <code>&lt;head&gt;</code> 里加一行 <code>&lt;link rel="canonical" href="..."&gt;</code>，避免重复内容问题</li>
+</ul>
+</div>
+
+<hr class="divider">
+
+<h2 id="s3">第 3–4 天：第一个工具</h2>
+
+<div class="task">
+<div class="task-h"><span class="num">6</span><span class="task-t">写第一个工具：Markup vs Margin 计算器</span><span class="meta">2 小时</span></div>
+<p style="font-size:14px;color:var(--muted);margin:0 0 10px">我已生成好完整可用的页面，见同目录 <code>tools/markup-margin-calculator.html</code>，直接部署即可。</p>
+<p style="font-size:14px;margin:0 0 10px">为什么第一个工具选它（而不是销售税）：</p>
+<ul class="ck" style="margin-bottom:12px">
+<li><strong>纯数学，不需要外部数据</strong>→ 不存在"数据过期要维护"的坑，第一天就能上线且永远不会错</li>
+<li>目标用户明确：做电商的、接装修单的自由职业者、批发商</li>
+<li>广告主明确：POS/支付终端、电商建站 SaaS、会计软件——B2B 广告主，给钱多</li>
+<li>搜索意图极强："markup vs margin"是真实存在的困惑，Google 上有大量相关讨论</li>
+</ul>
+<p style="font-size:14px;margin:0 0 10px"><strong>用 AI 写工具的提示词模板</strong>（这是你唯一需要掌握的技术能力）：</p>
+<pre><code>用原生 HTML + CSS + JavaScript 单文件（不要用任何框架和 CDN 依赖）写一个 [工具名] 计算器。
+
+要求：
+1. 纯静态，直接双击能在浏览器打开，无构建步骤
+2. 所有逻辑在前端 JS 完成，不需要服务器
+3. 输入框用 &lt;label&gt; 关联，带 aria-label 无障碍属性
+4. 数字输入用 type="number" step="0.01"，实时计算（input 事件，不等提交）
+5. 响应式：移动端优先，max-width 容器，flex 布局
+6. 结果区用aria-live="polite" 无障碍播报
+7. 页面包含 H1、H2 说明段落、常见问题（用 &lt;details&gt;&lt;summary&gt;）
+8. 内嵌 FAQPage 结构化数据（JSON-LD）
+9. 底部留两个广告位容器：id="ad-slot-top" 和 id="ad-slot-bottom"，高度预留 90px
+10. 视觉：系统字体栈，浅色主题，纯平设计无渐变无阴影，圆角 8px
+11. 声明：本工具仅供参考，不构成税务/财务建议
+
+工具逻辑：[在这里详细描述计算规则，包括所有边界情况]</code></pre>
+</div>
+
+<div class="task">
+<div class="task-h"><span class="num">7</span><span class="task-t">测试与上线</span><span class="meta">1 小时</span></div>
+<ul class="ck">
+<li>本地浏览器打开，检查计算结果。用<strong>边界值测</strong>：成本 0、售价 0、输入负数、超大数、中间带空格的字符串</li>
+<li>手机上看一眼（Chrome DevTools 切 iPhone 尺寸），60% 流量来自手机</li>
+<li>部署到 Cloudflare Pages，打开线上网址验证一遍</li>
+<li>在 Search Console 用"网址检查"手动提交收录请求（<code>www.example.com/markup-margin-calculator.html</code>）</li>
+<li>把新页面加进 <code>sitemap.xml</code></li>
+</ul>
+</div>
+
+<hr class="divider">
+
+<h2 id="s4">第 5–7 天：关键词筛选</h2>
+
+<p>这是整个 30 天里<strong>最重要的 2 小时</strong>。选错词簇，后面 25 天的努力全废。</p>
+
+<div class="task">
+<div class="task-h"><span class="num">8</span><span class="task-t">免费查词（不用付费工具）</span><span class="meta">90 分钟</span></div>
+<p style="font-size:14px;color:var(--muted);margin:0 0 10px">先用免费的验证想法，<strong>不要一上来买 Ahrefs/Semrush</strong>（$99+/月，前期不值）。</p>
+<ul class="ck">
+<li><strong>Google 自动补全</strong>：打开 Google，键入 <code>sales tax calculator for</code> 不回车，看它给你补什么。<strong>这是真实用户的真实提问，是最可靠的长尾词来源</strong></li>
+<li><strong>Google 相关搜索</strong>：搜一个核心词，滚到页面底部的 "Related searches"</li>
+<li><strong>People Also Ask</strong>：记录下所有问题，这些天然适合写成 FAQ 段落</li>
+<li><strong>Reddit / Quora</strong>：搜你的垂类关键词，看真实提问和抱怨。小企业主的抱怨列表 = 现成的工具选题</li>
+<li><strong>Google Keyword Planner</strong>（免费）：搜关键词量级和 CPC。<strong>CPC 越高说明广告主越想买这个位置</strong>——这是最直接的变现信号</li>
+</ul>
+</div>
+
+<div class="task">
+<div class="task-h"><span class="num">9</span><span class="task-t">用五项打分筛选</span><span class="meta">40 分钟</span></div>
+<p>每个候选词按这5 项打 0–2 分，<strong>总分 ≥ 7 才做</strong>：</p>
+<table>
+<thead><tr><th>维度</th><th>0分</th><th>1分</th><th>2分</th></tr></thead>
+<tbody>
+<tr><td>CPC（Keyword Planner）</td><td>&lt;$1</td><td>$1–3</td><td>&gt;$3</td></tr>
+<tr><td>首页是否有巨头</td><td>有 3家以上大站</td><td>1–2 家</td><td>首页都是论坛/小站</td></tr>
+<tr><td>词的长度</td><td>1 词</td><td>2–3 词</td><td>4 词以上（含地名/行业）</td></tr>
+<tr><td>意图是否明确</td><td>信息型</td><td>对比型</td><td>交易型（准备花钱）</td></tr>
+<tr><td>你能否保证算对</td><td>需要外部数据</td><td>部分需要</td><td>纯数学或公开数据</td></tr>
+</tbody>
+</table>
+<div class="good" style="margin-top:12px">
+<strong>第30 天版本的 15 个工具建议</strong>（按推荐顺序，含目标关键词簇）：<br>
+<ol style="margin:6px 0 0">
+<li>Markup vs Margin 计算器 <span class="badge">✅ 已生成</span></li>
+<li>Gross vs Net Profit 计算器</li>
+<li>Break-Even Point 计算器</li>
+<li>Sales Tax 计算器（50 州基础税率 + 郡可选）</li>
+<li>Sales Tax with Shipping（处理免税州/买家承担）</li>
+<li>Payroll Burden 计算器（真实人力成本 = 工资 + 雇主税 + 福利）</li>
+<li>Overtime Pay 计算器（FLSA 联邦 + 州法）</li>
+<li>Employee vs Contractor 成本对比</li>
+<li>1099 vs W-9 门槛判断</li>
+<li>Profit Margin by Industry（20+ 行业基准值对照）</li>
+<li>Shipping Cost vs Price 定价计算器</li>
+<li>Discount / Promo 后利润计算器</li>
+<li>Cash Runway 计算器（小微企业最关心的"我还能撑几个月"）</li>
+<li>Loan Payment vs APR 对比（含提前还款罚金）</li>
+<li>Inventory Reorder Point 计算器</li>
+</ol>
+</div>
+</div>
+
+<hr class="divider">
+
+<h2 id="s5">第 2 周：工具 2–4 + 联盟接入</h2>
+
+<div class="task">
+<div class="task-h"><span class="num">10</span><span class="task-t">再写 2 个工具</span><span class="meta">2.5 小时</span></div>
+<ul class="ck">
+<li>用第 3 天的提示词模板，各写一个。建议顺序：Gross vs Net Profit（最简单）→ Break-Even（最有商业价值）</li>
+<li>每个工具页加 <code>&lt;details&gt;&lt;summary&gt;</code> FAQ 段落，内嵌 JSON-LD 的 FAQPage 结构化数据</li>
+<li>每个工具页之间做<strong>内链</strong>：页面底部"相关工具"链接。这是页面被收录和提升排名的关键</li>
+<li>每个工具页必须有一段 200–400 词的正文（不是纯工具页）——Google 需要看到文字才判断这个页面的主题和价值</li>
+</ul>
+</div>
+
+<div class="task">
+<div class="task-h"><span class="num">11</span><span class="task-t">接入联盟（这是"快钱"的主线，不是广告）</span><span class="meta">90 分钟</span></div>
+<div class="warn" style="margin-bottom:12px">
+<strong>为什么先接联盟而不是 AdSense</strong><br>
+AdSense：门槛 20–30 页 + 审核 1–2 周 + 满$100 才付款 → 你的第一笔钱最早在第 3 个月末<br>
+联盟：无流量门槛，审核通过后链接立刻可用 → <strong>只要有 1 次点击就产生数据</strong><br><br>
+而且联盟的收益天花板本来就更高：一条 Payroll SaaS 转介$50–400，而展示广告给同等流量只有几美元。
+</div>
+<ul class="ck">
+<li><strong>优先级1（美国本地，最匹配）</strong>：<code>impact.com</code>、<code>shareasale.com</code>、<code>cj.com</code>。搜 "payroll software affiliate program"，申请 Paychex/Gusto/QuickBooks/ADP 的联盟</li>
+<li><strong>优先级 2（易过审）</strong>：<code>amazon.com/associates</code>（办公用品、计算器、账簿、扫描枪等实物商品）</li>
+<li><strong>优先级 3（可立即开通）</strong>：<code>awin.com</code>、<code>clickbank.com</code>（后者常被用来塞不需要审核的 offer）</li>
+<li><strong>优先找这些 offer</strong>：Payroll 软件、POS/支付终端、记账 SaaS、EIN 注册代提交（$100–250/单）、小微企业保险、域名/主机</li>
+</ul>
+<div class="bad" style="margin-top:12px">
+<strong>三条铁律：</strong><br>
+1. 页面上必须写明这是affiliate link，佣金来自推荐（美国 FTC 要求，Google 也不喜欢隐藏推广）<br>
+2. 不要买"自动注入全站关键词外链"的服务，那是灰色 SEO，被Google 惩罚<br>
+3. 不要做"跳转页 + 多个 offer 堆在一页"——转化率极低，且会被判为低质页面
+</div>
+</div>
+
+<div class="task">
+<div class="task-h"><span class="num">12</span><span class="task-t">第 3 个工具 + 第一次提交收录</span><span class="meta">1 小时</span></div>
+<ul class="ck">
+<li>写第 3 个工具</li>
+<li>把 3 个工具页 + 5 个法务页 = 8 页全部在 Search Console 手动提交</li>
+<li>在 <code>sitemap.xml</code> 补上新 URL 并重新提交</li>
+<li>去 Bing Webmaster Tools 也提交一遍（收录速度比 Google 快，能提前拿到测试数据）</li>
+</ul>
+</div>
+
+<hr class="divider">
+
+<h2 id="s6">第 3 周：补到 15 页 + 申请 AdSense</h2>
+
+<div class="task">
+<div class="task-h"><span class="num">13</span><span class="task-t">把页面做到 15 个</span><span class="meta">3 小时</span></div>
+<ul class="ck">
+<li>再写 3 个工具（第 5–7 个）</li>
+<li>做 2 个 <strong>州级销售税页面</strong>：<code>texas-sales-tax-calculator.html</code>、<code>florida-sales-tax-calculator.html</code>。<strong>这类页面是整个站的中枢</strong>——它们承接最高商业意图的词，并链接到所有工具页</li>
+<li>做 1 个高质量 <strong>行业页</strong>：<code>restaurant-profit-margin.html</code>（餐饮业利润率基准 + 成本结构）</li>
+<li>每页加 FAQ 结构化数据；站点内建 <code>/tools/</code> 索引页，把所有工具列出来</li>
+</ul>
+</div>
+
+<div class="task">
+<div class="task-h"><span class="num">14</span><span class="task-t">申请 AdSense</span><span class="meta">40 分钟 · 等1–2 周</span></div>
+<ul class="ck">
+<li>去 <code>adsense.google.com</code>，用注册域名时用的 Google 账号登录</li>
+<li>国家/地区选 <strong>Hong Kong SAR, China</strong> 或 <strong>China</strong>——<span class="badge">按你的汇丰账户实际情况选</span>。如果选错会导致付款方式受限，先确认再提交</li>
+<li>付款方式选 <strong>Wire transfer（电汇）</strong> → 填你的汇丰账户信息：
+  <ul>
+    <li>Account name：你的账户名（拼音或英文，与银行一致）</li>
+    <li>Bank：<code>HSBC Hong Kong</code></li>
+    <li>SWIFT：<code>HBKHHKHH</code></li>
+    <li>Account number：你的卓越理财账户号</li>
+  </ul>
+</li>
+<li>⚠️ <strong>不要填中国内地账户</strong>，电汇会被退回</li>
+<li>广告代码不要手动插入——申请通过后在 AdSense 后台开 <strong>Auto Ads</strong>，它会自动放置广告位，比手动挂效果更好（RPM 高 20–40%）</li>
+</ul>
+<div class="note">
+<strong>被拒了怎么办</strong><br>
+AdSense 拒审的绝大多数原因是"低价值内容"，不是流量不够。按这个顺序查：<br>
+① 页面数够不够 20个？② 每个工具有没有 200 词以上的说明正文？③ 隐私政策/关于/联系页齐不齐？④ HTTPS 正常吗？⑤ 有没有未编辑的 AI 灌水？<br><br>
+改完等 2–4 周可重新申请，申请次数不限。工具本身不算"AI 内容"——它是有实际功能的页面，Google 是认可的。
+</div>
+</div>
+
+<hr class="divider">
+
+<h2 id="s7">第 4 周：读数据、定去留</h2>
+
+<div class="task">
+<div class="task-h"><span class="num">15</span><span class="task-t">去 Search Console 看这 4 个数</span><span class="meta">1 小时</span></div>
+<p>路径：<code>Search Console → 效果 → 搜索结果</code>，看过去 28 天数据。</p>
+<table>
+<thead><tr><th>指标</th><th>路径</th><th>达标线</th></tr></thead>
+<tbody>
+<tr><td>已收录页面数</td><td><code>网页索引 → 页面索引</code></td><td>≥ 12 页</td></tr>
+<tr><td>总曝光量</td><td><code>效果 → 总数</code></td><td>≥ 300 次</td></tr>
+<tr><td>平均排名</td><td><code>效果 → 查询 → 平均位置</code></td><td>≤ 30 位</td></tr>
+<tr><td>有点击的查询数</td><td><code>效果 → 查询</code></td><td>≥ 3 个不同词</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="task">
+<div class="task-h"><span class="num">16</span><span class="task-t">按决策树执行，不要凭感觉</span><span class="meta">30 分钟</span></div>
+<div class="good" style="margin-bottom:12px"><strong>✅ 收录 ≥12 页 且曝光 ≥ 300 且平均排名 ≤30</strong><br>
+→ 链路成立。继续投入：第 2 个月加到 30 页，申请 Mediavine（门槛 5万 PV/月，到达后 RPM 是 AdSense 的 3–5 倍）。<strong>这是唯一该加码的信号。</strong></div>
+<div class="warn" style="margin-bottom:12px"><strong>⚠️ 收录 ≥12 页 但曝光 &lt; 100</strong><br>
+→ 选词错或竞争度过高。<strong>不要加量</strong>，回到第 5–7 天换词簇。先把已有的页面换个关键词角度重写标题和 H1，比新增 10 个页面有用。</div>
+<div class="bad"><strong>❌ 收录 &lt; 6 页</strong><br>
+→ 技术问题，不是内容问题。别写新工具了，回去查：sitemap 有没有提交、有没有 noindex、robots.txt 有没有误拦、内链有没有做。先修，再加量。</div>
+</div>
+
+<hr class="divider">
+
+<h2 id="s8">第 2–6 个月：放大路径</h2>
+
+<p>只有第 30 天判定"继续"之后，才走这条路。</p>
+
+<div class="tl">
+<div class="tl-item">
+<div class="tl-d">第 2 个月 · 约 20 小时</div>
+<div class="tl-t">页面从 15 加到 30</div>
+<p style="font-size:14px;color:var(--muted);margin:0">重点补<b>州级页面</b>（你已有 2 个，补到 10–15 个）和<b>行业页</b>。开始写第一个真正的长文内容（1500+ 词）作为引流入口。AdSense 大概率通过。</p>
+</div>
+<div class="tl-item">
+<div class="tl-d">第 3 个月 · 约 20 小时</div>
+<div class="tl-t">过 AdSense，开始有微量收入</div>
+<p style="font-size:14px;color:var(--muted);margin:0">预期收入 $10–80。<b>这个阶段正常，不要因为收入低而放弃</b>。此时关键词开始从第 20 位往第 10 位爬，收入是指数增长不是线性。</p>
+</div>
+<div class="tl-item">
+<div class="tl-d">第 4–5 个月</div>
+<div class="tl-t">过 5 万 PV/月，申请 Mediavine</div>
+<p style="font-size:14px;color:var(--muted);margin:0">Mediavine 全门槛是 5 万 PV/月或 $5000 年广告收入。RPM $15–50，是 AdSense 的 3–5 倍。<b>这一天收入会有一次跳变</b>。</p>
+</div>
+<div class="tl-item">
+<div class="tl-d">第 6 个月起</div>
+<div class="tl-t">此时可以复制到第二个站</div>
+<p style="font-size:14px;color:var(--muted);margin:0">把验证过的框架复制到<b>第二个垂类</b>（如房产装修测算）。这时你有了模板、流程、和对 SEO 的实操理解，第二个站的启动成本降到 1/3。</p>
+</div>
+</div>
+
+<hr class="divider">
+
+<h2 id="s9">红线清单（别踩）</h2>
+
+<table>
+<thead><tr><th>⛔ 别做</th><th>原因</th></tr></thead>
+<tbody>
+<tr><td>批量生成 100 篇 AI 文章</td><td>Google 对纯 AI 正文的收录率实测从 72% 掉到 18%。必被降权</td></tr>
+<tr><td>买外链 / 买"包收录"服务</td><td>Google 反作弊系统激进，AdSense封号是永久的（一生一个账号）</td></tr>
+<tr><td>同一页面挂 5+ 个联盟 offer</td><td>转化率极低，且被判低质页面</td></tr>
+<tr><td>用国内主机 + 国内 CDN</td><td>速度慢影响排名，且 Google 审核严格</td></tr>
+<tr><td>首屏堆广告</td><td>Google 明确对"广告过多、体验差"的站点降权</td></tr>
+<tr><td>用 AI 写的税务数字当权威数据源</td><td>税率经常变。用政府官网数据，标注更新日期</td></tr>
+<tr><td>隐瞒 affiliate link</td><td>FTC 要求披露；Google 会降低信任评分</td></tr>
+</tbody>
+</table>
+
+<hr class="divider">
+
+<h2>现在就做这三件事</h2>
+<ol>
+<li><strong>买域名</strong>（40 分钟）——命名规则照上面第1 天</li>
+<li><strong>部署已生成的工具页</strong>（30 分钟）—— <code>tools/markup-margin-calculator.html</code> 直接可用，先让它上线跑起来</li>
+<li><strong>注册 Search Console</strong>（20 分钟）——没有它你 30 天后无法判断成败</li>
+</ol>
+
+<p style="margin-top:24px;color:var(--muted);font-size:14px;border-top:1px solid var(--border);padding-top:16px;">
+完成第 1–7 天后回来找我。我可以帮你：核对长尾词清单并打分、生成剩下 14 个工具的完整代码、审查你写的页面是否有 AdSense 审核风险点。
+</p>
+
+</body>
+</html>

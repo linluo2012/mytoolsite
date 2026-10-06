@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Small Profit Tools</title>
+<meta name="description" content="Contact Small Profit Tools. Report a calculation error, suggest a tool, or ask a question.">
+<link rel="canonical" href="https://example.com/contact.html">
+<style>
+  *{box-sizing:border-box;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       background:#fff;color:#1c1c1a;line-height:1.7;margin:0;padding:0 16px 64px;}
+  .wrap{max-width:720px;margin:0 auto;}
+  h1{font-size:28px;font-weight:600;letter-spacing:-0.02em;margin:32px 0 16px;}
+  h2{font-size:18px;font-weight:600;margin:28px 0 10px;}
+  p,li{font-size:15px;margin:0 0 12px;}
+  ul{padding-left:22px;}
+  a{color:#185fa5;}
+  .box{background:#faf9f7;border:1px solid #e5e3dc;border-radius:10px;padding:18px 20px;margin:0 0 20px;}
+  .lab{font-weight:500;font-size:14px;display:block;margin-bottom:6px;}
+  .hint{display:block;font-weight:400;color:#6b6a64;font-size:13px;margin-top:2px;}
+  input[type=text],input[type=email],select,textarea{
+    width:100%;padding:10px 12px;border:1px solid #c9c7bf;border-radius:8px;
+    font-size:16px;background:#fff;color:inherit;font-family:inherit;
+  }
+  textarea{min-height:130px;resize:vertical;}
+  input:focus,select:focus,textarea:focus{outline:2px solid #185fa5;outline-offset:1px;border-color:#185fa5;}
+  .fld{margin-bottom:16px;}
+  button{
+    padding:11px 20px;border-radius:8px;border:1px solid #1c1c1a;background:#1c1c1a;color:#fff;
+    font-size:15px;font-family:inherit;cursor:pointer;font-weight:500;
+  }
+  button:hover{background:#333;}
+  .note{font-size:13px;color:#6b6a64;margin-top:10px;}
+  footer{border-top:1px solid #e5e3dc;margin-top:32px;padding-top:16px;font-size:13px;color:#6b6a64;}
+  footer a{color:#6b6a64;margin-right:14px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Contact</h1>
+
+<p>Found a calculation error, an outdated tax rate, or a claim that does not hold up? Please tell us. Corrections are welcome and will be made.</p>
+
+<div class="box">
+<p style="margin:0;"><strong>Email:</strong> <a href="mailto:hello@example.com">hello@example.com</a></p>
+</div>
+
+<h2>Send a message</h2>
+<p style="font-size:14px;color:#6b6a64;">Replace the form action with your own form service (Formspree, Netlify Forms, Cloudflare Worker) before going live.</p>
+
+<form method="POST" action="https://formspree.io/f/YOUR_FORM_ID">
+  <div class="fld">
+    <label class="lab" for="name">Your name</label>
+    <input type="text" id="name" name="name" required>
+  </div>
+  <div class="fld">
+    <label class="lab" for="email">Your email <span class="hint">Only used to reply. Never shared or sold.</span></label>
+    <input type="email" id="email" name="email" required>
+  </div>
+  <div class="fld">
+    <label class="lab" for="topic">What is this about?</label>
+    <select id="topic" name="topic">
+      <option value="correction">Calculation error or wrong number</option>
+      <option value="outdated">Outdated tax rate or threshold</option>
+      <option value="request">Request a new calculator</option>
+      <option value="bug">Something is not working</option>
+      <option value="other">Other</option>
+    </select>
+  </div>
+  <div class="fld">
+    <label class="lab" for="tool">Which tool is it about? <span class="hint">Leave blank if it is a new request</span></label>
+    <input type="text" id="tool" name="tool" placeholder="e.g. markup-margin-calculator.html">
+  </div>
+  <div class="fld">
+    <label class="lab" for="msg">Message</label>
+    <textarea id="msg" name="message" required placeholder="If reporting an error, please include the numbers you entered and what you expected to see."></textarea>
+  </div>
+  <button type="submit">Send message</button>
+  <p class="note">By sending this form you agree to our <a href="https://example.com/privacy.html">Privacy Policy</a>.</p>
+</form>
+
+<h2>What to expect</h2>
+<ul>
+  <li><strong>Calculation errors</strong> are treated as priority and are usually fixed within a few days.</li>
+  <li><strong>Outdated rates</strong> are checked against the relevant government source and corrected.</li>
+  <li><strong>Tool requests</strong> are prioritized by how many people ask for the same thing. We cannot commit to a date.</li>
+</ul>
+
+<h2>Before you write</h2>
+<p>If your question is about whether a specific business decision is profitable or compliant, this site cannot answer that. Please consult a qualified accountant, tax professional, or attorney. If your question is about how a calculator behaves, please include the input values so the issue can be reproduced.</p>
+
+<footer>
+  <a href="https://example.com/">Home</a>
+  <a href="https://example.com/tools.html">All calculators</a>
+  <a href="https://example.com/about.html">About</a>
+  <a href="https://example.com/privacy.html">Privacy Policy</a>
+  <a href="https://example.com/disclaimer.html">Disclaimer</a>
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+# 构建产物 — 由 build.py 自动生成，不要提交到 git
+site/
+dist/
+
+# 助手工作数据
+.workbuddy/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+
+# Python
+__pycache__/
+*.pyc
+
+# 备份文件
+*.bak
+*~
+
+# 密钥与账号信息（重要：绝对不要提交）
+.env
+.env.*
+secrets.json
+credentials.json
+*.pem
+*.key
