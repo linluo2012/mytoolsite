@@ -13,10 +13,14 @@ Cloudflare Pages 云端构建（自动执行）：
     2. 替换占位域名 example.com → 真实域名
     3. 仅对实际存在的页面生成 sitemap.xml
     4. 生成 robots.txt
-    5. 校验产物
+    5. 生成 _headers（安全响应头 + 缓存策略）
+    6. 校验产物
 
 域名优先级：
-    环境变量 SITE_DOMAIN > 命令行参数 > example.com（回退）
+    环境变量 SITE_DOMAIN > 命令行参数 > .env > wrangler.toml > example.com
+
+注意：Cloudflare Pages 会忽略 wrangler.toml 的 [build.environment]，
+该文件在这里仅作为环境变量缺失时的兜底来源。
 """
 import sys, os, pathlib, shutil, re
 
@@ -29,14 +33,37 @@ PLACEHOLDER = "example.com"
 CF_OUT = ROOT / "dist"
 
 
+def from_wrangler() -> str:
+    """从 wrangler.toml 读取 SITE_DOMAIN，作为环境变量缺失时的兜底。"""
+    p = ROOT / "wrangler.toml"
+    if not p.exists():
+        return ""
+    m = re.search(r'SITE_DOMAIN\s*=\s*"([^"]+)"', p.read_text(encoding="utf-8"))
+    return m.group(1).strip().lower() if m else ""
+
+
+def from_dotenv() -> str:
+    """读取本地 .env。"""
+    p = ROOT / ".env"
+    if not p.exists():
+        return ""
+    m = re.search(r'^SITE_DOMAIN\s*=\s*(.+)$', p.read_text(encoding="utf-8"),
+                  re.MULTILINE)
+    return m.group(1).strip().strip('"\'').lower() if m else ""
+
+
 def resolve_domain() -> str:
-    """云端用环境变量，本地用命令行参数。"""
+    """按优先级解析真实域名。"""
     env = os.environ.get("SITE_DOMAIN", "").strip()
     if env:
         return env.lower()
     for a in sys.argv[1:]:
         if not a.startswith("--") and "." in a:
             return a.lower()
+    for fn in (from_dotenv, from_wrangler):
+        v = fn()
+        if v:
+            return v
     return PLACEHOLDER
 
 
@@ -112,6 +139,18 @@ def build(domain: str, outdir: pathlib.Path) -> int:
 
     # 5. 校验
     issues = []
+
+    # 5a. 域名回退检查 —— 这是最常见的失败原因，必须给明确指引
+    if domain == PLACEHOLDER:
+        issues.append(
+            f"域名未配置，构建使用了占位域名 {PLACEHOLDER}，线上所有链接都会失效。\n"
+            f"     修复方式（任选其一）：\n"
+            f"       1. Cloudflare 后台 Settings → Environment variables → Add\n"
+            f"          Variable name: SITE_DOMAIN    Value:你的真实域名\n"
+            f"       2. 在仓库根目录的 wrangler.toml 中设置 SITE_DOMAIN\n"
+            f"       3. 本地构建时用命令行参数指定"
+        )
+
     leftover = [f.name for f in outdir.glob("*.html")
                  if PLACEHOLDER in f.read_text(encoding="utf-8")]
     if leftover:
