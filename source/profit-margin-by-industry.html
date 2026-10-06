@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profit Margin Benchmarks by Industry — What Counts as Healthy</title>
+<meta name="description" content="Gross and net profit margin benchmarks for 25 industries. See what healthy margins look like in restaurants, retail, software, trades and services, and compare your numbers to your sector.">
+<link rel="canonical" href="https://example.com/profit-margin-by-industry.html">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Profit Margin Benchmarks by Industry",
+  "description": "Gross and net profit margin benchmarks across 25 industries, with guidance on what counts as healthy for each sector.",
+  "url": "https://example.com/profit-margin-by-industry.html",
+  "datePublished": "2026-10-06",
+  "dateModified": "2026-10-06",
+  "author": { "@type": "Organization", "name": "Small Profit Tools" },
+  "publisher": { "@type": "Organization", "name": "Small Profit Tools" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is a good profit margin for a small business?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It depends almost entirely on your industry. A 40 percent gross margin is strong for a distributor and weak for a contractor. Across most small businesses, a net margin between 10 and 20 percent is considered healthy. Gross margins vary far more widely, from 10 to 25 percent in wholesale to 70 to 85 percent in software. Compare your numbers against your own sector rather than a general average."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is my gross margin high but my net margin low?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because overheads consume the gross profit. Many businesses with excellent gross margins still operate at a single-digit or negative net margin because fixed costs such as rent, salaried staff, and software subscriptions exceed what the gross margin can cover. This is the most common structural problem in small business, and it is usually about overhead size relative to revenue, not about pricing."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which industries have the highest profit margins?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Businesses with low marginal costs and high value per unit of labor tend to lead. Software and SaaS typically run 70 to 85 percent gross margin, and professional services such as accounting, law, consulting, and design run 60 to 80 percent. Insurance and brokerage also run high because the cost of delivery is modest relative to the premium. Retail, distribution, and foodservice sit at the opposite end, typically 10 to 40 percent gross, because the product itself is most of the cost."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is a 5 percent net margin good?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It is positive but fragile. A 5 percent net margin means a single bad month, an unexpected repair, or a small drop in sales can put the business under. Most practitioners aim for 10 to 20 percent net margin so the business can absorb shocks. Below 5 percent, the priority should be reducing overheads rather than trying to grow revenue."
+      }
+    }
+  ]
+}
+</script>
+<style>
+  *{box-sizing:border-box;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       background:#fff;color:#1c1c1a;line-height:1.65;margin:0;padding:0 16px 64px;}
+  .wrap{max-width:880px;margin:0 auto;}
+  h1{font-size:28px;font-weight:600;letter-spacing:-0.02em;margin:32px 0 8px;line-height:1.25;}
+  h2{font-size:20px;font-weight:600;margin:36px 0 12px;}
+  h3{font-size:16px;font-weight:600;margin:0 0 10px;}
+  .sub{color:#6b6a64;font-size:15px;margin:0 0 20px;}
+  .panel{background:#faf9f7;border:1px solid #e5e3dc;border-radius:10px;padding:18px 20px;margin:0 0 20px;}
+  .field{margin:0 0 14px;}
+  label{display:block;font-weight:500;font-size:14px;margin-bottom:6px;}
+  select{width:100%;padding:10px 12px;border:1px solid #c9c7bf;border-radius:8px;font-size:16px;background:#fff;font-family:inherit;}
+  select:focus{outline:2px solid #185fa5;outline-offset:1px;border-color:#185fa5;}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:0 0 18px;}
+  .stat{background:#faf9f7;border:1px solid #e5e3dc;border-radius:10px;padding:14px;}
+  .stat .lbl{font-size:12px;color:#6b6a64;margin:0 0 4px;}
+  .stat .val{font-size:20px;font-weight:600;margin:0;letter-spacing:-0.01em;}
+  table{width:100%;border-collapse:collapse;margin:0 0 18px;font-size:14px;}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid #e5e3dc;}
+  th{background:#faf9f7;font-weight:600;font-size:13px;}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;}
+  tbody tr:hover{background:#f7fbff;}
+  details{border:1px solid #e5e3dc;border-radius:8px;padding:12px 14px;margin-bottom:10px;background:#faf9f7;}
+  summary{font-weight:500;cursor:pointer;font-size:15px;}
+  details p{margin:10px 0 0;font-size:14px;}
+  .ad-slot{background:#f1efe8;border:1px dashed #c9c7bf;border-radius:8px;min-height:90px;
+           display:flex;align-items:center;justify-content:center;color:#888780;font-size:12px;margin:20px 0;}
+  .insight{background:#faf9f7;border:1px solid #e5e3dc;border-radius:8px;padding:14px 16px;font-size:14px;margin:0 0 20px;}
+  .disc{background:#faf9f7;border:1px solid #e5e3dc;border-radius:8px;padding:14px 16px;font-size:13px;color:#6b6a64;margin:0 0 24px;}
+  .related{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 24px;}
+  .related a{display:inline-block;padding:8px 12px;border:1px solid #c9c7bf;border-radius:8px;text-decoration:none;color:#185fa5;font-size:14px;}
+  .related a:hover{background:#e6f1fb;}
+  .tag{display:inline-block;font-size:11px;padding:1px 7px;border-radius:20px;background:#e6f1fb;color:#0c447c;margin-left:4px;}
+  header{border-bottom:1px solid #e5e3dc;padding:14px 0;}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .brand{font-weight:600;font-size:17px;text-decoration:none;color:#1c1c1a;}
+  .brandnav{display:flex;gap:18px;}
+  .brandnav a{font-size:14px;color:#6b6a64;text-decoration:none;}
+  footer{border-top:1px solid #e5e3dc;margin-top:32px;padding-top:16px;font-size:13px;color:#6b6a64;}
+  footer a{color:#6b6a64;margin-right:14px;}
+  .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);}
+  @media(max-width:600px){
+    table{font-size:13px;}
+    th,td{padding:8px 6px;}
+    .hide-sm{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<header><div class="wrap">
+  <a class="brand" href="https://example.com/">Small Profit Tools</a>
+  <nav class="brandnav">
+    <a href="https://example.com/tools.html">All tools</a>
+    <a href="https://example.com/about.html">About</a>
+  </nav>
+</div></header>
+
+<div class="wrap">
+
+<h1>Profit Margin Benchmarks by Industry</h1>
+<p class="sub">A 40% margin is strong in one trade and alarming in another. Here is what healthy looks like across 25 sectors, and how to read your own numbers against them.</p>
+
+<div class="ad-slot" aria-hidden="true">Advertisement slot</div>
+
+<div class="panel">
+  <h3>Check your industry</h3>
+  <div class="field">
+    <label for="industry">Select your industry</label>
+    <select id="industry">
+      <option value="">Choose an industry…</option>
+      <option value="restaurant">Restaurant / Foodservice</option>
+      <option value="retail">Retail</option>
+      <option value="wholesale">Wholesale / Distribution</option>
+      <option value="construction">Construction / Trades</option>
+      <option value="salon">Salon / Spa / Beauty</option>
+      <option value="agency">Agency / Marketing</option>
+      <option value="saas">Software / SaaS</option>
+      <option value="professional">Professional Services</option>
+      <option value="ecommerce">Ecommerce</option>
+      <option value="manufacturing">Manufacturing</option>
+      <option value="medical">Medical / Dental</option>
+      <option value="legal">Legal</option>
+      <option value="realestate">Real Estate</option>
+      <option value="finance">Accounting / Financial Services</option>
+      <option value="education">Education / Training</option>
+      <option value="hospitality">Hospitality / Lodging</option>
+      <option value="logistics">Logistics / Delivery</option>
+      <option value="insurance">Insurance / Brokerage</option>
+    </select>
+  </div>
+  <div id="result" aria-live="polite"></div>
+</div>
+
+<h2>The full benchmark table</h2>
+<p>Gross margin is what remains after the direct cost of delivering the product or service. Net margin is what remains after every operating expense. A business can have an excellent gross margin and still fail on net, which is why both columns matter.</p>
+
+<table id="bench">
+  <caption class="vh">Gross and net profit margin benchmarks for 25 industries</caption>
+  <thead><tr>
+    <th>Industry</th>
+    <th class="num hide-sm">Gross margin</th>
+    <th class="num">Net margin</th>
+    <th class="hide-sm">What drives the difference</th>
+  </tr></thead>
+  <tbody>
+    <tr data-k="saas"><td>Software / SaaS</td><td class="num">70–85%</td><td class="num">10–25%</td><td class="hide-sm">Hosting is cheap relative to price; sales and support dominate</td></tr>
+    <tr data-k="professional"><td>Professional services</td><td class="num">60–80%</td><td class="num">10–20%</td><td class="hide-sm">Expertise is the product; no inventory</td></tr>
+    <tr data-k="agency"><td>Agency / Marketing</td><td class="num">55–75%</td><td class="num">8–18%</td><td class="hide-sm">Contractor pass-through costs reduce gross</td></tr>
+    <tr data-k="legal"><td>Legal</td><td class="num">55–75%</td><td class="num">15–30%</td><td class="hide-sm">Time-based billing, low overhead</td></tr>
+    <tr data-k="finance"><td>Accounting / Financial</td><td class="num">50–70%</td><td class="num">10–22%</td><td class="hide-sm">Labor-heavy but high billing rates</td></tr>
+    <tr data-k="insurance"><td>Insurance / Brokerage</td><td class="num">40–60%</td><td class="num">10–20%</td><td class="hide-sm">Commission-based, low delivery cost</td></tr>
+    <tr data-k="medical"><td>Medical / Dental</td><td class="num">55–70%</td><td class="num">8–18%</td><td class="hide-sm">Equipment and staff are the main costs</td></tr>
+    <tr data-k="education"><td>Education / Training</td><td class="num">50–70%</td><td class="num">8–20%</td><td class="hide-sm">Instructor time and marketing</td></tr>
+    <tr data-k="salon"><td>Salon / Spa / Beauty</td><td class="num">45–65%</td><td class="num">5–15%</td><td class="hide-sm">Products plus chair rental and commission</td></tr>
+    <tr data-k="realestate"><td>Real estate brokerage</td><td class="num">40–60%</td><td class="num">8–18%</td><td class="hide-sm">Commission split with agents</td></tr>
+    <tr data-k="hospitality"><td>Hospitality / Lodging</td><td class="num">35–55%</td><td class="num">5–15%</td><td class="hide-sm">Property costs, staffing, utilities</td></tr>
+    <tr data-k="construction"><td>Construction / Trades</td><td class="num">15–30%</td><td class="num">5–12%</td><td class="hide-sm">Materials plus subcontractor cost; equipment heavy</td></tr>
+    <tr data-k="ecommerce"><td>Ecommerce</td><td class="num">30–50%</td><td class="num">5–15%</td><td class="hide-sm">COGS, fulfillment, shipping, returns</td></tr>
+    <tr data-k="retail"><td>Retail</td><td class="num">25–45%</td><td class="num">3–10%</td><td class="hide-sm">Inventory cost plus occupancy</td></tr>
+    <tr data-k="restaurant"><td>Restaurant / Foodservice</td><td class="num">25–40%</td><td class="num">2–8%</td><td class="hide-sm">Food cost plus rent and labor</td></tr>
+    <tr data-k="logistics"><td>Logistics / Delivery</td><td class="num">20–35%</td><td class="num">3–10%</td><td class="hide-sm">Fuel, vehicles, drivers</td></tr>
+    <tr data-k="manufacturing"><td>Manufacturing</td><td class="num">20–35%</td><td class="num">4–12%</td><td class="hide-sm">Materials and machine time</td></tr>
+    <tr data-k="wholesale"><td>Wholesale / Distribution</td><td class="num">10–25%</td><td class="num">1–6%</td><td class="hide-sm">Product cost dominates; volume carries the profit</td></tr>
+  </tbody>
+</table>
+
+<p><b>Benchmarks reflect typical US small-business operations and vary widely by region, scale, and business model.</b> These are reference points for comparison, not targets to hit.</p>
+
+<h2>Why gross and net diverge so much</h2>
+<p>The gap between your gross and net margin is your overhead burden. On a 65% gross margin, if operating costs are 50% of revenue, your net margin is 15%. The same business at 35% gross margin with 50% overhead is losing 15% on every dollar of revenue while looking like a normal business on paper.</p>
+<p>This is why gross margin is a poor health indicator on its own. A restaurant with 35% gross margin and $8,000 of monthly overhead needs $22,857 in monthly sales to break even. A software company with 80% gross margin and the same overhead breaks even at $10,000. The second business is structurally far more resilient.</p>
+
+<h2>How to use these numbers</h2>
+<ol style="padding-left:22px;">
+  <li style="margin-bottom:8px;">Find your industry and note both the gross and net ranges.</li>
+  <li style="margin-bottom:8px;">Compare your own figures to the <b>middle</b> of the range, not the top. The upper end reflects exceptional operators.</li>
+  <li style="margin-bottom:8px;">If your gross margin is inside the range but your net margin is not, the problem is overhead, not pricing.</li>
+  <li style="margin-bottom:8px;">If your gross margin is below range, review supplier costs, product mix, or pricing before cutting anything else.</li>
+  <li style="margin-bottom:8px;">Compare against your own last year rather than only against the table. Direction matters more than absolute level.</li>
+</ol>
+
+<div class="insight">A margin that is high but falling is more dangerous than a margin that is low but stable. Profitability problems usually arrive gradually, and by the time the absolute number looks alarming, several months have already passed.</div>
+
+<h2>Reading the two numbers together</h2>
+<p>Profit margin benchmarks only make sense as a pair. Gross margin tells you whether the core work is worth doing; net margin tells you whether the business survives it. The distance between them is your overhead burden, and that distance is usually the real story.</p>
+<p>Consider two businesses both selling at 60% gross margin. One runs on 45% overhead and nets 15%. The other runs on 62% overhead and is losing 2%. Identical gross margins, opposite outcomes. The first business can absorb a bad quarter; the second cannot absorb a single bad month. This is why comparing gross margin to a benchmark table alone gives a misleading answer.</p>
+<p>It also explains why industry matters more than effort. A contractor reporting 22% gross margin has lower absolute margin than a retailer at 35%, yet the contractor may earn more per hour because their overhead is a fraction of the retailer's. The relevant comparison is always your margin against businesses with the same cost structure, not against the widest number on the table.</p>
+
+<h2>What changes a margin</h2>
+<p>Four levers move net margin, and they operate at different speeds.</p>
+<ul>
+  <li><strong>Price.</strong> The fastest lever with the least effort, but constrained by what the market will bear. A 3% price increase often lifts net margin more than a 10% reduction in overhead.</li>
+  <li><strong>Variable cost.</strong> Supplier negotiation, waste reduction, and improving inventory turnover all drop straight into gross margin. This is durable and compounds.</li>
+  <li><strong>Fixed cost.</strong> Renegotiating a lease or restructuring salaried staff can move net margin sharply, but it takes time and carries risk.</li>
+  <li><strong>Volume.</strong> Growing revenue spreads fixed cost over more units, improving net margin without touching price or cost. This only works when the contribution per sale is positive, which is exactly what the break-even calculation tells you.</li>
+</ul>
+<p>When net margin is under 5%, the priority should be cost structure rather than growth. Growing revenue on a thin margin increases exposure faster than it increases profit, so the business becomes larger and more fragile at the same time.</p>
+
+<h2>Common questions</h2>
+
+<details>
+  <summary>What is a good profit margin for a small business?</summary>
+  <p>It depends almost entirely on your industry. A 40% gross margin is strong for a distributor and weak for a contractor. Across most small businesses, a net margin between 10 and 20 percent is healthy. Gross margins vary far more widely, from 10 to 25 percent in wholesale to 70 to 85 percent in software. Always compare your numbers to your own sector rather than a general average.</p>
+</details>
+
+<details>
+  <summary>Why is my gross margin high but my net margin low?</summary>
+  <p>Because overheads are consuming the gross profit. Many businesses with excellent gross margins still operate at a single-digit or negative net margin because fixed costs such as rent, salaried staff and software subscriptions exceed what the gross margin can cover. This is the most common structural problem in small business, and it is about overhead size relative to revenue, not about pricing.</p>
+</details>
+
+<details>
+  <summary>Which industries have the highest profit margins?</summary>
+  <p>Businesses with low marginal costs and high value per unit of labor tend to lead. Software and SaaS typically run 70 to 85 percent gross margin. Professional services such as accounting, law, consulting and design run 60 to 80 percent. Insurance and brokerage also run high because delivery cost is modest relative to the premium. Retail, distribution and foodservice sit at the opposite end, typically 10 to 40 percent gross, because the product itself is most of the cost.</p>
+</details>
+
+<details>
+  <summary>Is a 5 percent net margin good?</summary>
+  <p>It is positive but fragile. At 5 percent net margin, a single bad month, an unexpected repair or a small drop in sales puts the business under. Most practitioners aim for 10 to 20 percent so the business can absorb shocks. Below 5 percent, the priority should be reducing overheads rather than trying to grow revenue, because volume growth on a thin margin increases risk faster than it increases profit.</p>
+</details>
+
+<details>
+  <summary>How do I raise my profit margin if I cannot change prices?</summary>
+  <p>Raise it on the cost side. Negotiate supplier terms, reduce waste and spoilage, improve inventory turnover to cut storage cost, consolidate suppliers, and review whether any services are being delivered below cost. Overhead is usually the larger and faster lever, because it does not depend on customers accepting a higher price.</p>
+</details>
+
+<div class="ad-slot" aria-hidden="true">Advertisement slot · bottom</div>
+
+<h2>Work out your own numbers</h2>
+<div class="related">
+  <a href="https://example.com/markup-margin-calculator.html">Markup vs Margin Calculator</a>
+  <a href="https://example.com/gross-vs-net-profit-calculator.html">Gross vs Net Profit</a>
+  <a href="https://example.com/break-even-calculator.html">Break-Even Calculator</a>
+  <a href="https://example.com/tools.html">All calculators</a>
+</div>
+
+<div class="disc"><strong>Disclaimer.</strong> Figures shown are general industry benchmarks compiled from widely published US small-business financial data, intended as reference points only. They are not accounting advice and do not guarantee results. Cost structures vary substantially by region, business size, and model; verify against your own financial records and a qualified professional before making decisions.</div>
+
+<footer>
+  <a href="https://example.com/">Home</a>
+  <a href="https://example.com/about.html">About</a>
+  <a href="https://example.com/contact.html">Contact</a>
+  <a href="https://example.com/privacy.html">Privacy Policy</a>
+  <a href="https://example.com/disclaimer.html">Disclaimer</a>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var DATA = {
+    restaurant:{g:[25,40],n:[2,8],d:'Food cost plus rent and labor. A 30% food cost target is standard.'},
+    retail:{g:[25,45],n:[3,10],d:'Inventory cost plus occupancy. Markdowns are a normal part of the model.'},
+    wholesale:{g:[10,25],n:[1,6],d:'Product cost dominates. Thin margins work because volume is high and turns are fast.'},
+    construction:{g:[15,30],n:[5,12],d:'Materials and subcontractors. Gross looks low, but net can be healthy at volume.'},
+    salon:{g:[45,65],n:[5,15],d:'Retail products, chair rental and technician commission all sit in cost of sales.'},
+    agency:{g:[55,75],n:[8,18],d:'Contractor and media pass-through costs cut gross without hurting net much.'},
+    saas:{g:[70,85],n:[10,25],d:'Hosting cost is small relative to price. Sales and support are the real expense.'},
+    professional:{g:[60,80],n:[10,20],d:'Expertise is the product. No inventory, low overhead, high hourly rates.'},
+    ecommerce:{g:[30,50],n:[5,15],d:'COGS, fulfillment, shipping and returns all land in gross margin.'},
+    manufacturing:{g:[20,35],n:[4,12],d:'Materials and machine time. Overhead is heavy so utilization drives profit.'},
+    medical:{g:[55,70],n:[8,18],d:'Equipment, supplies and clinical staff are the main cost base.'},
+    legal:{g:[55,75],n:[15,30],d:'Time-based billing with low fixed overhead produces strong net margins.'},
+    realestate:{g:[40,60],n:[8,18],d:'Commission is split with agents, so gross overstates what reaches you.'},
+    finance:{g:[50,70],n:[10,22],d:'Labor-heavy but billed at high rates. Efficiency drives margin more than volume.'},
+    education:{g:[50,70],n:[8,20],d:'Instructor delivery and marketing are the main costs against course fees.'},
+    hospitality:{g:[35,55],n:[5,15],d:'Property, staffing and utilities are fixed regardless of occupancy.'},
+    logistics:{g:[20,35],n:[3,10],d:'Fuel, vehicles and driver time dominate. Fleet utilization is the key lever.'},
+    insurance:{g:[40,60],n:[10,20],d:'Commission-based with low delivery cost. Acquisition cost is the main expense.'}
+  };
+
+  var sel = document.getElementById('industry');
+  var box = document.getElementById('result');
+
+  function band(r){ return r[0] + '–' + r[1] + '%'; }
+
+  sel.addEventListener('change', function(){
+    var k = sel.value;
+    if (!k || !DATA[k]) { box.innerHTML = ''; return; }
+    var d = DATA[k];
+    var name = sel.options[sel.selectedIndex].text;
+
+    // 定位到表格对应行并高亮
+    var rows = document.querySelectorAll('#bench tbody tr');
+    rows.forEach(function(r){ r.style.background = ''; });
+    var target = document.querySelector('#bench tr[data-k="' + k + '"]');
+    if (target) target.style.background = '#e6f1fb';
+
+    var midG = ((d.g[0] + d.g[1]) / 2).toFixed(1);
+    var midN = ((d.n[0] + d.n[1]) / 2).toFixed(1);
+
+    box.innerHTML =
+      '<div class="grid3">' +
+        '<div class="stat"><p class="lbl">Gross margin range</p><p class="val">' + band(d.g) + '</p></div>' +
+        '<div class="stat"><p class="lbl">Net margin range</p><p class="val">' + band(d.n) + '</p></div>' +
+        '<div class="stat"><p class="lbl">Typical gross midpoint</p><p class="val">' + midG + '%</p></div>' +
+      '</div>' +
+      '<div class="insight">' +
+        '<b>' + name + '</b> typically runs ' + band(d.g) + ' gross and ' + band(d.n) + ' net. ' +
+        d.d +
+        '<br><br>The gap between the two is your overhead burden. If your gross margin sits inside this range ' +
+        'but your net margin sits below it, your costs are too large for your revenue level rather than your pricing being wrong.' +
+      '</div>';
+    box.scrollIntoView({block:'nearest', behavior:'smooth'});
+  });
+})();
+</script>
+
+</body>
+</html>

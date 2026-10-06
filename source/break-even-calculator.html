@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Break-Even Calculator — How Many Units to Cover Your Costs</title>
+<meta name="description" content="Free break-even calculator. Find how many units or months you need to sell to cover fixed costs, what your contribution margin is, and how much revenue break-even needs.">
+<link rel="canonical" href="https://example.com/break-even-calculator.html">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Break-Even Calculator",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any",
+  "url": "https://example.com/break-even-calculator.html",
+  "description": "Calculate break-even units, break-even revenue, contribution margin per unit and contribution margin ratio from fixed costs, variable cost and price.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is break-even analysis?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Break-even analysis finds the point where total revenue exactly equals total costs, so profit is zero. Below that point you lose money on every sale; above it each sale adds to your profit. It answers two questions: how much do I need to sell to stop losing money, and how much room do I have if sales fall. It is the fastest way to test whether a price, a lease or a product launch is financially survivable."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I calculate break-even units?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Divide fixed costs by the contribution margin per unit. Contribution margin per unit is selling price minus variable cost per unit. So if fixed costs are 12,000 per month, price is 50 and variable cost is 20, contribution margin is 30, and break-even is 12,000 divided by 30 which is 400 units a month."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between break-even units and break-even revenue?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Break-even units is the number of items or jobs you must sell. Break-even revenue is the sales value at that point, which is units multiplied by price. The two differ when you sell at very different price points. Revenue is the better measure for comparing a business against a sales target, while units is the better measure for planning production and staffing."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is my break-even point so high?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The most common cause is a low contribution margin, meaning variable costs consume most of your price. If materials and labor leave only a small amount per item to cover fixed costs, break-even becomes large. Rising prices, reducing variable cost, or lowering fixed overhead all move the point down. The calculator shows your contribution margin ratio, which is the clearest indicator of how much room you actually have."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should I include my salary in fixed costs?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Include it if you need to pay yourself to keep operating. Your own compensation is a real cost of the business, and excluding it understates break-even, which can make a weak plan look viable. Exclude it only when calculating return on investment in the business as an investment, where your time is not treated as a paid expense."
+      }
+    }
+  ]
+}
+</script>
+<style>
+  *{box-sizing:border-box;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       background:#fff;color:#1c1c1a;line-height:1.65;margin:0;padding:0 16px 64px;}
+  .wrap{max-width:840px;margin:0 auto;}
+  h1{font-size:28px;font-weight:600;letter-spacing:-0.02em;margin:32px 0 8px;line-height:1.25;}
+  h2{font-size:20px;font-weight:600;margin:36px 0 12px;}
+  h3{font-size:16px;font-weight:600;margin:0 0 10px;}
+  .sub{color:#6b6a64;font-size:15px;margin:0 0 20px;}
+  .panel{background:#faf9f7;border:1px solid #e5e3dc;border-radius:10px;padding:20px;margin:0 0 18px;}
+  .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;}
+  .field{margin:0 0 14px;}
+  label{display:block;font-weight:500;font-size:14px;margin-bottom:6px;}
+  .hint{display:block;font-weight:400;color:#6b6a64;font-size:13px;margin-top:2px;}
+  input[type=number]{width:100%;padding:10px 12px;border:1px solid #c9c7bf;border-radius:8px;
+       font-size:16px;background:#fff;color:inherit;}
+  input:focus{outline:2px solid #185fa5;outline-offset:1px;border-color:#185fa5;}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:0 0 18px;}
+  .stat{background:#faf9f7;border:1px solid #e5e3dc;border-radius:10px;padding:14px;}
+  .stat .lbl{font-size:12px;color:#6b6a64;margin:0 0 4px;}
+  .stat .val{font-size:24px;font-weight:600;margin:0;letter-spacing:-0.01em;}
+  .stat.hl{background:#e1f5ee;border-color:#9fe1cb;}
+  .stat.hl .val{color:#0f6e56;}
+  .stat.warn{background:#faeeda;border-color:#fac775;}
+  .stat.warn .val{color:#854f0b;}
+  .stat.bad{background:#fcebeb;border-color:#f7c1c1;}
+  .stat.bad .val{color:#a32d2d;}
+  table{width:100%;border-collapse:collapse;margin:0 0 18px;font-size:14px;}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid #e5e3dc;}
+  th{background:#faf9f7;font-weight:600;font-size:13px;}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;}
+  details{border:1px solid #e5e3dc;border-radius:8px;padding:12px 14px;margin-bottom:10px;background:#faf9f7;}
+  summary{font-weight:500;cursor:pointer;font-size:15px;}
+  details p{margin:10px 0 0;font-size:14px;}
+  .ad-slot{background:#f1efe8;border:1px dashed #c9c7bf;border-radius:8px;min-height:90px;
+           display:flex;align-items:center;justify-content:center;color:#888780;font-size:12px;margin:20px 0;}
+  .insight{background:#faf9f7;border:1px solid #e5e3dc;border-radius:8px;padding:14px 16px;font-size:14px;margin:0 0 20px;}
+  .disc{background:#faf9f7;border:1px solid #e5e3dc;border-radius:8px;padding:14px 16px;font-size:13px;color:#6b6a64;margin:0 0 24px;}
+  .related{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 24px;}
+  .related a{display:inline-block;padding:8px 12px;border:1px solid #c9c7bf;border-radius:8px;text-decoration:none;color:#185fa5;font-size:14px;}
+  .related a:hover{background:#e6f1fb;}
+  header{border-bottom:1px solid #e5e3dc;padding:14px 0;}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .brand{font-weight:600;font-size:17px;text-decoration:none;color:#1c1c1a;}
+  .brandnav{display:flex;gap:18px;}
+  .brandnav a{font-size:14px;color:#6b6a64;text-decoration:none;}
+  footer{border-top:1px solid #e5e3dc;margin-top:32px;padding-top:16px;font-size:13px;color:#6b6a64;}
+  footer a{color:#6b6a64;margin-right:14px;}
+  .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);}
+</style>
+</head>
+<body>
+
+<header><div class="wrap">
+  <a class="brand" href="https://example.com/">Small Profit Tools</a>
+  <nav class="brandnav">
+    <a href="https://example.com/tools.html">All tools</a>
+    <a href="https://example.com/about.html">About</a>
+  </nav>
+</div></header>
+
+<div class="wrap">
+
+<h1>Break-Even Calculator</h1>
+<p class="sub">How many sales does it take to stop losing money? And how much room do you have if sales fall?</p>
+
+<div class="ad-slot" id="ad-slot-top" aria-hidden="true">Advertisement slot · top</div>
+
+<div class="panel">
+  <h3>Your costs</h3>
+  <div class="row">
+    <div class="field">
+      <label for="fixed">Fixed costs per month <span class="hint">Rent, salaried staff, insurance, software, marketing — costs you pay whether or not you sell</span></label>
+      <input type="number" id="fixed" value="12000" step="0.01" min="0" inputmode="decimal">
+    </div>
+    <div class="field">
+      <label for="variable">Variable cost per unit <span class="hint">Materials, packaging, payment fees, direct labor</span></label>
+      <input type="number" id="variable" value="20" step="0.01" min="0" inputmode="decimal">
+    </div>
+    <div class="field">
+      <label for="price">Selling price per unit</label>
+      <input type="number" id="price" value="50" step="0.01" min="0" inputmode="decimal">
+    </div>
+  </div>
+
+  <h3 style="margin-top:22px;">Optional: what you currently sell</h3>
+  <p class="hint" style="margin:-4px 0 14px;">Leave blank to see the break-even point alone.</p>
+  <div class="row">
+    <div class="field">
+      <label for="units">Units sold per month</label>
+      <input type="number" id="units" value="320" step="1" min="0" inputmode="numeric">
+    </div>
+  </div>
+</div>
+
+<div id="results" aria-live="polite">
+  <div class="grid3">
+    <div class="stat hl">
+      <p class="lbl">Break-even units per month</p>
+      <p class="val" id="beUnits">400</p>
+    </div>
+    <div class="stat">
+      <p class="lbl">Break-even revenue per month</p>
+      <p class="val" id="beRevenue">$20,000.00</p>
+    </div>
+    <div class="stat">
+      <p class="lbl">Contribution margin per unit</p>
+      <p class="val" id="cm">$30.00</p>
+    </div>
+  </div>
+
+  <div class="grid3">
+    <div class="stat">
+      <p class="lbl">Contribution margin ratio</p>
+      <p class="val" id="cmRatio">60.0%</p>
+    </div>
+    <div class="stat" id="gapCard">
+      <p class="lbl">Units above / below break-even</p>
+      <p class="val" id="gap">−80</p>
+    </div>
+    <div class="stat">
+      <p class="lbl">Revenue needed to cover fixed costs</p>
+      <p class="val" id="beFixed">$12,000.00</p>
+    </div>
+  </div>
+
+  <div id="gapBlock">
+    <h2>Where you stand</h2>
+    <table>
+      <caption class="vh">Comparison of current sales against break-even</caption>
+      <thead><tr><th>Measure</th><th class="num">Amount</th></tr></thead>
+      <tbody>
+        <tr><td>Units sold per month</td><td class="num" id="g-units">320</td></tr>
+        <tr><td>Break-even units</td><td class="num" id="g-be">400</td></tr>
+        <tr><td><strong>Difference</strong></td><td class="num" id="g-diff"><strong>−80</strong></td></tr>
+        <tr><td>Revenue at current sales</td><td class="num" id="g-rev">$16,000.00</td></tr>
+        <tr><td>Profit or loss at current sales</td><td class="num" id="g-profit"><strong>−$2,400.00</strong></td></tr>
+        <tr><td>Sales needed to reach break-even</td><td class="num" id="g-need">80 more units</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="insight" id="insight" role="status"></div>
+</div>
+
+<h2>What break-even actually tells you</h2>
+<p>Break-even is the volume at which profit is exactly zero. Its real value is not the number itself but what it reveals: how much of every sale is left over after variable costs to cover your fixed bills. That leftover is called contribution margin, and it is the number that decides whether a business model works.</p>
+<p>A business with $50 of sales and $20 of variable cost has $30 per unit toward its fixed costs. If fixed costs are $12,000 a month, 400 units covers them. If your actual sales are lower, every unit sold still loses money. That is the trap most new businesses fall into, because contribution margin is easy to overlook when the price feels healthy.</p>
+
+<h2>Fixed versus variable cost</h2>
+<table>
+  <thead><tr><th>Type</th><th>Meaning</th><th>Examples</th></tr></thead>
+  <tbody>
+    <tr><td>Fixed</td><td>Does not change with volume, within a reasonable range</td><td>Rent or mortgage, salaried staff, insurance, software subscriptions, website hosting, depreciation</td></tr>
+    <tr><td>Variable</td><td>Changes directly with each unit sold</td><td>Materials, packaging, payment processing fees, shipping, sales commission, direct production labor</td></tr>
+    <tr><td>Semi-variable</td><td>Partly fixed, partly variable</td><td>Utilities, phone plans, marketing spend if you tie it to volume</td></tr>
+  </tbody>
+</table>
+<p>Classification matters because break-even only works if costs are assigned to the right bucket. A retainer that steps up after 500 clients is semi-variable, and treating it as fully fixed will understate your break-even.</p>
+
+<h2>Reading the two numbers</h2>
+<table>
+  <thead><tr><th>Contribution margin ratio</th><th>What it means for you</th></tr></thead>
+  <tbody>
+    <tr><td>Below 20%</td><td>Very thin. A small rise in variable cost pushes you under. Raising price or cutting cost is usually the only way out.</td></tr>
+    <tr><td>20–40%</td><td>Tight but workable, common in retail and distribution. Break-even will be high in units.</td></tr>
+    <tr><td>40–60%</td><td>Healthy. Most well-run small service businesses sit here.</td></tr>
+    <tr><td>60–80%</td><td>Strong, typical of software, agencies and professional services.</td></tr>
+    <tr><td>Above 80%</td><td>Very high, usually a service with negligible material cost.</td></tr>
+  </tbody>
+</table>
+
+<h2>Common questions</h2>
+
+<details>
+  <summary>What is break-even analysis?</summary>
+  <p>Break-even analysis finds the point where total revenue equals total costs, so profit is zero. Below it you lose money on every sale; above it each sale adds to your profit. It answers two questions: how much must I sell to stop losing money, and how much room do I have if sales fall? It is the fastest way to test whether a price, a lease or a product launch is financially survivable.</p>
+</details>
+
+<details>
+  <summary>How do I calculate break-even units?</summary>
+  <p>Divide fixed costs by the contribution margin per unit, which is selling price minus variable cost per unit. If fixed costs are $12,000 per month, price is $50 and variable cost is $20, contribution margin is $30, so break-even is $12,000 divided by 30, which is 400 units a month. The same arithmetic expressed in revenue form is fixed costs divided by the contribution margin ratio.</p>
+</details>
+
+<details>
+  <summary>What is the difference between break-even units and break-even revenue?</summary>
+  <p>Break-even units is the number of items or jobs you must sell. Break-even revenue is the sales value at that point, which is units multiplied by price. They diverge when you sell at very different price points. Revenue is the better measure for comparing against a sales target, while units is better for planning production and staffing.</p>
+</details>
+
+<details>
+  <summary>Why is my break-even point so high?</summary>
+  <p>Usually because your contribution margin is low, meaning variable costs consume most of your price. If materials and labor leave only a small amount per item to cover fixed costs, break-even becomes large regardless of how good the gross margin looks. Raising prices, reducing variable cost, or lowering fixed overhead all move the point down. Check the contribution margin ratio above first, because it explains most cases.</p>
+</details>
+
+<details>
+  <summary>Should I include my own salary in fixed costs?</summary>
+  <p>Include it if you need to pay yourself to keep operating. Your compensation is a real cost of the business, and excluding it understates break-even, which can make an unsustainable plan look viable. Exclude it only when you are calculating return on the business as an investment, where your unpaid time is treated as a contribution rather than an expense.</p>
+</details>
+
+<details>
+  <summary>How much cushion should I aim for above break-even?</summary>
+  <p>A common target is 20 to 30 percent above break-even, which gives room for a slow month, unexpected costs, and a downward sales swing. If your sales sit exactly at break-even, any small disruption turns into a loss. The cushion is also what funds growth, because cash generated above break-even is what pays for hiring or inventory expansion.</p>
+</details>
+
+<div class="ad-slot" id="ad-slot-bottom" aria-hidden="true">Advertisement slot · bottom</div>
+
+<h2>Related tools</h2>
+<div class="related">
+  <a href="https://example.com/markup-margin-calculator.html">Markup vs Margin</a>
+  <a href="https://example.com/gross-vs-net-profit-calculator.html">Gross vs Net Profit</a>
+  <a href="https://example.com/tools.html">All calculators</a>
+</div>
+
+<div class="disc"><strong>Disclaimer.</strong> This calculator is for informational and educational purposes only. Results are estimates based on the figures you enter and do not constitute tax, accounting, legal, or financial advice. Verify figures with a qualified professional before making business decisions.</div>
+
+<footer>
+  <a href="https://example.com/">Home</a>
+  <a href="https://example.com/about.html">About</a>
+  <a href="https://example.com/contact.html">Contact</a>
+  <a href="https://example.com/privacy.html">Privacy Policy</a>
+  <a href="https://example.com/disclaimer.html">Disclaimer</a>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  function v(id){
+    var x = parseFloat(document.getElementById(id).value);
+    return (isFinite(x) && x >= 0) ? x : 0;
+  }
+  function money(n){
+    return '$' + n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  }
+  function num(n){
+    return Math.round(n).toLocaleString('en-US');
+  }
+  function pct(n){
+    return (isFinite(n)?n:0).toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1}) + '%';
+  }
+  function setT(id, val){
+    var el = document.getElementById(id);
+    if (el) el.textContent = val;
+  }
+  var blank = function(v0){ return v0 === '' || v0 === null ? '' : num(v0); };
+
+  function update(){
+    var fixed = v('fixed');
+    var variable = v('variable');
+    var price = v('price');
+    var unitsRaw = document.getElementById('units').value.trim();
+    var units = unitsRaw === '' ? null : v('units');
+
+    var cm = price - variable;
+    var cmRatio = price > 0 ? (cm / price) * 100 : 0;
+
+    // 无边际毛利时无法计算盈亏平衡
+    if (cm <= 0) {
+      setT('beUnits', '—');
+      setT('beRevenue', '—');
+      setT('cm', money(cm));
+      setT('cmRatio', pct(cmRatio));
+      setT('gap', '—');
+      setT('beFixed', money(fixed));
+      document.getElementById('gapBlock').style.display = 'none';
+      document.getElementById('insight').textContent =
+        'Your price (' + money(price) + ') is not greater than your variable cost (' + money(variable) +
+        '), so every sale loses money before fixed costs are considered. Raise the price above ' +
+        money(variable) + ' or reduce variable cost first.';
+      return;
+    }
+
+    var beUnits = fixed / cm;
+    var beRevenue = beUnits * price;
+    setT('beUnits', num(beUnits) + (Math.abs(beUnits - Math.round(beUnits)) < 0.001 ? '' : ' (' + beUnits.toFixed(1) + ')'));
+    setT('beRevenue', money(beRevenue));
+    setT('cm', money(cm));
+    setT('cmRatio', pct(cmRatio));
+    setT('beFixed', money(fixed));
+
+    if (units === null) {
+      document.getElementById('gapBlock').style.display = 'none';
+      var base = 'Each sale contributes ' + money(cm) + ' toward fixed costs, so you need ' +
+                 num(Math.ceil(beUnits)) + ' sales a month to cover ' + money(fixed) + '. ';
+      base += cmRatio < 30
+        ? 'That contribution margin is thin, which is why break-even sits so far up. Raising price or cutting variable cost moves it down quickly.'
+        : (cmRatio >= 60
+            ? 'That is a strong contribution margin, so fixed costs are covered with fewer sales.'
+            : 'That is a workable contribution margin for a small business.');
+      document.getElementById('insight').textContent = base;
+      return;
+    }
+
+    document.getElementById('gapBlock').style.display = '';
+    var diff = units - beUnits;
+    setT('g-units', num(units));
+    setT('g-be', num(beUnits));
+    setT('gap', (diff < 0 ? '−' : '+') + num(Math.abs(diff)));
+    setT('g-rev', money(units * price));
+    var profit = diff * cm;
+    setT('g-profit', (profit < 0 ? '−' : '') + money(Math.abs(profit)));
+
+    var card = document.getElementById('gapCard');
+    card.className = 'stat ' + (diff < 0 ? 'bad' : (diff < beUnits * 0.15 ? 'warn' : 'hl'));
+
+    if (diff < 0) {
+      setT('g-need', num(Math.ceil(-diff)) + ' more units');
+      document.getElementById('insight').textContent =
+        'You are ' + num(Math.ceil(-diff)) + ' units short of break-even, which is a loss of ' +
+        money(Math.abs(profit)) + ' this month. Covering the gap needs about ' +
+        pct((-diff) / (units || 1) * 100) + ' more sales than you are currently making. ' +
+        (cmRatio < 30
+          ? 'Because your contribution margin is only ' + pct(cmRatio) + ', raising price is usually faster than adding volume.'
+          : 'Adding volume is realistic here because each sale contributes ' + money(cm) + '.');
+    } else {
+      setT('g-need', 'Already above break-even');
+      var cushion = beUnits > 0 ? (diff / beUnits * 100) : 0;
+      document.getElementById('insight').textContent =
+        'You are ' + num(Math.floor(diff)) + ' units above break-even, a profit of ' + money(profit) +
+        ' this month. That is a ' + pct(cushion) + ' cushion over the break-even point. ' +
+        (cushion < 15
+          ? 'A cushion this thin leaves little room for a slow month or unexpected costs.'
+          : 'A cushion of this size gives you room to absorb a bad month and still stay solvent.');
+    }
+  }
+
+  ['fixed','variable','price','units'].forEach(function(id){
+    document.getElementById(id).addEventListener('input', update);
+  });
+  update();
+})();
+</script>
+
+</body>
+</html>
