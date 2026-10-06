@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Illinois Sales Tax Calculator — 6.25% State Rate (2026)</title>
+<meta name="description" content="Free Illinois sales tax calculator. Illinois has a 6.25% state sales tax rate, plus local county and city add-ons averaging 2.73%. Calculate exact sales tax on any amount.">
+<link rel="canonical" href="https://example.com/sales-tax-calculator-illinois.html">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Illinois Sales Tax Calculator",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any",
+  "url": "https://example.com/sales-tax-calculator-illinois.html",
+  "description": "Calculate Illinois sales tax on any amount using the 6.25% state rate and county or city local add-ons.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the sales tax rate in Illinois?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Illinois has a state sales tax rate of 6.25 percent. County and city add-ons average a further 2.73 percent, so the typical combined rate is about 8.98 percent. The highest combined rate in the state reaches about 11 percent in the areas with the largest local additions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Illinois a destination-based or origin-based sales tax state?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Illinois is destination-based, meaning the tax rate is determined by where the buyer is located rather than where the seller or business is based. For most goods shipped to a Illinois customer, the rate of the destination applies. Exemptions exist, particularly for groceries in some states, so not every item is taxed at the standard rate."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I know the exact local rate for my customer's address?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Statewide averages hide a wide range. A single Illinois county can add nothing while another adds more than 4.75 percent, so a customer 30 miles away can pay a different rate. For an exact figure, look up the specific city or county at point of sale, use the state revenue department address lookup tool, or use automated rate lookup software that resolves by customer address."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to register for sales tax in Illinois?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Registration depends on your sales volume and whether you have physical presence in the state. A common threshold is $100,000 in annual sales. Once you exceed it, you are generally required to collect Illinois sales tax on remote sales, register with the Illinois revenue department, and file periodic returns even if you have no physical location in the state."
+      }
+    }
+  ]
+}
+</script>
+<style>
+  *{box-sizing:border-box;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       background:#fff;color:#1c1c1a;line-height:1.65;margin:0;padding:0 16px 64px;}
+  .wrap{max-width:820px;margin:0 auto;}
+  h1{font-size:28px;font-weight:600;letter-spacing:-0.02em;margin:32px 0 8px;line-height:1.25;}
+  h2{font-size:20px;font-weight:600;margin:36px 0 12px;}
+  h3{font-size:16px;font-weight:600;margin:0 0 10px;}
+  .sub{color:#6b6a64;font-size:15px;margin:0 0 20px;}
+  .panel{background:#faf9f7;border:1px solid #e5e3dc;border-radius:10px;padding:20px;margin:0 0 18px;}
+  .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;}
+  .field{margin:0 0 14px;}
+  label{display:block;font-weight:500;font-size:14px;margin-bottom:6px;}
+  .hint{display:block;font-weight:400;color:#6b6a64;font-size:13px;margin-top:2px;}
+  input[type=number],select{width:100%;padding:10px 12px;border:1px solid #c9c7bf;border-radius:8px;
+       font-size:16px;background:#fff;color:inherit;font-family:inherit;}
+  input:focus,select:focus{outline:2px solid #185fa5;outline-offset:1px;border-color:#185fa5;}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:0 0 18px;}
+  .stat{background:#faf9f7;border:1px solid #e5e3dc;border-radius:10px;padding:14px;}
+  .stat .lbl{font-size:12px;color:#6b6a64;margin:0 0 4px;}
+  .stat .val{font-size:24px;font-weight:600;margin:0;letter-spacing:-0.01em;}
+  .stat.hl{background:#e1f5ee;border-color:#9fe1cb;}
+  .stat.hl .val{color:#0f6e56;}
+  table{width:100%;border-collapse:collapse;margin:0 0 18px;font-size:14px;}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid #e5e3dc;}
+  th{background:#faf9f7;font-weight:600;font-size:13px;}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;}
+  details{border:1px solid #e5e3dc;border-radius:8px;padding:12px 14px;margin-bottom:10px;background:#faf9f7;}
+  summary{font-weight:500;cursor:pointer;font-size:15px;}
+  details p{margin:10px 0 0;font-size:14px;}
+  .ad-slot{background:#f1efe8;border:1px dashed #c9c7bf;border-radius:8px;min-height:90px;
+           display:flex;align-items:center;justify-content:center;color:#888780;font-size:12px;margin:20px 0;}
+  .note{background:#e6f1fb;border-left:3px solid #185fa5;border-radius:0 8px 8px 0;padding:12px 16px;font-size:14px;margin:0 0 18px;}
+  .src{font-size:12px;color:#6b6a64;margin:-6px 0 18px;}
+  .disc{background:#faf9f7;border:1px solid #e5e3dc;border-radius:8px;padding:14px 16px;font-size:13px;color:#6b6a64;margin:0 0 24px;}
+  .related{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 24px;}
+  .related a{display:inline-block;padding:8px 12px;border:1px solid #c9c7bf;border-radius:8px;text-decoration:none;color:#185fa5;font-size:14px;}
+  .related a:hover{background:#e6f1fb;}
+  header{border-bottom:1px solid #e5e3dc;padding:14px 0;}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .brand{font-weight:600;font-size:17px;text-decoration:none;color:#1c1c1a;}
+  .brandnav{display:flex;gap:18px;}
+  .brandnav a{font-size:14px;color:#6b6a64;text-decoration:none;}
+  footer{border-top:1px solid #e5e3dc;margin-top:32px;padding-top:16px;font-size:13px;color:#6b6a64;}
+  footer a{color:#6b6a64;margin-right:14px;}
+  .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);}
+</style>
+</head>
+<body>
+
+<header><div class="wrap">
+  <a class="brand" href="https://example.com/">Small Profit Tools</a>
+  <nav class="brandnav">
+    <a href="https://example.com/tools.html">All tools</a>
+    <a href="https://example.com/about.html">About</a>
+  </nav>
+</div></header>
+
+<div class="wrap">
+
+<h1>Illinois Sales Tax Calculator</h1>
+<p class="sub">A 6.25% state rate plus up to 4.75 percent in local county and city add-ons.</p>
+
+<div class="ad-slot" aria-hidden="true">Advertisement slot</div>
+
+<div class="panel">
+  <div class="row">
+    <div class="field">
+      <label for="amount">Amount before tax</label>
+      <input type="number" id="amount" value="100" step="0.01" min="0" inputmode="decimal">
+    </div>
+    <div class="field">
+      <label for="localRate">Local tax rate <span class="hint">County and city add-ons. The statewide average is 2.73%.</span></label>
+      <input type="number" id="localRate" value="2.73" step="0.01" min="0" max="15" inputmode="decimal">
+    </div>
+  </div>
+  <div class="field" style="margin-bottom:0;">
+    <label for="purchases">How many separate purchases? <span class="hint">Some items are taxed per transaction, so rounding applies per purchase rather than on the total.</span></label>
+    <input type="number" id="purchases" value="1" step="1" min="1" inputmode="numeric">
+  </div>
+</div>
+
+<div aria-live="polite">
+  <div class="grid3">
+    <div class="stat hl">
+      <p class="lbl">Combined tax rate</p>
+      <p class="val" id="rate">8.98%</p>
+    </div>
+    <div class="stat">
+      <p class="lbl">Sales tax</p>
+      <p class="val" id="tax">$9.03</p>
+    </div>
+    <div class="stat">
+      <p class="lbl">Total with tax</p>
+      <p class="val" id="total">$109.03</p>
+    </div>
+  </div>
+
+  <div class="grid3">
+    <div class="stat">
+      <p class="lbl">State portion</p>
+      <p class="val" id="stateTax">$7.25</p>
+    </div>
+    <div class="stat">
+      <p class="lbl">Local portion</p>
+      <p class="val" id="localTax">$1.78</p>
+    </div>
+    <div class="stat">
+      <p class="lbl">Tax on $1,000</p>
+      <p class="val" id="per1000">$90.30</p>
+    </div>
+  </div>
+
+  <h2>Quick reference</h2>
+  <table>
+    <caption class="vh">Illinois sales tax quick reference</caption>
+    <thead><tr><th>Scenario</th><th class="num">Rate</th><th class="num">Tax on $100</th><th class="num">Total on $100</th></tr></thead>
+    <tbody id="quickRef">
+      <tr><td>State rate only</td><td class="num">{rate}%</td><td class="num">{rate_m}</td><td class="num">{rate_100}</td></tr>
+      <tr><td>Typical (state + average local)</td><td class="num">{combined}%</td><td class="num">{combined_m}</td><td class="num">{combined_100}</td></tr>
+      <tr><td>Highest (state + max local)</td><td class="num">{maxrate}%</td><td class="num">{maxrate_m}</td><td class="num">{maxrate_100}</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note" id="verdict"></div>
+</div>
+
+<h2>What makes Illinois different</h2>
+<p>Illinois combines a high state rate with substantial local add-ons. Chicago sits at the top of the range, while many downstate counties are close to the state rate alone. Grocery items are taxed at a reduced 1 percent rate.</p>
+
+<h2>State rate versus combined rate</h2>
+<p>The 6.25 percent figure is the statewide base rate. What a buyer actually pays is the base rate plus county, city and special district add-ons, and those vary enough within Illinois to change the final number by several percentage points. A customer in one county may pay close to 6.25 percent while another in a different county pays more than 8.98 percent.</p>
+<p>This matters most for businesses that quote prices without tax and add it at checkout. Using the statewide average of 2.73 percent is a reasonable planning figure, but it will be wrong at both ends of the range, and for any customer in a high-rate area the error is systematically in your favour until it is not.</p>
+
+<h2>Common questions</h2>
+
+<details>
+  <summary>What is the sales tax rate in Illinois?</summary>
+  <p>Illinois has a state sales tax rate of 6.25 percent. County and city add-ons average a further 2.73 percent, so the typical combined rate is about 8.98 percent. The highest combined rate in the state reaches about 11 percent in areas with the largest local additions.</p>
+</details>
+
+<details>
+  <summary>Is Illinois destination-based or origin-based?</summary>
+  <p>Illinois is destination-based, meaning the tax rate follows where the buyer is located rather than where the seller is based. For most goods shipped to a Illinois customer, the destination rate applies. Exemptions exist, particularly for groceries in some states, so not every item is taxed at the standard rate.</p>
+</details>
+
+<details>
+  <summary>How do I find the exact rate for my customer's address?</summary>
+  <p>Statewide averages hide a wide range. A single Illinois county can add nothing while another adds more than 4.75 percent, so two customers 30 miles apart can pay different rates. For an exact figure, look up the specific city or county at the point of sale, use the state revenue department address lookup tool, or use automated rate lookup software that resolves by customer address.</p>
+</details>
+
+<details>
+  <summary>Do I need to register for sales tax in Illinois?</summary>
+  <p>Registration depends on your sales volume and whether you have physical presence in the state. A common threshold is $100,000 in annual sales. Once you exceed it, you are generally required to collect Illinois sales tax on remote sales, register with the Illinois revenue department, and file periodic returns even without a physical location in the state.</p>
+</details>
+
+<div class="ad-slot" aria-hidden="true">Advertisement slot</div>
+
+<h2>Related tools</h2>
+<div class="related">
+  <a href="https://example.com/markup-margin-calculator.html">Markup vs Margin</a>
+  <a href="https://example.com/gross-vs-net-profit-calculator.html">Gross vs Net Profit</a>
+  <a href="https://example.com/break-even-calculator.html">Break-Even</a>
+  <a href="https://example.com/tools.html">All calculators</a>
+</div>
+
+<p class="src">Rates as of July 1, 2026, from Tax Foundation midyear state and local sales tax data. State and county rates change; verify with the Illinois department of revenue before relying on a specific figure for invoicing or filing.</p>
+
+<div class="disc"><strong>Disclaimer.</strong> This calculator is for informational and educational purposes only. Tax figures shown are estimates from published state and average local rates and do not constitute tax, accounting, or legal advice. Local rates vary by address, product category, and special district. Verify the exact rate for a specific transaction with the relevant state revenue department and a qualified professional.</div>
+
+<footer>
+  <a href="https://example.com/">Home</a>
+  <a href="https://example.com/about.html">About</a>
+  <a href="https://example.com/contact.html">Contact</a>
+  <a href="https://example.com/privacy.html">Privacy Policy</a>
+  <a href="https://example.com/disclaimer.html">Disclaimer</a>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var STATE_RATE = 6.25;
+  var AVG_LOCAL = 2.73;
+  var MAX_LOCAL = 4.75;
+  var NEXUS = "$100,000";
+
+  function v(id){
+    var x = parseFloat(document.getElementById(id).value);
+    return (isFinite(x) && x >= 0) ? x : 0;
+  }
+  function money(n){
+    return '$' + n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  }
+  function pct(n){
+    return (isFinite(n)?n:0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}) + '%';
+  }
+  function setT(id, val){
+    var el = document.getElementById(id);
+    if (el) el.textContent = val;
+  }
+
+  function update(){
+    var amount = v('amount');
+    var local = v('localRate');
+    var purchases = Math.max(1, Math.floor(v('purchases')) || 1);
+    var combined = STATE_RATE + local;
+
+    var tax, stateTax, localTax, total;
+    if (purchases > 1) {
+      // 逐笔计税：每笔四舍五入到分，再累加（与多数州规则一致）
+      var per = amount / purchases;
+      var perTax = Math.round(per * combined / 100 * 100) / 100;
+      tax = perTax * purchases;
+      stateTax = Math.round(per * STATE_RATE / 100 * 100) / 100 * purchases;
+      localTax = Math.round(per * local / 100 * 100) / 100 * purchases;
+      total = amount + tax;
+    } else {
+      tax = amount * combined / 100;
+      stateTax = amount * STATE_RATE / 100;
+      localTax = amount * local / 100;
+      total = amount + tax;
+    }
+
+    setT('rate', pct(combined));
+    setT('tax', money(tax));
+    setT('total', money(total));
+    setT('stateTax', money(stateTax));
+    setT('localTax', money(localTax));
+    setT('per1000', money(1000 * combined / 100));
+
+    // 结论
+    var msg = 'At ' + pct(combined) + ', every $1,000 of sales carries ' + money(1000 * combined / 100) +
+              ' in Illinois sales tax. ';
+    if (local >= AVG_LOCAL - 0.05 && local <= AVG_LOCAL + 0.05) {
+      msg += 'You are using the statewide average local rate, which is a reasonable planning figure. ';
+      msg += 'The actual rate for a given address runs from ' + pct(STATE_RATE) + ' to ' + pct(STATE_RATE + MAX_LOCAL) +
+             ', so a customer outside the average area will be taxed differently.';
+    } else if (local > AVG_LOCAL) {
+      msg += 'This is above the statewide average of ' + pct(AVG_LOCAL) +
+             ', so it reflects a higher-rate area of Illinois. ';
+      if (local > MAX_LOCAL) msg += 'It is above the known maximum of ' + pct(MAX_LOCAL) + ', so double-check the value. ';
+    } else {
+      msg += 'This is below the statewide average of ' + pct(AVG_LOCAL) +
+             ', consistent with a lower-rate county or a customer in a jurisdiction with no add-on. ';
+    }
+    if (amount > 0) {
+      msg += 'For pricing decisions, note that tax is collected from the buyer and usually is not part of your revenue, so it should not be counted in profit calculations.';
+    }
+    setT('verdict', msg);
+  }
+
+  ['amount','localRate','purchases'].forEach(function(id){
+    document.getElementById(id).addEventListener('input', update);
+  });
+  update();
+})();
+</script>
+
+</body>
+</html>

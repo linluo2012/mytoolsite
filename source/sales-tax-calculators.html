@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>US State Sales Tax Calculators — All States, Rates and Thresholds</title>
+<meta name="description" content="Free sales tax calculators for every major US state. Current 2026 state rates, local county and city add-ons, and economic nexus thresholds. Destination-based rules explained.">
+<link rel="canonical" href="https://example.com/sales-tax-calculators.html">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "US State Sales Tax Calculators",
+  "description": "Sales tax calculators for US states with 2026 state rates, average local add-ons and economic nexus thresholds.",
+  "url": "https://example.com/sales-tax-calculators.html"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "California Sales Tax Calculator", "url": "https://example.com/sales-tax-calculator-california.html" },
+    { "@type": "ListItem", "position": 2, "name": "Texas Sales Tax Calculator", "url": "https://example.com/sales-tax-calculator-texas.html" },
+    { "@type": "ListItem", "position": 3, "name": "New York Sales Tax Calculator", "url": "https://example.com/sales-tax-calculator-new-york.html" },
+    { "@type": "ListItem", "position": 4, "name": "Florida Sales Tax Calculator", "url": "https://example.com/sales-tax-calculator-florida.html" },
+    { "@type": "ListItem", "position": 5, "name": "Illinois Sales Tax Calculator", "url": "https://example.com/sales-tax-calculator-illinois.html" },
+    { "@type": "ListItem", "position": 6, "name": "Washington Sales Tax Calculator", "url": "https://example.com/sales-tax-calculator-washington.html" },
+    { "@type": "ListItem", "position": 7, "name": "Pennsylvania Sales Tax Calculator", "url": "https://example.com/sales-tax-calculator-pennsylvania.html" },
+    { "@type": "ListItem", "position": 8, "name": "Ohio Sales Tax Calculator", "url": "https://example.com/sales-tax-calculator-ohio.html" }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Which US states have no sales tax?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Five states have no state-level sales tax: Delaware, Montana, New Hampshire, Oregon and Alaska. Alaska has local sales tax that applies in some jurisdictions, so it is not uniformly tax-free. The other four impose no sales tax at any level. Grocery items are taxed at reduced rates or not at all in many other states, so a full exemption list is longer than the no-tax state list."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the highest sales tax rate in the US?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Louisiana has the highest combined state and local sales tax rate at about 10.13 percent, followed closely by Tennessee at about 9.61 percent and Washington at about 9.57 percent. At the state level alone, California has the highest base rate at 7.25 percent, followed by Indiana, Rhode Island and Tennessee at 7 percent each. Local additions are what push some states above 10 percent in practice."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is economic nexus?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Economic nexus is a sales threshold, commonly between $100,000 and $500,000 in annual sales, above which a business without physical presence in a state must still collect that state's sales tax. Thresholds differ by state and some also count transaction volume rather than dollars. Once you cross the threshold you are generally required to register with the state revenue department and file periodic returns."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is sales tax based on my location or my customer's?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In all states with a sales tax, the rate follows the destination, which is normally the customer's address rather than your business address. This is called destination-based sourcing. The practical consequence for a remote seller is that you may need to charge different rates to customers in the same state, and you may need to register in multiple states once you exceed their thresholds."
+      }
+    }
+  ]
+}
+</script>
+<style>
+  *{box-sizing:border-box;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       background:#fff;color:#1c1c1a;line-height:1.65;margin:0;padding:0 16px 64px;}
+  .wrap{max-width:880px;margin:0 auto;}
+  h1{font-size:28px;font-weight:600;letter-spacing:-0.02em;margin:32px 0 8px;line-height:1.25;}
+  h2{font-size:20px;font-weight:600;margin:36px 0 12px;}
+  h3{font-size:16px;font-weight:600;margin:0 0 10px;}
+  .sub{color:#6b6a64;font-size:15px;margin:0 0 20px;}
+  .panel{background:#faf9f7;border:1px solid #e5e3dc;border-radius:10px;padding:18px 20px;margin:0 0 20px;}
+  .field{margin:0 0 14px;}
+  label{display:block;font-weight:500;font-size:14px;margin-bottom:6px;}
+  select{width:100%;padding:10px 12px;border:1px solid #c9c7bf;border-radius:8px;font-size:16px;background:#fff;font-family:inherit;}
+  select:focus{outline:2px solid #185fa5;outline-offset:1px;border-color:#185fa5;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin:0 0 24px;}
+  .card{border:1px solid #e5e3dc;border-radius:10px;padding:16px 18px;text-decoration:none;color:inherit;display:block;}
+  .card:hover{border-color:#185fa5;background:#f7fbff;}
+  .card .st{font-size:12px;color:#6b6a64;margin:0 0 6px;}
+  .card h3{margin:0 0 6px;}
+  .card p{font-size:14px;color:#6b6a64;margin:0;}
+  .rates{font-variant-numeric:tabular-nums;font-size:13px;color:#0f6e56;margin:8px 0 0;padding-top:8px;border-top:1px solid #e5e3dc;}
+  table{width:100%;border-collapse:collapse;margin:0 0 18px;font-size:14px;}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid #e5e3dc;}
+  th{background:#faf9f7;font-weight:600;font-size:13px;}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;}
+  tbody tr:hover{background:#f7fbff;}
+  details{border:1px solid #e5e3dc;border-radius:8px;padding:12px 14px;margin-bottom:10px;background:#faf9f7;}
+  summary{font-weight:500;cursor:pointer;font-size:15px;}
+  details p{margin:10px 0 0;font-size:14px;}
+  .ad-slot{background:#f1efe8;border:1px dashed #c9c7bf;border-radius:8px;min-height:90px;
+           display:flex;align-items:center;justify-content:center;color:#888780;font-size:12px;margin:20px 0;}
+  .note{background:#e6f1fb;border-left:3px solid #185fa5;border-radius:0 8px 8px 0;padding:12px 16px;font-size:14px;margin:0 0 18px;}
+  .src{font-size:12px;color:#6b6a64;margin:-6px 0 18px;}
+  .disc{background:#faf9f7;border:1px solid #e5e3dc;border-radius:8px;padding:14px 16px;font-size:13px;color:#6b6a64;margin:0 0 24px;}
+  .related{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 24px;}
+  .related a{display:inline-block;padding:8px 12px;border:1px solid #c9c7bf;border-radius:8px;text-decoration:none;color:#185fa5;font-size:14px;}
+  .related a:hover{background:#e6f1fb;}
+  header{border-bottom:1px solid #e5e3dc;padding:14px 0;}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .brand{font-weight:600;font-size:17px;text-decoration:none;color:#1c1c1a;}
+  .brandnav{display:flex;gap:18px;}
+  .brandnav a{font-size:14px;color:#6b6a64;text-decoration:none;}
+  footer{border-top:1px solid #e5e3dc;margin-top:32px;padding-top:16px;font-size:13px;color:#6b6a64;}
+  footer a{color:#6b6a64;margin-right:14px;}
+  .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);}
+  @media(max-width:600px){table{font-size:13px;}th,td{padding:8px 6px;}}
+</style>
+</head>
+<body>
+
+<header><div class="wrap">
+  <a class="brand" href="https://example.com/">Small Profit Tools</a>
+  <nav class="brandnav">
+    <a href="https://example.com/tools.html">All tools</a>
+    <a href="https://example.com/about.html">About</a>
+  </nav>
+</div></header>
+
+<div class="wrap">
+
+<h1>US State Sales Tax Calculators</h1>
+<p class="sub">Current 2026 state rates, local add-ons, and the thresholds that decide when you must register.</p>
+
+<div class="ad-slot" aria-hidden="true">Advertisement slot</div>
+
+<div class="panel">
+  <h3>Jump to a state</h3>
+  <div class="field" style="margin-bottom:0;">
+    <label for="st">Select a state</label>
+    <select id="st">
+      <option value="">Choose a state…</option>
+      <option value="sales-tax-calculator-california.html">California — 7.25% state</option>
+      <option value="sales-tax-calculator-texas.html">Texas — 6.25% state</option>
+      <option value="sales-tax-calculator-new-york.html">New York — 4% state</option>
+      <option value="sales-tax-calculator-florida.html">Florida — 6% state</option>
+      <option value="sales-tax-calculator-illinois.html">Illinois — 6.25% state</option>
+      <option value="sales-tax-calculator-washington.html">Washington — 6.5% state</option>
+      <option value="sales-tax-calculator-pennsylvania.html">Pennsylvania — 6% state</option>
+      <option value="sales-tax-calculator-ohio.html">Ohio — 5.75% state</option>
+    </select>
+  </div>
+</div>
+
+<h2>All state calculators</h2>
+<div class="grid">
+  <a class="card" href="https://example.com/sales-tax-calculator-california.html">
+    <p class="st">CA · highest state rate in the US</p>
+    <h3>California Sales Tax Calculator</h3>
+    <p>7.25% base with 1.78% average local. Largest local add-ons in the state reach 5.25 points.</p>
+    <p class="rates">Typical 9.03% · Highest 12.5% · Nexus $500,000</p>
+  </a>
+  <a class="card" href="https://example.com/sales-tax-calculator-texas.html">
+    <p class="st">TX · simple statewide pricing</p>
+    <h3>Texas Sales Tax Calculator</h3>
+    <p>6.25% base with 1.95% average local, and local add-ons are capped near 2%.</p>
+    <p class="rates">Typical 8.2% · Highest 8.25% · Nexus $500,000</p>
+  </a>
+  <a class="card" href="https://example.com/sales-tax-calculator-new-york.html">
+    <p class="st">NY · highest local add-ons in the US</p>
+    <h3>New York Sales Tax Calculator</h3>
+    <p>Low 4% base, but New York City adds nearly 4.88 points on its own.</p>
+    <p class="rates">Typical 8.54% · Highest 8.88% · Nexus $500,000</p>
+  </a>
+  <a class="card" href="https://example.com/sales-tax-calculator-florida.html">
+    <p class="st">FL · single statewide rate</p>
+    <h3>Florida Sales Tax Calculator</h3>
+    <p>6% base with modest county surcharges, so pricing is consistent across the state.</p>
+    <p class="rates">Typical 6.98% · Highest 8% · Nexus $100,000</p>
+  </a>
+  <a class="card" href="https://example.com/sales-tax-calculator-illinois.html">
+    <p class="st">IL · Chicago at the top of the range</p>
+    <h3>Illinois Sales Tax Calculator</h3>
+    <p>6.25% base with 2.73% average local. Groceries are taxed at 1%.</p>
+    <p class="rates">Typical 8.98% · Highest 11% · Nexus $100,000</p>
+  </a>
+  <a class="card" href="https://example.com/sales-tax-calculator-washington.html">
+    <p class="st">WA · no state tax, local drives everything</p>
+    <h3>Washington Sales Tax Calculator</h3>
+    <p>6.5% base is misleading on its own. Combined rates run up to nearly 10%.</p>
+    <p class="rates">Typical 9.57% · Highest 10.7% · Nexus $100,000</p>
+  </a>
+  <a class="card" href="https://example.com/sales-tax-calculator-pennsylvania.html">
+    <p class="st">PA · easy national pricing</p>
+    <h3>Pennsylvania Sales Tax Calculator</h3>
+    <p>Flat 6% base with very small local add-ons averaging 0.34%.</p>
+    <p class="rates">Typical 6.34% · Highest 8% · Nexus $100,000</p>
+  </a>
+  <a class="card" href="https://example.com/sales-tax-calculator-ohio.html">
+    <p class="st">OH · wide range of exemptions</p>
+    <h3>Ohio Sales Tax Calculator</h3>
+    <p>5.75% base with 1.54% average local. Many groceries and services are exempt.</p>
+    <p class="rates">Typical 7.29% · Highest 8% · Nexus $100,000</p>
+  </a>
+</div>
+
+<h2>All eight states at a glance</h2>
+<table>
+  <caption class="vh">Sales tax rates and nexus thresholds for eight US states</caption>
+  <thead><tr>
+    <th>State</th>
+    <th class="num">State rate</th>
+    <th class="num">Avg local</th>
+    <th class="num">Typical</th>
+    <th class="num">Highest</th>
+    <th class="num">Nexus</th>
+  </tr></thead>
+  <tbody>
+    <tr><td><a href="https://example.com/sales-tax-calculator-california.html">California</a></td><td class="num">7.25%</td><td class="num">1.78%</td><td class="num">9.03%</td><td class="num">12.5%</td><td class="num">$500,000</td></tr>
+    <tr><td><a href="https://example.com/sales-tax-calculator-texas.html">Texas</a></td><td class="num">6.25%</td><td class="num">1.95%</td><td class="num">8.2%</td><td class="num">8.25%</td><td class="num">$500,000</td></tr>
+    <tr><td><a href="https://example.com/sales-tax-calculator-new-york.html">New York</a></td><td class="num">4%</td><td class="num">4.54%</td><td class="num">8.54%</td><td class="num">8.88%</td><td class="num">$500,000</td></tr>
+    <tr><td><a href="https://example.com/sales-tax-calculator-florida.html">Florida</a></td><td class="num">6%</td><td class="num">0.98%</td><td class="num">6.98%</td><td class="num">8%</td><td class="num">$100,000</td></tr>
+    <tr><td><a href="https://example.com/sales-tax-calculator-illinois.html">Illinois</a></td><td class="num">6.25%</td><td class="num">2.73%</td><td class="num">8.98%</td><td class="num">11%</td><td class="num">$100,000</td></tr>
+    <tr><td><a href="https://example.com/sales-tax-calculator-washington.html">Washington</a></td><td class="num">6.5%</td><td class="num">3.07%</td><td class="num">9.57%</td><td class="num">10.7%</td><td class="num">$100,000</td></tr>
+    <tr><td><a href="https://example.com/sales-tax-calculator-pennsylvania.html">Pennsylvania</a></td><td class="num">6%</td><td class="num">0.34%</td><td class="num">6.34%</td><td class="num">8%</td><td class="num">$100,000</td></tr>
+    <tr><td><a href="https://example.com/sales-tax-calculator-ohio.html">Ohio</a></td><td class="num">5.75%</td><td class="num">1.54%</td><td class="num">7.29%</td><td class="num">8%</td><td class="num">$100,000</td></tr>
+  </tbody>
+</table>
+
+<p class="src">Rates as of July 1, 2026, from Tax Foundation midyear state and local sales tax data. Nexus thresholds sourced from individual state revenue departments.</p>
+
+<h2>Why the state rate is rarely the number you charge</h2>
+<p>The state rate is the base. What a buyer actually pays adds county, city and special district rates on top, and those add-ons vary by several points within a single state. California's average combined rate is 9.03 percent, but the range runs from 7.25 to 12.5 percent depending on the address. Washington's range is similar: 6.5 to 10.7 percent.</p>
+<p>This matters most when you quote prices before tax and add it at checkout. Using the statewide average is reasonable for planning, but it is systematically wrong in high-rate areas, and those are often the areas where your customers are concentrated.</p>
+
+<h2>Destination-based sourcing</h2>
+<p>Every state with a sales tax uses destination-based sourcing, which means the customer's address sets the rate, not yours. For a remote seller this has a direct consequence: you may need to charge a different rate to two customers in the same state, and you may be required to register in states where you have no physical presence once you pass their sales thresholds.</p>
+
+<h2>Economic nexus thresholds</h2>
+<p>Nexus is the point at which a state can require you to collect its tax even without a physical location. Most thresholds sit at $100,000 in annual sales, with larger states using $500,000. Some states also count the number of transactions rather than dollars.</p>
+<p>Once you cross a threshold you generally must register with that state's revenue department, collect the tax, file periodic returns, and in some cases pay a penalty for periods you were unregistered. This is the part that surprises sellers most, because the sales that trigger the obligation can be spread across many small orders.</p>
+
+<h2>Common questions</h2>
+
+<details>
+  <summary>Which US states have no sales tax?</summary>
+  <p>Five states have no state-level sales tax: Delaware, Montana, New Hampshire, Oregon and Alaska. Alaska has local sales tax applying in some jurisdictions, so it is not uniformly tax-free. The other four impose no sales tax at any level. Separately, many states tax groceries at a reduced rate or exempt them entirely, so a complete exemption list is much longer than the no-tax state list.</p>
+</details>
+
+<details>
+  <summary>What is the highest sales tax rate in the US?</summary>
+  <p>Louisiana has the highest combined state and local rate at about 10.13 percent, followed by Tennessee at about 9.61 percent and Washington at about 9.57 percent. At the state level alone, California has the highest base rate at 7.25 percent, followed by Indiana, Rhode Island and Tennessee at 7 percent each. Local additions are what push several states above 10 percent in practice.</p>
+</details>
+
+<details>
+  <summary>What is economic nexus?</summary>
+  <p>Economic nexus is a sales threshold, commonly between $100,000 and $500,000 in annual sales, above which a business without physical presence in a state must still collect that state's sales tax. Thresholds differ by state and some also count transaction volume rather than dollars. Once you cross it you are generally required to register with the state revenue department and file periodic returns.</p>
+</details>
+
+<details>
+  <summary>Is sales tax based on my location or my customer's?</summary>
+  <p>All states with a sales tax use destination-based sourcing, so the customer's address sets the rate rather than your business address. The practical consequence for a remote seller is that you may need to charge different rates to customers in the same state, and you may need to register in multiple states once you exceed their thresholds.</p>
+</details>
+
+<details>
+  <summary>Does a tax-exempt sale still count toward the nexus threshold?</summary>
+  <p>Generally yes. Nexus thresholds are usually measured on gross sales, including exempt items, which surprises many sellers. The rules vary by state, and some offer an occasional-market or occasional-sale exemption that applies only if you stayed below the threshold for a limited period. That exemption is narrow and is not a general solution for ongoing remote sales.</p>
+</details>
+
+<div class="ad-slot" aria-hidden="true">Advertisement slot</div>
+
+<h2>Related tools</h2>
+<div class="related">
+  <a href="https://example.com/markup-margin-calculator.html">Markup vs Margin</a>
+  <a href="https://example.com/gross-vs-net-profit-calculator.html">Gross vs Net Profit</a>
+  <a href="https://example.com/break-even-calculator.html">Break-Even</a>
+  <a href="https://example.com/tools.html">All calculators</a>
+</div>
+
+<div class="disc"><strong>Disclaimer.</strong> This page is for informational and educational purposes only. Tax figures are estimates from published state and average local rates and do not constitute tax, accounting, or legal advice. Local rates vary by address, product category, and special district, and they change. Verify the exact rate for a specific transaction with the relevant state revenue department and a qualified professional before invoicing or filing.</div>
+
+<footer>
+  <a href="https://example.com/">Home</a>
+  <a href="https://example.com/about.html">About</a>
+  <a href="https://example.com/contact.html">Contact</a>
+  <a href="https://example.com/privacy.html">Privacy Policy</a>
+  <a href="https://example.com/disclaimer.html">Disclaimer</a>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var sel=document.getElementById('st');
+  sel.addEventListener('change',function(){
+    if(sel.value) window.location.href='https://example.com/'+sel.value;
+  });
+})();
+</script>
+
+</body>
+</html>
