@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gross vs Net Profit Calculator — See Your Real Bottom Line</title>
+<meta name="description" content="Free gross vs net profit calculator. Enter revenue and operating expenses to see your true bottom line, net margin, and whether costs are eating your profit. Works for any small business.">
+<link rel="canonical" href="https://example.com/gross-vs-net-profit-calculator.html">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Gross vs Net Profit Calculator",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any",
+  "url": "https://example.com/gross-vs-net-profit-calculator.html",
+  "description": "Calculate net profit from revenue and operating expenses, with net margin, markup and expense ratio analysis.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the difference between gross and net profit?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Gross profit is revenue minus the direct cost of delivering the goods or services, so it measures whether the core work is profitable. Net profit is what remains after subtracting every operating expense as well: rent, salaries, software, insurance, marketing, interest and taxes. A business can show a healthy gross profit and still be losing money once overheads are counted."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What counts as an operating expense?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Operating expenses are the costs of running the business that are not the direct cost of goods: rent or mortgage, salaries and wages, benefits, insurance, software subscriptions, marketing and advertising, phone and internet, utilities, professional fees, bank charges, vehicle costs and depreciation. Interest and income tax are usually reported separately below the net line."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a healthy net margin for a small business?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Net margins below 5% leave little buffer for a slow month. Many healthy small businesses run between 10% and 20%. Above 30% is usually only realistic for software, agencies and professional services where direct labor is not paid out of the same revenue. Compare your own net margin against your industry rather than a general benchmark."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is my gross profit good but my net profit negative?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "This is common and it almost always means overheads are too high for your revenue level. The typical causes are fixed costs such as rent or salaried staff that are too large for current volume, or variable operating costs such as marketing and software subscriptions that scale without matching revenue. The calculator's expense ratio panel shows which categories consume the largest share of revenue so you can target them."
+      }
+    }
+  ]
+}
+</script>
+<style>
+  *{box-sizing:border-box;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       background:#fff;color:#1c1c1a;line-height:1.65;margin:0;padding:0 16px 64px;}
+  .wrap{max-width:840px;margin:0 auto;}
+  h1{font-size:28px;font-weight:600;letter-spacing:-0.02em;margin:32px 0 8px;line-height:1.25;}
+  h2{font-size:20px;font-weight:600;margin:36px 0 12px;}
+  h3{font-size:16px;font-weight:600;margin:0 0 10px;}
+  .sub{color:#6b6a64;font-size:15px;margin:0 0 20px;}
+  .panel{background:#faf9f7;border:1px solid #e5e3dc;border-radius:10px;padding:20px;margin:0 0 18px;}
+  .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;}
+  .field{margin:0 0 14px;}
+  label{display:block;font-weight:500;font-size:14px;margin-bottom:6px;}
+  .hint{display:block;font-weight:400;color:#6b6a64;font-size:13px;margin-top:2px;}
+  input[type=number]{width:100%;padding:10px 12px;border:1px solid #c9c7bf;border-radius:8px;
+       font-size:16px;background:#fff;color:inherit;}
+  input:focus{outline:2px solid #185fa5;outline-offset:1px;border-color:#185fa5;}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:0 0 18px;}
+  .stat{background:#faf9f7;border:1px solid #e5e3dc;border-radius:10px;padding:14px;}
+  .stat .lbl{font-size:12px;color:#6b6a64;margin:0 0 4px;}
+  .stat .val{font-size:24px;font-weight:600;margin:0;letter-spacing:-0.01em;}
+  .stat.hl{background:#e1f5ee;border-color:#9fe1cb;}
+  .stat.hl .val{color:#0f6e56;}
+  .stat.neg{background:#fcebeb;border-color:#f7c1c1;}
+  .stat.neg .val{color:#a32d2d;}
+  .stat.mid{background:#faeeda;border-color:#fac775;}
+  .stat.mid .val{color:#854f0b;}
+  table{width:100%;border-collapse:collapse;margin:0 0 18px;font-size:14px;}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid #e5e3dc;}
+  th{background:#faf9f7;font-weight:600;font-size:13px;}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;}
+  details{border:1px solid #e5e3dc;border-radius:8px;padding:12px 14px;margin-bottom:10px;background:#faf9f7;}
+  summary{font-weight:500;cursor:pointer;font-size:15px;}
+  details p{margin:10px 0 0;font-size:14px;}
+  .ad-slot{background:#f1efe8;border:1px dashed #c9c7bf;border-radius:8px;min-height:90px;
+           display:flex;align-items:center;justify-content:center;color:#888780;font-size:12px;margin:20px 0;}
+  .note{background:#e6f1fb;border-left:3px solid #185fa5;border-radius:0 8px 8px 0;padding:12px 16px;font-size:14px;margin:0 0 18px;}
+  .insight{background:#faf9f7;border:1px solid #e5e3dc;border-radius:8px;padding:14px 16px;font-size:14px;margin:0 0 20px;}
+  .bar{height:8px;background:#e5e3dc;border-radius:4px;overflow:hidden;margin:4px 0 0;}
+  .bar > span{display:block;height:100%;background:#888780;}
+  .disc{background:#faf9f7;border:1px solid #e5e3dc;border-radius:8px;padding:14px 16px;font-size:13px;color:#6b6a64;margin:0 0 24px;}
+  .related{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 24px;}
+  .related a{display:inline-block;padding:8px 12px;border:1px solid #c9c7bf;border-radius:8px;text-decoration:none;color:#185fa5;font-size:14px;}
+  .related a:hover{background:#e6f1fb;}
+  header{border-bottom:1px solid #e5e3dc;padding:14px 0;}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .brand{font-weight:600;font-size:17px;text-decoration:none;color:#1c1c1a;}
+  .brandnav{display:flex;gap:18px;}
+  .brandnav a{font-size:14px;color:#6b6a64;text-decoration:none;}
+  footer{border-top:1px solid #e5e3dc;margin-top:32px;padding-top:16px;font-size:13px;color:#6b6a64;}
+  footer a{color:#6b6a64;margin-right:14px;}
+  .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);}
+</style>
+</head>
+<body>
+
+<header><div class="wrap">
+  <a class="brand" href="https://example.com/">Small Profit Tools</a>
+  <nav class="brandnav">
+    <a href="https://example.com/tools.html">All tools</a>
+    <a href="https://example.com/about.html">About</a>
+  </nav>
+</div></header>
+
+<div class="wrap">
+
+<h1>Gross vs Net Profit Calculator</h1>
+<p class="sub">Your gross profit says whether the work is profitable. Your net profit says whether you are actually in business.</p>
+
+<div class="ad-slot" id="ad-slot-top" aria-hidden="true">Advertisement slot · top</div>
+
+<div class="panel">
+  <h3>Revenue and direct costs</h3>
+  <div class="row">
+    <div class="field">
+      <label for="revenue">Total revenue <span class="hint">Sales for the period</span></label>
+      <input type="number" id="revenue" value="120000" step="0.01" min="0" inputmode="decimal">
+    </div>
+    <div class="field">
+      <label for="cogs">Cost of goods sold <span class="hint">Materials, subcontractors, direct labor</span></label>
+      <input type="number" id="cogs" value="38000" step="0.01" min="0" inputmode="decimal">
+    </div>
+  </div>
+
+  <h3 style="margin-top:22px;">Operating expenses</h3>
+  <p class="hint" style="margin:-4px 0 14px;">Leave anything that does not apply blank or set to zero.</p>
+  <div class="row">
+    <div class="field">
+      <label for="rent">Rent / mortgage</label>
+      <input type="number" id="rent" value="18000" step="0.01" min="0" inputmode="decimal">
+    </div>
+    <div class="field">
+      <label for="salaries">Salaries and wages <span class="hint">Excludes direct labor already in COGS</span></label>
+      <input type="number" id="salaries" value="42000" step="0.01" min="0" inputmode="decimal">
+    </div>
+    <div class="field">
+      <label for="marketing">Marketing and advertising</label>
+      <input type="number" id="marketing" value="8500" step="0.01" min="0" inputmode="decimal">
+    </div>
+    <div class="field">
+      <label for="software">Software and subscriptions</label>
+      <input type="number" id="software" value="2400" step="0.01" min="0" inputmode="decimal">
+    </div>
+    <div class="field">
+      <label for="insurance">Insurance</label>
+      <input type="number" id="insurance" value="3200" step="0.01" min="0" inputmode="decimal">
+    </div>
+    <div class="field">
+      <label for="utilities">Utilities and internet</label>
+      <input type="number" id="utilities" value="1900" step="0.01" min="0" inputmode="decimal">
+    </div>
+    <div class="field">
+      <label for="fees">Professional fees and bank charges</label>
+      <input type="number" id="fees" value="1400" step="0.01" min="0" inputmode="decimal">
+    </div>
+    <div class="field">
+      <label for="other">Other operating expenses</label>
+      <input type="number" id="other" value="1200" step="0.01" min="0" inputmode="decimal">
+    </div>
+  </div>
+</div>
+
+<div id="results" aria-live="polite">
+  <div class="grid3">
+    <div class="stat">
+      <p class="lbl">Gross profit</p>
+      <p class="val" id="gross">$82,000.00</p>
+    </div>
+    <div class="stat" id="netCard">
+      <p class="lbl">Net profit</p>
+      <p class="val" id="net">$3,400.00</p>
+    </div>
+    <div class="stat">
+      <p class="lbl">Net margin</p>
+      <p class="val" id="netmargin">2.8%</p>
+    </div>
+  </div>
+
+  <div class="grid3">
+    <div class="stat">
+      <p class="lbl">Gross margin</p>
+      <p class="val" id="grossmargin">68.3%</p>
+    </div>
+    <div class="stat">
+      <p class="lbl">Total operating expenses</p>
+      <p class="val" id="opex">$78,600.00</p>
+    </div>
+    <div class="stat">
+      <p class="lbl">Expenses as % of revenue</p>
+      <p class="val" id="opexratio">65.5%</p>
+    </div>
+  </div>
+
+  <h2>Where the money goes</h2>
+  <table>
+    <caption class="vh">Revenue allocation breakdown</caption>
+    <thead><tr><th>Line</th><th class="num">Amount</th><th class="num">% of revenue</th><th style="width:34%;">Share</th></tr></thead>
+    <tbody id="breakdown">
+      <tr><td>Revenue</td><td class="num">$120,000.00</td><td class="num">100.0%</td><td class="num">—</td></tr>
+      <tr><td>Cost of goods sold</td><td class="num" id="b-cogs">−$38,000.00</td><td class="num" id="b-cogs-p">31.7%</td><td class="num"><div class="bar"><span id="bar-cogs" style="width:31.7%"></span></div></td></tr>
+      <tr><td>Rent / mortgage</td><td class="num" id="b-rent">−$18,000.00</td><td class="num" id="b-rent-p">15.0%</td><td class="num"><div class="bar"><span id="bar-rent" style="width:15.0%"></span></div></td></tr>
+      <tr><td>Salaries and wages</td><td class="num" id="b-salaries">−$42,000.00</td><td class="num" id="b-salaries-p">35.0%</td><td class="num"><div class="bar"><span id="bar-salaries" style="width:35.0%"></span></div></td></tr>
+      <tr><td>Marketing</td><td class="num" id="b-marketing">−$8,500.00</td><td class="num" id="b-marketing-p">7.1%</td><td class="num"><div class="bar"><span id="bar-marketing" style="width:7.1%"></span></div></td></tr>
+      <tr><td>Software</td><td class="num" id="b-software">−$2,400.00</td><td class="num" id="b-software-p">2.0%</td><td class="num"><div class="bar"><span id="bar-software" style="width:2%"></span></div></td></tr>
+      <tr><td>Insurance</td><td class="num" id="b-insurance">−$3,200.00</td><td class="num" id="b-insurance-p">2.7%</td><td class="num"><div class="bar"><span id="bar-insurance" style="width:2.7%"></span></div></td></tr>
+      <tr><td>Utilities</td><td class="num" id="b-utilities">−$1,900.00</td><td class="num" id="b-utilities-p">1.6%</td><td class="num"><div class="bar"><span id="bar-utilities" style="width:1.6%"></span></div></td></tr>
+      <tr><td>Professional fees</td><td class="num" id="b-fees">−$1,400.00</td><td class="num" id="b-fees-p">1.2%</td><td class="num"><div class="bar"><span id="bar-fees" style="width:1.2%"></span></div></td></tr>
+      <tr><td>Other</td><td class="num" id="b-other">−$1,200.00</td><td class="num" id="b-other-p">1.0%</td><td class="num"><div class="bar"><span id="bar-other" style="width:1%"></span></div></td></tr>
+    </tbody>
+    <tfoot>
+      <tr style="border-top:2px solid #c9c7bf;font-weight:600;">
+        <td>Net profit</td>
+        <td class="num" id="t-net">$3,400.00</td>
+        <td class="num" id="t-net-p">2.8%</td>
+        <td class="num"></td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <div class="insight" id="insight" role="status"></div>
+</div>
+
+<h2>What gross and net profit actually tell you</h2>
+<p>Gross profit answers one question: is the core work worth doing? Net profit answers a different one: can you survive doing it? A business with70% gross margin can still lose money if rent and salaries total more than that margin.</p>
+<p>The most common failure pattern among small businesses is not bad pricing. It is overheads that grew faster than revenue, usually fixed costs such as a lease or salaried staff committed at a higher volume than the business ended up delivering.</p>
+
+<h2>What counts as an operating expense</h2>
+<table>
+  <thead><tr><th>Category</th><th>Typical items</th></tr></thead>
+  <tbody>
+    <tr><td>Premises</td><td>Rent or mortgage, property tax, utilities, internet, cleaning</td></tr>
+    <tr><td>People</td><td>Salaries, wages, payroll taxes, benefits, workers comp, recruitment</td></tr>
+    <tr><td>Marketing</td><td>Advertising, content production, email tooling, commissions, referral fees</td></tr>
+    <tr><td>Technology</td><td>Software subscriptions, hosting, hardware, IT support</td></tr>
+    <tr><td>Insurance and legal</td><td>Liability, professional indemnity, workers comp, legal and accounting fees</td></tr>
+    <tr><td>Finance</td><td>Bank charges, merchant processing fees, payment gateway fees, interest</td></tr>
+    <tr><td>Travel and vehicle</td><td>Fuel, mileage, maintenance, parking, travel</td></tr>
+  </tbody>
+</table>
+<p>Interest and income tax are commonly reported below the net line rather than as operating expenses. If you want a figure that includes them, add them into the final expense boxes so you can see the after-tax position.</p>
+
+<h2>Net margin benchmarks</h2>
+<table>
+  <thead><tr><th>Net margin</th><th>What it signals</th></tr></thead>
+  <tbody>
+    <tr><td>Below 0%</td><td>Losing money. Every month without a change deepens the loss.</td></tr>
+    <tr><td>0–5%</td><td>Technically profitable, but one bad month can push you under.</td></tr>
+    <tr><td>5–10%</td><td>Thin. Enough to operate, not enough to absorb a shock.</td></tr>
+    <tr><td>10–20%</td><td>Healthy for most small businesses. This is a reasonable target.</td></tr>
+    <tr><td>20–30%</td><td>Strong. You have room to invest in growth and absorb surprises.</td></tr>
+    <tr><td>Above 30%</td><td>Usually only realistic in software, agencies, or professional services.</td></tr>
+  </tbody>
+</table>
+
+<h2>Common questions</h2>
+
+<details>
+  <summary>What is the difference between gross and net profit?</summary>
+  <p>Gross profit is revenue minus the direct cost of delivering what you sold. Net profit is what remains after every operating expense as well: rent, salaries, software, insurance, marketing, interest and tax. Gross profit tells you whether the core work is profitable. Net profit tells you whether the business is. A company can show strong gross profit and still be losing money once overheads are counted.</p>
+</details>
+
+<details>
+  <summary>Why is my gross profit good but my net profit negative?</summary>
+  <p>This is the most common pattern in small business, and it almost always means overheads exceed what the current revenue level can carry. The usual causes are fixed costs committed for a higher volume than you ended up delivering, such as a lease or salaried staff, or variable operating costs that scale without matching revenue, such as marketing and subscriptions. Use the breakdown table above to identify which category is largest, since that is where a change will make the most difference.</p>
+</details>
+
+<details>
+  <summary>Should contractor and subcontractor costs go in COGS or operating expenses?</summary>
+  <p>If the subcontractor performs the core work that delivers your product or service, their cost belongs in cost of goods sold. If they provide a supporting service such as accounting, cleaning or marketing, it is an operating expense. The distinction affects your gross margin, so be consistent and apply the same treatment period after period.</p>
+</details>
+
+<details>
+  <summary>How often should I recalculate this?</summary>
+  <p>Monthly is the practical minimum, because it lets you catch a cost creeping up before it becomes structural. Quarterly is better for seasonal businesses where a single weak month is not meaningful. The value is not the number itself but the trend: a net margin falling steadily means costs are growing faster than sales, and you want to see that while it is still fixable.</p>
+</details>
+
+<details>
+  <summary>Should I include my own salary as an expense?</summary>
+  <p>For measuring business performance, yes. Your compensation is a real cost of running the business. However, if you are calculating taxable income, the treatment differs, because your pay appears as payroll rather than as an expense on a business return. For a true picture of what the business leaves you with, include it.</p>
+</details>
+
+<div class="ad-slot" id="ad-slot-bottom" aria-hidden="true">Advertisement slot · bottom</div>
+
+<h2>Related tools</h2>
+<div class="related">
+  <a href="https://example.com/markup-margin-calculator.html">Markup vs Margin</a>
+  <a href="https://example.com/tools.html">All calculators</a>
+</div>
+
+<div class="disc"><strong>Disclaimer.</strong> This calculator is for informational and educational purposes only. Results are estimates based on the figures you enter and do not constitute tax, accounting, legal, or financial advice. Verify figures with a qualified professional before making business decisions.</div>
+
+<footer>
+  <a href="https://example.com/">Home</a>
+  <a href="https://example.com/about.html">About</a>
+  <a href="https://example.com/contact.html">Contact</a>
+  <a href="https://example.com/privacy.html">Privacy Policy</a>
+  <a href="https://example.com/disclaimer.html">Disclaimer</a>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var IDS = ['revenue','cogs','rent','salaries','marketing','software','insurance','utilities','fees','other'];
+  var OPEX = ['rent','salaries','marketing','software','insurance','utilities','fees','other'];
+  var LABEL = {rent:'Rent / mortgage', salaries:'Salaries and wages', marketing:'Marketing',
+               software:'Software', insurance:'Insurance', utilities:'Utilities',
+               fees:'Professional fees', other:'Other'};
+
+  function v(id){
+    var x = parseFloat(document.getElementById(id).value);
+    return (isFinite(x) && x >= 0) ? x : 0;
+  }
+  function money(n){
+    return '$' + n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  }
+  function pct(n){
+    return (isFinite(n)?n:0).toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1}) + '%';
+  }
+  function setNum(id, val){
+    var el = document.getElementById(id);
+    if (el) el.textContent = val;
+  }
+
+  function update(){
+    var rev = v('revenue');
+    var cogs = v('cogs');
+    var gross = rev - cogs;
+    var grossMargin = rev > 0 ? (gross / rev) * 100 : 0;
+
+    var opex = 0;
+    for (var i = 0; i < OPEX.length; i++) opex += v(OPEX[i]);
+
+    var net = gross - opex;
+    var netMargin = rev > 0 ? (net / rev) * 100 : 0;
+    var opexRatio = rev > 0 ? (opex / rev) * 100 : 0;
+
+    setNum('gross', money(gross));
+    setNum('net', money(net));
+    setNum('netmargin', pct(netMargin));
+    setNum('grossmargin', pct(grossMargin));
+    setNum('opex', money(opex));
+    setNum('opexratio', pct(opexRatio));
+
+    var card = document.getElementById('netCard');
+    card.className = 'stat' + (net < 0 ? ' neg' : (netMargin < 5 ? ' mid' : ' hl'));
+
+    // 明细行
+    setNum('b-cogs', '−' + money(cogs));
+    for (var j = 0; j < OPEX.length; j++) {
+      var k = OPEX[j], amt = v(k), p = rev > 0 ? (amt / rev) * 100 : 0;
+      setNum('b-' + k, '−' + money(amt));
+      setNum('b-' + k + '-p', pct(p));
+      var bar = document.getElementById('bar-' + k);
+      if (bar) bar.style.width = Math.min(100, Math.max(0, p)) + '%';
+    }
+    var cp = rev > 0 ? (cogs / rev) * 100 : 0;
+    var cbar = document.getElementById('bar-cogs');
+    if (cbar) cbar.style.width = Math.min(100, Math.max(0, cp)) + '%';
+    setNum('b-cogs-p', pct(cp));
+
+    setNum('t-net', money(net));
+    setNum('t-net-p', pct(netMargin));
+
+    // 结论
+    var msg;
+    if (rev <= 0){
+      msg = 'Enter your revenue above to see the full breakdown.';
+    } else if (net < 0){
+      var biggest = '', bigAmt = 0;
+      for (var m = 0; m < OPEX.length; m++){
+        var a = v(OPEX[m]);
+        if (a > bigAmt){ bigAmt = a; biggest = LABEL[OPEX[m]]; }
+      }
+      msg = 'You are losing ' + money(-net) + ' on ' + money(rev) + ' of revenue. ';
+      if (biggest && bigAmt > 0){
+        msg += 'Your largest operating expense is ' + biggest + ' at ' + money(bigAmt) + '. That is the first place to look for savings, because a reduction there moves straight to the bottom line.';
+      } else {
+        msg += 'Add your operating expenses above to see which category is driving the loss.';
+      }
+    } else if (netMargin < 5){
+      msg = 'Net profit is ' + money(net) + ', which is a ' + pct(netMargin) + ' margin. That is positive but very thin, and a single slow month could push you under. Cutting a small fixed cost or lifting prices slightly would make a real difference.';
+    } else if (netMargin < 20){
+      msg = 'Net profit is ' + money(net) + ' on ' + money(rev) + ' of revenue, a ' + pct(netMargin) + ' net margin. That sits in the healthy range most small businesses aim for.';
+    } else {
+      msg = 'Net profit is ' + money(net) + ', a ' + pct(netMargin) + ' net margin. That is strong, and it gives you real room to absorb a slow month or invest in growth.';
+    }
+    document.getElementById('insight').textContent = msg;
+  }
+
+  IDS.forEach(function(id){
+    document.getElementById(id).addEventListener('input', update);
+  });
+  update();
+})();
+</script>
+
+</body>
+</html>
