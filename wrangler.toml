@@ -1,0 +1,15 @@
+# Cloudflare Pages 构建配置
+# 这个文件让 Cloudflare 自动识别构建配置，无需在后台手动填写
+
+name = "linwt"
+compatibility_date = "2026-10-06"
+
+[build]
+command = "python3 build.py --build"
+publish = "dist"
+
+[build.environment]
+SITE_DOMAIN = "linwt.top"
+
+# 域名从 .env 读取，本文件仅作兜底。
+# 如果日后换域名，优先改 .env；此处的值需同步更新。
