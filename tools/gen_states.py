@@ -44,6 +44,7 @@ STATES = {
                notes="Ohio taxes at the state level plus county and municipal additions. Many items are exempt including most groceries, prescription drugs, and some services, so the effective rate on taxable goods is lower than the headline figure suggests."),
 }
 
+
 TEMPLATE_HEAD = """<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -318,6 +319,8 @@ TEMPLATE_HEAD = """<!DOCTYPE html>
   <a href="https://{domain}/tools.html">All calculators</a>
 </div>
 
+<!--CROSSTATE-->
+
 <p class="src">Rates as of July 1, 2026, from Tax Foundation midyear state and local sales tax data. State and county rates change; verify with the {name} department of revenue before relying on a specific figure for invoicing or filing.</p>
 
 <div class="disc"><strong>Disclaimer.</strong> This calculator is for informational and educational purposes only. Tax figures shown are estimates from published state and average local rates and do not constitute tax, accounting, or legal advice. Local rates vary by address, product category, and special district. Verify the exact rate for a specific transaction with the relevant state revenue department and a qualified professional.</div>
@@ -430,6 +433,57 @@ def slug_of(name: str) -> str:
     return re.sub(r"-+", "-", s).strip("-")
 
 
+# 交叉链接分组。
+# 分组依据是**主题相关性**而非纯地理相邻 —— 同组州往往被同一批用户同时搜索，
+# 互链能更有效地向搜索引擎传递「这批页面属于同一主题集群」的信号。
+# 只列入已生成页面的州，避免死链。
+CLUSTER = {
+    "CA": ["WA", "TX", "NY"],
+    "TX": ["FL", "IL", "CA"],
+    "NY": ["PA", "OH", "CA"],
+    "FL": ["TX", "IL", "OH"],
+    "IL": ["OH", "TX", "FL"],
+    "WA": ["CA", "TX", "NY"],
+    "PA": ["NY", "OH", "IL"],
+    "OH": ["PA", "IL", "FL"],
+}
+
+
+def cross_state_block(code: str) -> str:
+    """
+    生成跨州交叉链接区块，让已生成的州页互相关联形成主题集群。
+
+    重要：只链接到**已生成页面的州**，避免死链。
+    未生成页面的州不出现 —— 死链会伤 SEO，且 AdSense 审核也会扣分。
+    """
+    neighbors = CLUSTER.get(code, [])
+    if not neighbors:
+        return ""
+    items = []
+    for nc in neighbors:
+        # 只链接已生成独立页面的州
+        if nc not in STATES or nc == code:
+            continue
+        s = STATES[nc]
+        combined = round(s["rate"] + s["local"], 2)
+        items.append(
+            f'<li><a href="https://example.com/sales-tax-calculator-{slug_of(s["name"])}.html">'
+            f'{s["name"]} Sales Tax Calculator</a> '
+            f'<span>&mdash; {combined:g}% typical combined rate</span></li>'
+        )
+    if not items:
+        return ""
+    return (
+        '<h2 id="other-states">Sales tax in other states</h2>\n'
+        '<p>Sales tax rates differ substantially between states, and a business shipping across the '
+        'country needs to charge the destination rate in each one. These related state calculators cover '
+        'the rates most often compared with this one.</p>\n'
+        '<ul>\n' + "\n".join(items) + "\n</ul>\n"
+        '<p>For a full comparison of every rate, see the '
+        '<a href="https://example.com/sales-tax-calculators.html">US state sales tax overview</a>.</p>'
+    )
+
+
 def build(code: str, domain: str) -> str:
     s = STATES[code]
     name = s["name"]
@@ -441,7 +495,7 @@ def build(code: str, domain: str) -> str:
         """去掉末尾多余的 0，7.00 -> 7，8.20-> 8.2"""
         return f"{x:.2f}".rstrip("0").rstrip(".")
 
-    return TEMPLATE_HEAD.format(
+    html = TEMPLATE_HEAD.format(
         name=name, slug=slug, domain=domain, date=DATE,
         rate=num(s["rate"]),
         local=num(s["local"]),
@@ -461,6 +515,8 @@ def build(code: str, domain: str) -> str:
         nexus=NEXUS.get(code, "$100,000"),
         notes=s["notes"],
     )
+    # 注入跨州交叉链接区块
+    return html.replace("<!--CROSSTATE-->", cross_state_block(code))
 
 
 def main():
