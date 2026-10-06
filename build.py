@@ -17,10 +17,11 @@ Cloudflare Pages 云端构建（自动执行）：
     6. 校验产物
 
 域名优先级：
-    环境变量 SITE_DOMAIN > 命令行参数 > .env > wrangler.toml > example.com
+    环境变量 SITE_DOMAIN > 命令行参数 > .env > domain.txt > example.com
 
-注意：Cloudflare Pages 会忽略 wrangler.toml 的 [build.environment]，
-该文件在这里仅作为环境变量缺失时的兜底来源。
+注意：不要在仓库里放 wrangler.toml。
+那个文件会让 Cloudflare 把 Pages 项目误判为 Workers 项目，
+导致它尝试执行 `npx wrangler deploy` 并因缺少 Worker 入口而失败。
 """
 import sys, os, pathlib, shutil, re
 
@@ -33,23 +34,17 @@ PLACEHOLDER = "example.com"
 CF_OUT = ROOT / "dist"
 
 
-def from_wrangler() -> str:
-    """从 wrangler.toml 读取 SITE_DOMAIN，作为环境变量缺失时的兜底。"""
-    p = ROOT / "wrangler.toml"
+def from_file(name: str) -> str:
+    """从单行文本文件读取域名（.env 或 domain.txt）。"""
+    p = ROOT / name
     if not p.exists():
         return ""
-    m = re.search(r'SITE_DOMAIN\s*=\s*"([^"]+)"', p.read_text(encoding="utf-8"))
-    return m.group(1).strip().lower() if m else ""
-
-
-def from_dotenv() -> str:
-    """读取本地 .env。"""
-    p = ROOT / ".env"
-    if not p.exists():
-        return ""
-    m = re.search(r'^SITE_DOMAIN\s*=\s*(.+)$', p.read_text(encoding="utf-8"),
-                  re.MULTILINE)
-    return m.group(1).strip().strip('"\'').lower() if m else ""
+    t = p.read_text(encoding="utf-8").strip()
+    m = re.search(r'^SITE_DOMAIN\s*=\s*(.+)$', t, re.MULTILINE)
+    if m:
+        return m.group(1).strip().strip('"\'').lower()
+    # 纯文本单行
+    return t.splitlines()[0].strip().lower() if t else ""
 
 
 def resolve_domain() -> str:
@@ -60,8 +55,8 @@ def resolve_domain() -> str:
     for a in sys.argv[1:]:
         if not a.startswith("--") and "." in a:
             return a.lower()
-    for fn in (from_dotenv, from_wrangler):
-        v = fn()
+    for name in (".env", "domain.txt"):
+        v = from_file(name)
         if v:
             return v
     return PLACEHOLDER
@@ -145,10 +140,9 @@ def build(domain: str, outdir: pathlib.Path) -> int:
         issues.append(
             f"域名未配置，构建使用了占位域名 {PLACEHOLDER}，线上所有链接都会失效。\n"
             f"     修复方式（任选其一）：\n"
-            f"       1. Cloudflare 后台 Settings → Environment variables → Add\n"
-            f"          Variable name: SITE_DOMAIN    Value:你的真实域名\n"
-            f"       2. 在仓库根目录的 wrangler.toml 中设置 SITE_DOMAIN\n"
-            f"       3. 本地构建时用命令行参数指定"
+            f"       1. 在仓库根目录的 domain.txt 里写入你的域名（一行纯文本）\n"
+            f"       2. Cloudflare 后台 Settings → Environment variables → Add\n"
+            f"          Variable name: SITE_DOMAIN    Value: 你的真实域名"
         )
 
     leftover = [f.name for f in outdir.glob("*.html")

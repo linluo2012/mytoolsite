@@ -19,9 +19,25 @@ echo
 
 FAIL=0
 
+# ── 检查 0：致命文件检查 ─────────────────────────
+echo "[检查 0] 致命文件"
+if [ -f wrangler.toml ]; then
+  echo "  ✗ 仓库里存在 wrangler.toml"
+  echo "    这会让 Cloudflare 把 Pages 项目误判为 Workers 项目，"
+  echo"    部署时会尝试执行 npx wrangler deploy 并失败。"
+  echo "    修复：删除该文件（域名请写进 domain.txt）"
+  FAIL=1
+else
+  echo "  无 wrangler.toml（正确）"
+fi
+if [ -f package.json ]; then
+  echo "  ⚠  存在 package.json，可能让 Cloudflare 误判为 Node 项目"
+fi
+echo ""
+
 # ── 检查 1：域名来源 ─────────────────────────────
 echo "[检查 1] 域名解析"
-echo "  当前构建会用到的域名："
+echo "  域名来源："
 "$PY" - <<'PY'
 import os, pathlib, re, sys
 ROOT = pathlib.Path(".")
@@ -31,19 +47,17 @@ def dotenv():
     if not p.exists(): return ""
     m = re.search(r'^SITE_DOMAIN\s*=\s*(.+)$', p.read_text(), re.M)
     return m.group(1).strip().strip('"\'') if m else ""
-def wrl():
-    p = ROOT/"wrangler.toml"
-    if not p.exists(): return ""
-    m = re.search(r'SITE_DOMAIN\s*=\s*"([^"]+)"', p.read_text())
-    return m.group(1).strip() if m else ""
-src = [("环境变量", env), (".env", dotenv()), ("wrangler.toml", wrl())]
+def dtxt():
+    p = ROOT/"domain.txt"
+    return p.read_text().strip().splitlines()[0].strip() if p.exists() and p.read_text().strip() else ""
+src = [("环境变量", env), (".env", dotenv()), ("domain.txt", dtxt())]
 found = False
 for name, val in src:
     if val:
         print(f"    找到 -> {name}: {val}")
         found = True
 if not found:
-    print("    未找到任何域名配置")
+    print("    未找到域名配置")
     sys.exit(1)
 PY
 echo ""
@@ -101,12 +115,10 @@ if [ "$FAIL" -eq 0 ]; then
   echo " 预检通过，可以推送"
   echo "==============================================="
   echo ""
-  echo "下一步："
-  echo "  ./deploy.sh \"说明\""
+  echo "下一步：./deploy.sh \"说明\""
   echo ""
-  echo "若 Cloudflare 构建仍报域名错误，在后台补环境变量："
-  echo "  Settings → Environment variables → Add"
-  echo "    SITE_DOMAIN = linwt.top"
+  echo "提醒：Cloudflare 后台的Build command 必须是 python3 build.py --build"
+  echo "      仓库里绝对不能有 wrangler.toml 或 package.json"
   exit 0
 else
   echo " 预检发现问题，请先修复"
