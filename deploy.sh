@@ -62,10 +62,32 @@ echo "[3/4] 提交改动…"
 git add -A
 git commit -q -m "$MSG"
 
-# ── 4. 推送 ──────────────────────────────────────
+# ── 4. 推送（带重试）─────────────────────────────
 echo "[4/4] 推送到 GitHub…"
 BRANCH="$(git branch --show-current)"
-git push origin "$BRANCH"
+
+push_ok=0
+for attempt in 1 2 3; do
+  if [ "$attempt" -gt 1 ]; then
+    echo "      重试（第 $attempt 次）…"
+    sleep 4
+  fi
+  if git push origin "$BRANCH" 2>&1; then
+    push_ok=1
+    break
+  fi
+done
+
+if [ "$push_ok" -ne 1 ]; then
+  echo
+  echo "✗ 推送失败。代码已安全提交在本地，不会丢失。"
+  echo "  常见原因与对策："
+  echo "  1. 网络波动 → 过几分钟直接重试："
+  echo "       git push origin $BRANCH"
+  echo "  2. Clash 规则把 github.com 分到了不合适的线路"
+  echo "     → 在 Clash Verge 里确认 github 走代理而非直连"
+  exit 1
+fi
 
 echo
 echo "已推送。"
