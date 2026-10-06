@@ -156,6 +156,7 @@ Avalara、TaxJar、Paychix、ADP、Gusto 都在做这类工具，且它们本身
 <li>⚠️ <strong>不要用带连字符的域名</strong>，容易被判断为垃圾站点，影响 AdSense 审核</li>
 <li>关闭 WHOIS 隐私保护时注意：AdSense 要求你能证明域名所有权，保留购买记录和账号邮箱</li>
 <li>⚠️ <strong>不要用国内注册商</strong>（阿里云/腾讯云域名），它们对英文站的 Google 收录和 AdSense 审核都有负面影响</li>
+<li><strong>实际已选域名：<code>linwt.top</code></strong>，已写入 <code>domain.txt</code>（提交到仓库）与 <code>.env</code>（本地，gitignore）</li>
 </ul>
 </div>
 
@@ -482,11 +483,52 @@ AdSense 拒审的绝大多数原因是"低价值内容"，不是流量不够。�
 
 <hr class="divider">
 
+<h2 id="deploy-notes">部署踩坑记录（已解决，供后续参考）</h2>
+
+<p>这个站点在部署过程中踩了三个坑，都已修复并沉淀成自动化检查。把它们记下来，避免下次重蹈覆辙。</p>
+
+<table>
+<thead><tr><th>现象</th><th>根因</th><th>解决办法</th></tr></thead>
+<tbody>
+<tr>
+  <td>向导页找不到 <code>Build output directory</code></td>
+  <td>Cloudflare 新版界面检测不到框架时会简化表单，该字段被折叠</td>
+  <td>Framework preset 选 <code>None</code> 后字段显现；或在项目内用 <code>domain.txt</code> 解决域名问题</td>
+</tr>
+<tr>
+  <td><code>domain: example.com</code>，构建报残留占位域名</td>
+  <td>环境变量 <code>SITE_DOMAIN</code> 未注入</td>
+  <td>仓库根目录放 <code>domain.txt</code>（单行纯文本），build.py 从中读取，不依赖任何后台配置</td>
+</tr>
+<tr>
+  <td><code>Missing entry-point to Worker script</code>，构建成功但部署失败</td>
+  <td><strong>仓库里有 <code>wrangler.toml</code></strong>，Cloudflare 把 Pages 项目误判为 Workers 项目，改跑 <code>npx wrangler deploy</code></td>
+  <td>删除该文件。<b>Pages 项目仓库里绝不能有 <code>wrangler.toml</code> 或 <code>package.json</code></b></td>
+</tr>
+</tbody>
+</table>
+
+<div class="bad">
+<strong>最重要的教训</strong><br>
+第三坑是我自己引入的。为了解决第一个坑（找不到字段）而去加配置文件，结果引入了更严重的问题。<b>遇到界面字段找不到时，优先在项目内解决（加文件、改脚本），不要在配置文件上做文章。</b><br><br>
+另一个关键点：<b>构建成功 ≠ 部署成功</b>。日志里 <code>Success: Build command completed</code> 只是第一步，真正的失败可能在后面的 deploy 阶段。读日志要从下往上看最终状态。
+</div>
+
+<h3>上线前必跑预检</h3>
+<pre><code>./check-deploy.sh</code></pre>
+<p>这个脚本会模拟 Cloudflare 的构建环境（不带环境变量），检查致命文件、域名解析、构建结果、产物完整性。上面三个坑都能在推送前发现，不用等 2 分钟看日志。</p>
+
+<h3>域名配置的优先级</h3>
+<pre><code>环境变量 SITE_DOMAIN  &gt;  命令行参数  &gt;  .env  &gt;  domain.txt</code></pre>
+<p>换域名时改<code>.env</code>（本地）和 <code>domain.txt</code>（提交到仓库）两处即可。</p>
+
+<hr class="divider">
+
 <h2>现在就做这三件事</h2>
 <ol>
-<li><strong>买域名</strong>（40 分钟）——命名规则照上面第1 天</li>
-<li><strong>部署已生成的工具页</strong>（30 分钟）—— <code>tools/markup-margin-calculator.html</code> 直接可用，先让它上线跑起来</li>
-<li><strong>注册 Search Console</strong>（20 分钟）——没有它你 30 天后无法判断成败</li>
+<li><strong>部署并自查</strong>——确认 7 个页面都能打开、计算器能正常计算</li>
+<li><strong>Search Console 验证 + 提交 sitemap</strong>——这一步决定 Google 会不会收录你，是 30 天后判断成败的前提</li>
+<li><strong>申请 AdSense</strong>——页面数还差得远（第 3 周有 15 页时再申请，通过率更高）</li>
 </ol>
 
 <p style="margin-top:24px;color:var(--muted);font-size:14px;border-top:1px solid var(--border);padding-top:16px;">
