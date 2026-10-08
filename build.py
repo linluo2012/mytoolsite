@@ -28,7 +28,7 @@ Cloudflare Pages 云端构建（自动执行）：
 那个文件会让 Cloudflare 把 Pages 项目误判为 Workers 项目，
 导致它尝试执行 `npx wrangler deploy` 并因缺少 Worker 入口而失败。
 """
-import sys, os, pathlib, shutil, re, json
+import sys, os, pathlib, shutil, re, json, subprocess
 
 ROOT = pathlib.Path(__file__).parent
 SRC = ROOT / "source"
@@ -37,6 +37,19 @@ PLACEHOLDER = "example.com"
 
 # Cloudflare Pages 默认输出目录
 CF_OUT = ROOT / "dist"
+
+def git_lastmod(relpath):
+    """返回文件在 git 中最后一次修改的日期（YYYY-MM-DD），取不到则返回 None。"""
+    try:
+        r = subprocess.run(["git", "log", "-1", "--format=%cs", "--", relpath],
+                           cwd=str(ROOT), capture_output=True, text=True, timeout=10)
+        d = r.stdout.strip()
+        if re.fullmatch(r"\d{4}-\d{2}-\d{2}", d):
+            return d
+    except Exception:
+        pass
+    return None
+
 
 # ── 联盟区块 ──────────────────────────────────────
 AFF_CONFIG = ROOT / "affiliate-config.json"
@@ -215,7 +228,12 @@ def build(domain: str, outdir: pathlib.Path) -> int:
             pri, freq = "1.0", "weekly"
         else:
             pri, freq = "0.3", "yearly"
-        urls.append(f"  <url>\n    <loc>https://{loc}</loc>\n"
+        # lastmod：取该页在 git 中最后一次被修改的日期。
+        # Google 会用它判断内容是否更新，有助提高抓取优先级。
+        # git 不可用（或文件未纳入版本控制）时省略该字段，不影响 sitemap 合法性。
+        lastmod = git_lastmod(f"source/{name}")
+        lm = f"    <lastmod>{lastmod}</lastmod>\n" if lastmod else ""
+        urls.append(f"  <url>\n    <loc>https://{loc}</loc>\n{lm}"
                     f"    <changefreq>{freq}</changefreq>\n"
                     f"    <priority>{pri}</priority>\n  </url>")
 
