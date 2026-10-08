@@ -1,0 +1,47 @@
+name: Deploy to Cloudflare Workers
+
+# 每次 push 到 main 自动部署。
+# 用途：Cloudflare 自带的 Workers Builds 集成不可靠时，用它接管部署。
+# 也可在 GitHub → Actions 页面点 "Run workflow" 手动触发一次。
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # 必须是 0（完整历史）：
+          # build.py 用 git log 生成 sitemap 的 lastmod，
+          # 默认的浅克隆（depth=1）会让所有页面日期变成同一个。
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Build site
+        run: python3 build.py --build
+
+      - name: Deploy to Workers
+        # 直接调 wrangler 而不走 GitHub Action 封装：
+        # 仓库里刻意不放 wrangler.toml（会被 Workers Builds 读取并覆盖后台配置），
+        # 所以项目名和 compatibility-date 都在命令行显式指定。
+        run: npx wrangler deploy --name linwt --assets dist --compatibility-date 2026-10-06
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Verify live site
+        run: |
+          for u in "/" "/sitemap.xml" "/ads.txt"; do
+            code=$(curl -sL -o /dev/null -w "%{http_code}" "https://linwt.top$u")
+            echo "$u -> $code"
+            [ "$code" = "200" ] || exit 1
+          done
