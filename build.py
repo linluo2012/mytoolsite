@@ -24,9 +24,14 @@ Cloudflare Pages 云端构建（自动执行）：
 域名优先级：
     环境变量 SITE_DOMAIN > 命令行参数 > .env > domain.txt > example.com
 
-注意：不要在仓库里放 wrangler.toml。
-那个文件会让 Cloudflare 把 Pages 项目误判为 Workers 项目，
-导致它尝试执行 `npx wrangler deploy` 并因缺少 Worker 入口而失败。
+部署方式（2026-10-08 核实）：
+    本项目部署在 Cloudflare **Workers**（Workers Builds，已连接 GitHub 仓库、
+    监听 main 分支），不是 Cloudflare Pages。
+       · 云端构建命令：python3 build.py --build   → 输出到 dist/
+       · 本地预览：    python3 build.py            → 输出到 site/
+    仓库里不要提交 wrangler.toml：Workers Builds 会读取它并覆盖后台的构建配置，
+    一旦与后台设置不一致就会部署失败。需要临时手动部署时，用命令行参数指定
+    （wrangler deploy --name <项目> --assets dist/），不要落文件到仓库。
 """
 import sys, os, pathlib, shutil, re, json, subprocess
 
