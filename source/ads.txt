@@ -1,0 +1,10 @@
+# ads.txt — linwt.top
+#
+# 状态：占位文件（AdSense 审核通过后需替换）
+#
+# 待 AdSense 审核通过、拿到发布商 ID（pub-xxxxxxxxxxxxxxxx）后，
+# 把下面这一行取消注释，并把 pub 号替换成你自己的真实 ID：
+#
+# google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
+#
+# 参考：https://developers.google.com/authorized-buyers/rtb/ads-txt

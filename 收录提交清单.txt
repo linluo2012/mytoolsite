@@ -1,0 +1,77 @@
+================================================================
+linwt.top — GSC 验证成功后的索引提交清单
+生成日期：2026-10-08    站点共 21 页
+================================================================
+
+【用法一】Bing 站长工具 → 网址提交（URL Submission）
+  支持一次粘贴多条，每天配额 10,000 条 → 下面 21 条一次性全贴即可。
+  入口：https://www.bing.com/webmasters  → 左侧「网址提交」
+
+【用法二】Google Search Console → 网址检查（URL Inspection）
+  一次只能查一条，手动配额有限 → 请按下面的分组，每天提一批。
+  入口：https://search.google.com/search-console → 顶部搜索框粘贴 URL
+        → 「测试实际网址」→「请求编入索引」
+
+
+----------------------------------------------------------------
+第 1 批（最优先，第一天提交）
+----------------------------------------------------------------
+https://linwt.top
+https://linwt.top/tools.html
+https://linwt.top/sales-tax-calculators.html
+https://linwt.top/gross-vs-net-profit-calculator.html
+https://linwt.top/break-even-calculator.html
+
+----------------------------------------------------------------
+第 2 批（第二天提交）
+----------------------------------------------------------------
+https://linwt.top/profit-margin-by-industry.html
+https://linwt.top/payroll-burden-calculator.html
+https://linwt.top/cash-runway-calculator.html
+https://linwt.top/markup-margin-calculator.html
+https://linwt.top/sales-tax-calculator-california.html
+
+----------------------------------------------------------------
+第 3 批（第三天提交）
+----------------------------------------------------------------
+https://linwt.top/sales-tax-calculator-texas.html
+https://linwt.top/sales-tax-calculator-new-york.html
+https://linwt.top/sales-tax-calculator-florida.html
+https://linwt.top/sales-tax-calculator-washington.html
+https://linwt.top/sales-tax-calculator-illinois.html
+
+----------------------------------------------------------------
+第 4 批（第四天提交，含法务页）
+----------------------------------------------------------------
+https://linwt.top/sales-tax-calculator-pennsylvania.html
+https://linwt.top/sales-tax-calculator-ohio.html
+https://linwt.top/about.html
+https://linwt.top/contact.html
+https://linwt.top/disclaimer.html
+https://linwt.top/privacy.html
+
+
+================================================================
+纯 URL 列表（共 21 条，供 Bing 批量提交直接复制）
+================================================================
+https://linwt.top
+https://linwt.top/about.html
+https://linwt.top/break-even-calculator.html
+https://linwt.top/cash-runway-calculator.html
+https://linwt.top/contact.html
+https://linwt.top/disclaimer.html
+https://linwt.top/gross-vs-net-profit-calculator.html
+https://linwt.top/markup-margin-calculator.html
+https://linwt.top/payroll-burden-calculator.html
+https://linwt.top/privacy.html
+https://linwt.top/profit-margin-by-industry.html
+https://linwt.top/sales-tax-calculator-california.html
+https://linwt.top/sales-tax-calculator-florida.html
+https://linwt.top/sales-tax-calculator-illinois.html
+https://linwt.top/sales-tax-calculator-new-york.html
+https://linwt.top/sales-tax-calculator-ohio.html
+https://linwt.top/sales-tax-calculator-pennsylvania.html
+https://linwt.top/sales-tax-calculator-texas.html
+https://linwt.top/sales-tax-calculator-washington.html
+https://linwt.top/sales-tax-calculators.html
+https://linwt.top/tools.html
