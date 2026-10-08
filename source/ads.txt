@@ -8,5 +8,3 @@
 # google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
 #
 # 参考：https://developers.google.com/authorized-buyers/rtb/ads-txt
-
-# deploy-check: automated-deploy-2026-10-08-2300
